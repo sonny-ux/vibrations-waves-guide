@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibrations &amp; Waves — Equation Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="document.addEventListener('DOMContentLoaded', () => { renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ],
+    throwOnError: false
+  }); })"></script>
+<style>
+:root {
+  --bg: #f4f5f9;
+  --surf: #ffffff;
+  --card: #ffffff;
+  --card2: #f0f1f7;
+  --border: #e2e4ef;
+  --border2: #cdd0e3;
+  --accent: #6d28d9;
+  --adim: #ede9fe;
+  --blue: #047857;
+  --bdim: #d1fae5;
+  --amber: #b45309;
+  --amdim: #fef9c3;
+  --rose: #be123c;
+  --rdim: #ffe4e6;
+  --text: #111827;
+  --text2: #374151;
+  --muted: #9ca3af;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.header {
+  background: var(--surf);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 24px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  background: var(--adim);
+  color: var(--accent);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+.header-text { flex: 1; min-width: 160px; }
+.header-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.header-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text2);
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+.tab-nav {
+  background: var(--surf);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-nav-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2px;
+  padding: 8px 16px 0;
+}
+.stab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 14px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.18s, border-color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.stab:hover { color: var(--text); }
+.stab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.main { max-width: 780px; margin: 0 auto; padding: 24px 16px 70px; }
+.panel { display: none; }
+.panel.active { display: block; }
+.intro {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  color: var(--text2);
+}
+.sec-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  margin-top: 26px;
+}
+.sec-title:first-of-type { margin-top: 0; }
+.eqcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.eqhdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
+}
+.eqhdr:hover { background: var(--card2); }
+.eqnum {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--adim);
+  border-radius: 4px;
+  padding: 3px 7px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.eqmain { flex: 1; min-width: 0; }
+.eqdisp { font-size: 1.05em; margin-bottom: 2px; overflow-x: auto; }
+.eqname { font-size: 12.5px; color: var(--text2); }
+.eqarrow {
+  font-size: 11px;
+  color: var(--muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.eqhdr.open .eqarrow { transform: rotate(90deg); }
+.eqbody {
+  display: none;
+  padding: 4px 16px 16px;
+  border-top: 1px solid var(--border);
+}
+.eqbody.open { display: block; padding-top: 14px; }
+.eqbody .block { margin-bottom: 12px; }
+.eqbody .block:last-child { margin-bottom: 0; }
+.block-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.params { list-style: none; }
+.params li {
+  display: flex;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 13.5px;
+  color: var(--text2);
+}
+.params .psym { flex-shrink: 0; min-width: 34px; color: var(--text); font-weight: 500; }
+.box {
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0;
+  font-size: 13.5px;
+  color: var(--text2);
+}
+.box.accent { background: var(--adim); border: 1px solid var(--border2); }
+.box.blue { background: var(--bdim); border: 1px solid #1e4a38; }
+.box.amber { background: var(--amdim); border: 1px solid #3a2808; }
+.box p { margin-bottom: 5px; }
+.box p:last-child { margin-bottom: 0; }
+.box .katex-display { margin: 6px 0; }
+.derivstep { margin: 4px 0; font-size: 13.5px; color: var(--text2); }
+.footer-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 30px;
+  font-family: 'JetBrains Mono', monospace;
+}
+@media (max-width: 480px) {
+  .header { padding: 14px 16px 12px; }
+  .main { padding: 18px 12px 60px; }
+  .eqhdr { padding: 12px 12px; }
+  .eqbody { padding: 4px 12px 14px; }
+  .eqbody.open { padding-top: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="badge">KING</div>
+    <div class="header-text">
+      <div class="header-title">Vibrations &amp; Waves — Equation Guide</div>
+      <div class="header-sub">Physics III · Chapters 1–2 · growing over the semester</div>
+    </div>
+    <div class="badge" style="background:var(--bdim);color:var(--blue);">REFERENCE</div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="stab active" onclick="switchTab('ch1')">Ch. 1 · Simple Harmonic Motion</button>
+    <button class="stab" onclick="switchTab('ch2')">Ch. 2 · Damped Oscillator</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ============ CHAPTER 1 ============ -->
+<div id="ch1" class="panel active">
+<div class="intro">Every equation in this chapter describes one thing: a system with a restoring force proportional to displacement, $F=-kx$. Once you recognize that pattern in <em>any</em> physical system — a spring, a pendulum, an LC circuit — every equation below applies to it, just with the labels changed.</div>
+
+<div class="sec-title">1.2 · A Mass on a Spring</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.2</span>
+    <div class="eqmain"><div class="eqdisp">$F = -kx$</div><div class="eqname">Hooke's law — the restoring force</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$F$</span> restoring force on the mass (N)</li>
+        <li><span class="psym">$k$</span> spring constant — force per unit displacement (N m⁻¹)</li>
+        <li><span class="psym">$x$</span> displacement from equilibrium (m)</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Origin</div>
+      <p>The minus sign is the entire physical content: the force always points back toward equilibrium, regardless of which side $x$ is displaced to. This — force proportional to displacement, directed opposite to it — is the defining property of <em>every</em> simple harmonic oscillator, not just springs.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.6</span>
+    <div class="eqmain"><div class="eqdisp">$$\dfrac{\mathrm d^2x}{\mathrm dt^2} = -\omega^2 x$$</div><div class="eqname">The equation of SHM — boxed in the text; the master equation of the chapter</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$\omega$</span> angular frequency of oscillation (rad s⁻¹)</li>
+        <li><span class="psym">$x$</span> displacement, as a function of time</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Derivation</div>
+      <div class="derivstep">1. Newton's second law: $F = ma = -kx$.</div>
+      <div class="derivstep">2. Acceleration is the second derivative of displacement: $a = \mathrm d^2x/\mathrm dt^2$.</div>
+      <div class="derivstep">3. Substitute: $m\,\mathrm d^2x/\mathrm dt^2 = -kx$, then divide by $m$ and write the constant $k/m$ as $\omega^2$.</div>
+    </div>
+    <div class="box accent"><p>Every equation in this chapter is either deriving this equation for a new physical system, or solving it. If you can recognize a system reduces to this form, you already know its entire behavior.</p></div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.7</span>
+    <div class="eqmain"><div class="eqdisp">$$\omega^2 = \dfrac{k}{m}$$</div><div class="eqname">Angular frequency of a mass on a spring</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$k$</span> spring constant (N m⁻¹)</li>
+        <li><span class="psym">$m$</span> mass (kg)</li>
+      </ul>
+    </div>
+    <div class="box amber"><p><strong>Key property:</strong> $\omega$ depends only on $k$ and $m$ — the physical properties of the oscillator — never on amplitude or how the motion was started. This is why a pendulum clock keeps accurate time regardless of how far you initially pull it.</p></div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.14</span>
+    <div class="eqmain"><div class="eqdisp">$$x = A\cos(\omega t + \phi)$$</div><div class="eqname">General solution for SHM — boxed in the text</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$A$</span> amplitude — maximum displacement (m)</li>
+        <li><span class="psym">$\omega$</span> angular frequency, fixed by the oscillator's physical properties</li>
+        <li><span class="psym">$\phi$</span> phase angle (rad) — set by initial conditions</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Why two constants</div>
+      <p>Equation 1.6 is a second-order differential equation, so its general solution always has exactly two free constants. Here they're $A$ and $\phi$; equivalently it can be written $x = a\cos\omega t + b\sin\omega t$ with $a = A\cos\phi$, $b=-A\sin\phi$ (Eq. 1.15–1.17) — same solution, different-looking constants.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.12–1.13</span>
+    <div class="eqmain"><div class="eqdisp">$$v = -\omega A\sin\omega t, \qquad a = -\omega^2 A\cos\omega t = -\omega^2 x$$</div><div class="eqname">Velocity and acceleration from the displacement</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Origin</div>
+      <p>Straightforward differentiation of $x=A\cos\omega t$ with respect to time, once and twice. Worth noticing directly from the graphs: velocity is zero exactly when displacement is at its extremes (the turning points), and maximum exactly when displacement passes through zero — a quarter-period phase shift between the two.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">1.2.5 · Energy of a Simple Harmonic Oscillator</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.19</span>
+    <div class="eqmain"><div class="eqdisp">$$E = K + U = \tfrac12 mv^2 + \tfrac12 kx^2$$</div><div class="eqname">Total mechanical energy — boxed in the text</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$K$</span> kinetic energy, $\tfrac12mv^2$</li>
+        <li><span class="psym">$U$</span> potential energy stored in the spring, $\tfrac12kx^2$ (from integrating $F=-kx$, Eq. 1.18)</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Derivation sketch</div>
+      <p>Start from $m\,\mathrm dv/\mathrm dt = -kx$, multiply through by $\mathrm dx = v\,\mathrm dt$ to get $mv\,\mathrm dv = -kx\,\mathrm dx$, then integrate both sides — the left becomes $\tfrac12mv^2$, the right $-\tfrac12kx^2$, and together they sum to a constant: the total energy $E$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.23</span>
+    <div class="eqmain"><div class="eqdisp">$$E = \tfrac12 kA^2$$</div><div class="eqname">Total energy in terms of amplitude alone</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Why this matters</div>
+      <p>Substituting the general solution into $K+U$, the time-dependent $\sin^2$ and $\cos^2$ terms combine to exactly $1$ (Eq. 1.21–1.23), leaving a constant — confirming energy conservation directly, and showing energy scales with the <em>square</em> of the amplitude. Double the amplitude, quadruple the energy.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">1.2.6 · Why Small Oscillations Are Always SHM</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.26–1.27</span>
+    <div class="eqmain"><div class="eqdisp">$$U(x) \approx \frac{x^2}{2}\left(\frac{\mathrm d^2U}{\mathrm dx^2}\right)_{x=0}, \qquad F = -x\left(\frac{\mathrm d^2U}{\mathrm dx^2}\right)_{x=0}$$</div><div class="eqname">Taylor expansion near equilibrium — the universal justification for SHM</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Reasoning</div>
+      <p>Any smooth potential well $U(x)$ can be Taylor-expanded about its minimum (Eq. 1.25). The constant term is irrelevant (potential energy has no absolute zero), and the first-derivative term vanishes exactly because $x=0$ is a minimum. What survives, to leading order, is a term proportional to $x^2$ — i.e. a parabolic well, which always produces a linear restoring force. This is the actual reason SHM is universal: <em>any</em> system in stable equilibrium behaves like a harmonic oscillator for sufficiently small displacements, whether it's a pendulum, a diatomic molecule, or a marble in a bowl.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">1.3 · The Pendulum</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.29, 1.31</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2\theta}{\mathrm dt^2} = -\frac{g}{l}\sin\theta \;\; \xrightarrow{\text{small }\theta} \;\; \frac{\mathrm d^2\theta}{\mathrm dt^2} = -\frac{g}{l}\theta$$</div><div class="eqname">Simple pendulum equation of motion, exact then small-angle</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$\theta$</span> angular displacement from vertical (rad)</li>
+        <li><span class="psym">$l$</span> length of the pendulum (m)</li>
+        <li><span class="psym">$g$</span> acceleration due to gravity</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Why $\sin\theta$ needs replacing</div>
+      <p>The exact equation has $\sin\theta$, not $\theta$, so it isn't literally SHM. Expanding $\sin\theta = \theta - \theta^3/3! + \cdots$ (Eq. 1.30) and keeping only the first term — valid once $\theta$ is small enough that higher powers are negligible — recovers the SHM form exactly.</p>
+    </div>
+    <div class="box blue"><p>Result: $\omega = \sqrt{g/l}$, $T = 2\pi\sqrt{l/g}$ (Eq. 1.32). Note $\omega$ depends on $g$ and $l$ only — not mass, not amplitude.</p></div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.43a–c</span>
+    <div class="eqmain"><div class="eqdisp">$$E = \tfrac12\alpha v^2 + \tfrac12\beta x^2$$</div><div class="eqname">The universal energy signature of SHM</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$\alpha$</span> the "inertia" constant (mass for a spring, $\alpha=m$; moment of inertia for a rotating system)</li>
+        <li><span class="psym">$\beta$</span> the "stiffness" constant (spring constant $k$; or $mg/l$ for a pendulum)</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Why this generalizes everything</div>
+      <p>Both the mass-on-spring energy ($\tfrac12mv^2+\tfrac12kx^2$) and the pendulum energy ($\tfrac12mv^2+\tfrac12\frac{mg}{l}x^2$) are special cases of this one form. Differentiating it with respect to time always reproduces the SHM equation with $\omega=\sqrt{\beta/\alpha}$ — meaning you never need to redo this derivation for a new system: just identify its $\alpha$ and $\beta$ and read off $\omega$ directly.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">1.4 · Oscillations in Electrical Circuits</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1.54</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2q}{\mathrm dt^2} = -\frac{1}{LC}q$$</div><div class="eqname">The LC circuit — SHM in an electrical system</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$q$</span> charge on the capacitor (C)</li>
+        <li><span class="psym">$L$</span> inductance (H)</li>
+        <li><span class="psym">$C$</span> capacitance (F)</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Origin</div>
+      <p>Kirchhoff's voltage law, $V_C + V_L = 0$, with $V_C = q/C$ and $V_L = L\,\mathrm dI/\mathrm dt = L\,\mathrm d^2q/\mathrm dt^2$ (since $I=\mathrm dq/\mathrm dt$). Same mathematical form as Eq. 1.6, with $\omega = \sqrt{1/LC}$.</p>
+    </div>
+    <div class="box accent"><p><strong>The correspondence (Eq. 1.57–1.58):</strong> $q \leftrightarrow x$, $L \leftrightarrow m$, $1/C \leftrightarrow k$. Every mechanical SHM result translates directly — this is why electrical circuits can be built as analogue simulations of mechanical systems.</p></div>
+  </div>
+</div>
+
+</div>
+
+<!-- ============ CHAPTER 2 ============ -->
+<div id="ch2" class="panel">
+<div class="intro">Chapter 2 adds one term to the master equation: a velocity-proportional damping force. Everything here is organized around a single comparison — $\gamma^2/4$ (the damping) versus $\omega_0^2$ (the spring-like restoring term) — and which one wins determines whether the system oscillates at all.</div>
+
+<div class="sec-title">2.2 · The Equation of Motion with Damping</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.2</span>
+    <div class="eqmain"><div class="eqdisp">$$F_d = -bv$$</div><div class="eqname">Damping force, proportional to velocity</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$b$</span> damping constant — force per unit velocity (N s m⁻¹)</li>
+        <li><span class="psym">$v$</span> velocity of the mass</li>
+      </ul>
+    </div>
+    <div class="box amber"><p>This linear-in-$v$ form is an approximation (valid for velocities that aren't too large), but it's the one that keeps the equation of motion linear and solvable — a damping force proportional to $v^2$ would be far harder to handle analytically.</p></div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.5</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2x}{\mathrm dt^2} + \gamma\frac{\mathrm dx}{\mathrm dt} + \omega_0^2 x = 0$$</div><div class="eqname">The damped harmonic oscillator equation — boxed in the text</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$\omega_0^2$</span> $=k/m$ — the <em>natural frequency</em>: what the system would oscillate at with zero damping</li>
+        <li><span class="psym">$\gamma$</span> $=b/m$ — the damping parameter (Eq. 2.4)</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Origin</div>
+      <p>Newton's second law with both forces present: $ma = -kx - bv$ (Eq. 2.3a), rearranged and divided through by $m$.</p>
+    </div>
+    <div class="box accent"><p>Everything else in this chapter is one of three cases determined by comparing $\gamma^2/4$ to $\omega_0^2$.</p></div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.7–2.8</span>
+    <div class="eqmain"><div class="eqdisp">$$x = A_0\exp(-\gamma t/2)\cos(\omega t + \phi), \qquad \omega^2 = \omega_0^2 - \gamma^2/4$$</div><div class="eqname">Light damping — boxed; oscillation with a decaying envelope</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Condition</div>
+      <p>$\gamma^2/4 < \omega_0^2$ — damping is weak enough that $\omega$ stays real, so the system still oscillates, just at a slightly lower frequency than $\omega_0$, with an amplitude that decays as $\exp(-\gamma t/2)$.</p>
+    </div>
+    <div class="block"><div class="block-label">Reading the pieces</div>
+      <ul class="params">
+        <li><span class="psym">$A_0$</span> initial amplitude</li>
+        <li><span class="psym">$\exp(-\gamma t/2)$</span> the decaying <em>envelope</em> — not the oscillation itself, just the ceiling it decays within</li>
+        <li><span class="psym">$\cos(\omega t+\phi)$</span> the oscillation inside that envelope, at the (slightly reduced) angular frequency $\omega$</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.9</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{A_n}{A_{n+1}} = \exp\!\left(\frac{\gamma T}{2}\right), \qquad \ln\!\left(\frac{A_n}{A_{n+1}}\right) = \frac{\gamma T}{2}$$</div><div class="eqname">Logarithmic decrement — ratio of successive amplitude peaks</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$A_n$</span> amplitude of the $n$-th peak; $A_{n+1}$ the next one, one period $T$ later</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Use</div>
+      <p>Since successive peaks always shrink by the <em>same fractional amount</em>, measuring any two consecutive peaks from a graph gives you $\gamma$ directly — a standard way to extract the damping parameter from experimental data.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.13</span>
+    <div class="eqmain"><div class="eqdisp">$$x = A\exp[(-\gamma/2+\sqrt{\gamma^2/4-\omega_0^2})t] + B\exp[(-\gamma/2-\sqrt{\gamma^2/4-\omega_0^2})t]$$</div><div class="eqname">Heavy (over) damping — no oscillation at all</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Condition</div>
+      <p>$\gamma^2/4 > \omega_0^2$ — damping dominates so strongly that the system just relaxes back to equilibrium, sluggishly, with two different exponential decay rates and no crossing back and forth.</p>
+    </div>
+    <div class="block"><div class="block-label">Why no oscillation</div>
+      <p>Both exponents are real and negative (since $\sqrt{\gamma^2/4-\omega_0^2} < \gamma/2$ always), so both terms are pure exponential decays — nothing in the solution oscillates.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.16</span>
+    <div class="eqmain"><div class="eqdisp">$$x = A\exp(-\gamma t/2) + Bt\exp(-\gamma t/2)$$</div><div class="eqname">Critical damping — fastest return to equilibrium, no overshoot</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Condition</div>
+      <p>$\gamma^2/4 = \omega_0^2$ exactly — the boundary case between light and heavy damping.</p>
+    </div>
+    <div class="block"><div class="block-label">Why this case is special</div>
+      <p>Of all three damping regimes, this is the one that returns the system to equilibrium in the shortest possible time without ever oscillating past it. That's why it's the design target for shock absorbers, door closers, and analogue meter needles — anything that needs to settle quickly without bouncing.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">2.3 · Rate of Energy Loss</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.18–2.19</span>
+    <div class="eqmain"><div class="eqdisp">$$E(t) = E_0\exp(-\gamma t) = E_0\exp(-t/\tau)$$</div><div class="eqname">Exponential energy decay — boxed in the text</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params">
+        <li><span class="psym">$E_0$</span> total energy at $t=0$</li>
+        <li><span class="psym">$\tau = 1/\gamma$</span> the <em>decay time</em> (or time constant) — the time for energy to fall by a factor of $e$</li>
+      </ul>
+    </div>
+    <div class="block"><div class="block-label">Derivation sketch</div>
+      <p>Substitute the light-damping solution into $E=\tfrac12mv^2+\tfrac12kx^2$; for very light damping the oscillating $\sin^2$ and $\cos^2$ terms again combine to $1$ (as in Ch. 1), leaving a clean exponential decay envelope.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.21, 2.23</span>
+    <div class="eqmain"><div class="eqdisp">$$Q = \frac{\omega_0}{\gamma} = \frac{\text{energy stored}}{\text{energy dissipated per radian}}$$</div><div class="eqname">The quality factor Q — boxed in the text</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Why it exists</div>
+      <p>$Q$ is a dimensionless "figure of merit" that works for any kind of oscillator — mechanical, electrical, or otherwise — regardless of what units its damping is measured in. Comparing the decay time $\tau$ (how long energy takes to dissipate) to the period $T$ (how long one oscillation takes) is the essential idea: many oscillations before dying out means high $Q$.</p>
+    </div>
+    <div class="block"><div class="block-label">Practical readings</div>
+      <ul class="params">
+        <li><span class="psym">high $Q$</span> many oscillations before the energy is significantly reduced (quartz crystal: $Q\sim10^6$)</li>
+        <li><span class="psym">low $Q$</span> only a few oscillations, or none (paperweight on a rubber band: $Q\sim10$)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.24–2.25</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2x}{\mathrm dt^2} + \frac{\omega_0}{Q}\frac{\mathrm dx}{\mathrm dt} + \omega_0^2 x = 0, \qquad \omega = \omega_0(1-1/4Q^2)^{1/2}$$</div><div class="eqname">The damped oscillator equation, rewritten in terms of Q</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Why rewrite it this way</div>
+      <p>Same physics as Eq. 2.5, with $\gamma$ replaced by $\omega_0/Q$ — useful because $Q$ is often the quantity actually measured or quoted for a real oscillator. Note that even a fairly low $Q=5$ only shifts $\omega$ from $\omega_0$ by about 0.5%, confirming that $\omega\approx\omega_0$ is an excellent approximation whenever damping is light.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">2.4 · Damped Electrical Oscillations</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.26</span>
+    <div class="eqmain"><div class="eqdisp">$$L\frac{\mathrm d^2q}{\mathrm dt^2} + R\frac{\mathrm dq}{\mathrm dt} + \frac{q}{C} = 0$$</div><div class="eqname">The damped LCR circuit — the electrical analog of Eq. 2.3b</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">The correspondence</div>
+      <ul class="params">
+        <li><span class="psym">$q\leftrightarrow x$</span>, <span class="psym">$L\leftrightarrow m$</span>, <span class="psym">$R\leftrightarrow b$</span>, <span class="psym">$1/C\leftrightarrow k$</span></li>
+      </ul>
+      <p>Since the differential equations are identical in form, every mechanical damping result carries over directly: light/heavy/critical damping, energy decay, and $Q$ all apply unchanged with these substitutions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">2.29–2.30</span>
+    <div class="eqmain"><div class="eqdisp">$$\omega^2 = \frac{1}{LC} - \frac{R^2}{4L^2}, \qquad Q = \frac{1}{R}\sqrt{\frac{L}{C}}$$</div><div class="eqname">Oscillation frequency and Q of a damped LCR circuit</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Reading it</div>
+      <p>Direct substitution of the mechanical-to-electrical correspondence above into Eq. 2.6 and Eq. 2.21. Larger resistance $R$ means more damping (smaller $Q$), exactly as a larger $b$ would mechanically.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer-note">More chapters added as the semester progresses.</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggle(hdr) {
+  var body = hdr.nextElementSibling;
+  hdr.classList.toggle('open');
+  body.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
