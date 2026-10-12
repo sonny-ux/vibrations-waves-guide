@@ -101,6 +101,28 @@ ul.check{list-style:none;padding-left:0}
 ul.check li{padding-left:1.6em;position:relative;margin:.35em 0}
 ul.check li::before{content:"☐";position:absolute;left:0;color:var(--muted)}
 .small{font-size:.9rem;color:var(--text-2)}
+
+/* Color-coded equation diagrams */
+:root{--c-in:#2a78d6;--c-damp:#c9521c;--c-spring:#13875e;--c-drive:#b8447a;
+  --c-in-bg:#e6f0fc;--c-damp-bg:#fdebe2;--c-spring-bg:#e2f4ec;--c-drive-bg:#fbe8f0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c-in:#6da7ec;--c-damp:#f0814f;--c-spring:#3ccf98;--c-drive:#ec8fb3;
+  --c-in-bg:#1c2a3d;--c-damp-bg:#3a2318;--c-spring-bg:#15302a;--c-drive-bg:#3a1d2a}}
+:root[data-theme="dark"]{--c-in:#6da7ec;--c-damp:#f0814f;--c-spring:#3ccf98;--c-drive:#ec8fb3;
+  --c-in-bg:#1c2a3d;--c-damp-bg:#3a2318;--c-spring-bg:#15302a;--c-drive-bg:#3a1d2a}
+.eqd{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 10px 12px;margin:1.1em 0}
+.eqd .cap{font:600 .78rem/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);text-align:center;margin-bottom:10px}
+.eqd .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px 6px}
+.eqd .t{display:flex;flex-direction:column;align-items:center;min-width:112px;max-width:170px}
+.eqd .sub{max-width:130px}
+.eqd .m{font-size:1.3em;padding:6px 10px;border-radius:8px;border:2px solid currentColor;min-width:70px;text-align:center;white-space:nowrap}
+.eqd .op{font-size:1.4em;padding-top:9px;color:var(--text-2);min-width:14px;text-align:center}
+.eqd .lab{font:700 .82rem/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;margin-top:7px;text-align:center}
+.eqd .sub{font:.76rem/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text-2);text-align:center;margin-top:2px}
+.c-in{color:var(--c-in)} .c-in .m{background:var(--c-in-bg)}
+.c-damp{color:var(--c-damp)} .c-damp .m{background:var(--c-damp-bg)}
+.c-spring{color:var(--c-spring)} .c-spring .m{background:var(--c-spring-bg)}
+.c-drive{color:var(--c-drive)} .c-drive .m{background:var(--c-drive-bg)}
+.k-in{color:var(--c-in);font-weight:700} .k-damp{color:var(--c-damp);font-weight:700} .k-spring{color:var(--c-spring);font-weight:700} .k-drive{color:var(--c-drive);font-weight:700}
 </style>
 </head>
 <body>
@@ -132,13 +154,19 @@ ul.check li::before{content:"☐";position:absolute;left:0;color:var(--muted)}
 
 <h3>1.1 The equation of motion</h3>
 
-<p>Start from the simplest oscillator: a mass \(m\) on a spring of stiffness \(k\). Hooke's law says the spring pulls back with force \(-kx\), where \(x\) is the displacement from equilibrium. Two more forces turn this into a <em>driven, damped</em> oscillator. The first is a <strong>damping force</strong>, a friction-like force proportional to velocity and opposite to it, written \(-b\dot{x}\). Here \(b\) is the damping constant and \(\dot x\) means \(dx/dt\). The second is a <strong>driving force</strong>, an external push that varies sinusoidally in time, \(F_0\cos\omega t\). Here \(F_0\) is its peak strength and \(\omega\) is the frequency at which the driver pushes, which you are free to choose. Newton's second law gives</p>
+<p>Start from the simplest oscillator: a mass \(m\) on a spring of stiffness \(k\). Hooke's law says the spring pulls back with force \(-kx\), where \(x\) is the displacement from equilibrium. Two more forces turn this into a <em>driven, damped</em> oscillator. The first is a <strong>damping force</strong>, a friction-like force proportional to velocity and opposite to it, written \(-b\dot{x}\). Here \(b\) is the damping constant and \(\dot x\) means \(dx/dt\). The second is a <strong>driving force</strong>, an external push that varies sinusoidally in time, \(F_0\cos\omega t\). Here \(F_0\) is its peak strength and \(\omega\) is the frequency at which the driver pushes, which you are free to choose. Newton's second law, mass times acceleration equals the total force, gives</p>
 
-\[ m\ddot{x} + b\dot{x} + kx = F_0\cos\omega t . \]
+<div class="eqd" role="img" aria-label="m x double dot equals minus k x minus b x dot plus F0 cos omega t, with each term labeled"><div class="cap">Newton's second law: response = sum of causes</div><div class="row"><div class="t c-in"><div class="m">\(m\ddot x\)</div><div class="lab">Inertia</div><div class="sub">mass × acceleration: what the mass actually does</div></div><div class="op">\(=\)</div><div class="t c-spring"><div class="m">\(-kx\)</div><div class="lab">Spring</div><div class="sub">depends on <em>position</em>; always points back to \(x=0\)</div></div><div class="t c-damp"><div class="m">\(-b\dot x\)</div><div class="lab">Damping</div><div class="sub">depends on <em>velocity</em>; always opposes the motion</div></div><div class="t c-drive"><div class="m">\(+F_0\cos\omega t\)</div><div class="lab">Driver</div><div class="sub">depends only on <em>time</em>; set from outside</div></div></div></div>
 
-<p>Dividing through by \(m\) gives the form King uses:</p>
+<p>Read the diagram from left to right. The left side is the <span class="k-in">response</span>: how the mass accelerates. The right side lists the three <em>causes</em>, and each one depends on something different. The <span class="k-spring">spring</span> depends on where the mass is. The <span class="k-damp">damping</span> depends on how fast it is moving. The <span class="k-drive">driver</span> depends only on the clock. Moving the spring and damping terms to the left flips their signs and gives the form usually written in textbooks:</p>
 
-\[ \ddot{x} + \gamma\dot{x} + \omega_0^2 x = \frac{F_0}{m}\cos\omega t, \qquad \gamma = \frac{b}{m},\quad \omega_0 = \sqrt{\frac{k}{m}} . \]
+<div class="eqd" role="img" aria-label="The same equation with the spring and damping terms moved to the left side"><div class="cap">Same equation, rearranged (signs flip when terms cross the equals sign)</div><div class="row"><div class="t c-in"><div class="m">\(m\ddot x\)</div><div class="lab">Inertia</div><div class="sub"></div></div><div class="op">\(+\)</div><div class="t c-damp"><div class="m">\(b\dot x\)</div><div class="lab">Damping</div><div class="sub"></div></div><div class="op">\(+\)</div><div class="t c-spring"><div class="m">\(kx\)</div><div class="lab">Spring</div><div class="sub"></div></div><div class="op">\(=\)</div><div class="t c-drive"><div class="m">\(F_0\cos\omega t\)</div><div class="lab">Driver</div><div class="sub"></div></div></div></div>
+
+<p>Dividing through by \(m\) turns every term from a force into an acceleration. Motion is set by acceleration, so this form shows directly what the mass does. It also shows that the motion depends only on the ratios \(b/m\) and \(k/m\), not on \(m\), \(b\) and \(k\) separately. Two oscillators with different hardware but the same ratios move identically. The colors carry over from above:</p>
+
+<div class="eqd" role="img" aria-label="The equation divided by m, each term labeled"><div class="cap">Divided by the mass: every term is now an acceleration</div><div class="row"><div class="t c-in"><div class="m">\(\ddot x\)</div><div class="lab">Acceleration</div><div class="sub"></div></div><div class="op">\(+\)</div><div class="t c-damp"><div class="m">\(\gamma\,\dot x\)</div><div class="lab">Damping</div><div class="sub">\(\gamma = b/m\)</div></div><div class="op">\(+\)</div><div class="t c-spring"><div class="m">\(\omega_0^2\,x\)</div><div class="lab">Spring</div><div class="sub">\(\omega_0^2 = k/m\)</div></div><div class="op">\(=\)</div><div class="t c-drive"><div class="m">\(\tfrac{F_0}{m}\cos\omega t\)</div><div class="lab">Driver</div><div class="sub">per unit mass</div></div></div></div>
+
+\[ \gamma = \frac{b}{m},\qquad \omega_0 = \sqrt{\frac{k}{m}} . \]
 
 <ul class="read">
 <li>\(\ddot x\) is the acceleration.</li>
