@@ -43,6 +43,9 @@ figure > svg .f{stroke:var(--accent);stroke-width:3;fill:none}
 figure > svg .g{stroke:var(--accent2);stroke-width:3;fill:none}
 figure > svg .h{stroke:var(--accent3);stroke-width:3;fill:none}
 figure > svg .dot{fill:var(--line)}
+figure > svg .fd{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:4 3;fill:none}
+figure > svg .gd{stroke:var(--accent2);stroke-width:1.5;stroke-dasharray:4 3;fill:none}
+.why{margin:14px 0 2px}
 figure > svg .tf{fill:var(--accent)} figure > svg .tg{fill:var(--accent2)} figure > svg .th{fill:var(--accent3)}
 summary:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 </style>
@@ -116,23 +119,47 @@ summary:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-o
 <p>For an object that can turn, where a force acts decides how much it twists the object. So draw the outline of the object and attach each arrow at its real point, not all at one dot.</p></details>
 
 <h3>4 · Law</h3>
-<p>At rest, so the twists about the pivot cancel: $\sum\tau = 0$. Take torques <b>about the pivot</b> so the unknown $P$ drops out.</p>
-<details class="c"><summary>Torque: what it is and why it's here</summary>
-<p><b>Torque</b> is the twisting strength of a force about a pivot:</p>
-$$\tau = (\text{force})\times(\text{lever arm}).$$
-<p>The <b>lever arm</b> is the perpendicular distance from the pivot to the line the force acts along. It is needed here because the rod can only turn, so the question is whether the twists balance. $P$ acts at the pivot, so its lever arm is 0 and it has no twist.</p></details>
-<details class="c"><summary>Lever arms from the figure</summary>
-<p>With the rod as the hypotenuse, a point a distance $r$ down the rod is $r\cos\theta$ below the pivot and $r\sin\theta$ to the side. A horizontal force's lever arm is the vertical drop; a vertical force's lever arm is the sideways offset.</p>
-<table><tr><th>Force</th><th>Lever arm</th><th>Twists toward</th></tr>
-<tr><td>$F$ at A</td><td>$a\cos\theta$</td><td>larger θ</td></tr>
-<tr><td>$mg$ at mass</td><td>$L\sin\theta$</td><td>vertical</td></tr>
-<tr><td>$F'$ at mass</td><td>$L\cos\theta$</td><td>larger θ</td></tr></table></details>
+<p class="why"><b>Why torque.</b> The pivot holds the top of the rod in place, so the rod cannot move anywhere. It can only turn. So "equilibrium" here means the turning effects of the forces cancel. A force's turning effect about the pivot is its <b>torque</b>, so the law is</p>
+$$\textstyle\sum\tau = 0\quad\text{(about the pivot).}$$
+<p class="why"><b>Why about the pivot.</b> $P$ acts at the pivot itself, at distance 0, so it has no torque about that point. The one force we know nothing about drops out.</p>
+<details class="c"><summary>Torque: what it is</summary>
+<p>Split a force, at the point where it acts, into a part <b>along</b> the rod and a part <b>perpendicular</b> to the rod. The part along the rod only pushes or pulls on the pivot, so it can't turn anything. The perpendicular part turns the rod, and more so the farther from the pivot it acts (think of a door handle far from the hinge). So:</p>
+$$\tau = (\text{perpendicular part of the force})\times(\text{distance from the pivot}).$$</details>
 
 <h3>5 · Solve</h3>
+<p class="why"><b>Split each force at its point</b> into its part along the rod and its part perpendicular to the rod. Only the perpendicular part (solid) turns the rod.</p>
+<figure>
+<svg viewBox="0 0 380 320" role="img" aria-label="F at A and mg at the mass, each split into a part along the rod and a part perpendicular to it">
+  <circle cx="120" cy="30" r="6" class="dot"/>
+  <line x1="120" y1="30" x2="120" y2="250" class="dash"/>
+  <path d="M120,75 A45,45 0 0 0 139,70.8" class="thin"/><text x="122" y="96">θ</text>
+  <line x1="120" y1="30" x2="204.5" y2="211.3" class="ln"/>
+  <circle cx="166.5" cy="129.7" r="4" class="dot"/><text x="140" y="134">A</text>
+  <line x1="166.5" y1="129.7" x2="266.5" y2="129.7" class="fd" marker-end="url(#ao)"/><text x="272" y="134" class="tf">F</text>
+  <line x1="166.5" y1="129.7" x2="248.6" y2="91.4" class="f" marker-end="url(#ao)"/><text x="232" y="82" class="tf">F cos θ</text>
+  <line x1="166.5" y1="129.7" x2="184.4" y2="168" class="fd"/><text x="194" y="162" class="tf">F sin θ</text>
+  <circle cx="204.5" cy="211.3" r="9" class="dot"/>
+  <line x1="204.5" y1="211.3" x2="204.5" y2="301.3" class="gd" marker-end="url(#ab)"/><text x="186" y="316" class="tg">mg</text>
+  <line x1="204.5" y1="211.3" x2="170.1" y2="227.4" class="g" marker-end="url(#ab)"/><text x="74" y="236" class="tg">mg sin θ</text>
+  <line x1="204.5" y1="211.3" x2="239" y2="285.1" class="gd"/><text x="246" y="286" class="tg">mg cos θ</text>
+</svg>
+<figcaption>Dashed: the full force and its part along the rod. Solid: the perpendicular part, which does the turning.</figcaption>
+</figure>
+<table>
+<tr><th>Force</th><th>Perpendicular part</th><th>Why that part</th><th>Distance</th><th>Torque</th></tr>
+<tr><td>$F$ at A</td><td>$F\cos\theta$</td><td>$F$ is horizontal; the rod's perpendicular is tilted θ from horizontal</td><td>$a$</td><td>$Fa\cos\theta$, toward larger θ</td></tr>
+<tr><td>$mg$ at mass</td><td>$mg\sin\theta$</td><td>$mg$ is vertical; the rod is tilted θ from vertical</td><td>$L$</td><td>$mgL\sin\theta$, back toward vertical</td></tr>
+</table>
+<details class="c"><summary>Why $\cos\theta$ for one and $\sin\theta$ for the other</summary>
+<p>A force at angle φ to a line has part $F\cos\varphi$ along the line and $F\sin\varphi$ across it. Gravity points straight down and the rod is θ from straight down, so gravity is at angle θ to the rod: across part $mg\sin\theta$. $F$ is horizontal, at angle $90^\circ-\theta$ to the rod: across part $F\sin(90^\circ-\theta)=F\cos\theta$.</p></details>
+<p class="why"><b>Equilibrium:</b> the two torques turn opposite ways, so for them to cancel they must be equal in size:</p>
 $$F\,a\cos\theta = mg\,L\sin\theta$$
+<p class="why"><b>Small angles</b> (the problem says θ ≪ 1): replace $\sin\theta\to\theta$ and $\cos\theta\to1$:</p>
+$$F\,a = mg\,L\,\theta \qquad\text{solve this for }\theta.$$
 <details class="c"><summary>Small angles: why $\sin\theta\approx\theta,\ \cos\theta\approx1$</summary>
-<p>For $\theta\ll1$ rad, the Taylor series $\sin\theta=\theta-\theta^3/6+\dots$ and $\cos\theta=1-\theta^2/2+\dots$ are dominated by their first terms. The problem says $\theta\ll1$, so we keep only those.</p></details>
-<p>Simplify, then solve for θ. For $F'$: same angle, so gravity's twist is unchanged, and $F'$ must supply the twist $F$ did.</p>
+<p>For $\theta\ll1$ rad, the Taylor series $\sin\theta=\theta-\theta^3/6+\dots$ and $\cos\theta=1-\theta^2/2+\dots$ are dominated by their first terms.</p></details>
+<p class="why"><b>F′:</b> horizontal at the mass, so by the same split its perpendicular part is $F'\cos\theta$, at distance $L$: torque $F'L\cos\theta$. Same angle means gravity's torque is unchanged, so $F'$ must supply exactly the torque $F$ supplied:</p>
+$$F'L\cos\theta = F\,a\cos\theta \qquad\text{solve this for }F'.$$
 
 <h3>6 · Check</h3>
 <div class="check">θ grows with $F$ and $a$, shrinks with $m$ and $L$. $F' &lt; F$ (since $a&lt;L$): pushing farther from the pivot takes less force. Units: $Fa/(mgL)$ is N·m / N·m, a pure number, as an angle in radians must be.</div>
@@ -204,19 +231,23 @@ $$F'L\cos\theta = Fa\cos\theta\ \Rightarrow\ \boxed{F' = \frac{a}{L}F}$$
 <p>A spring pushes or pulls with force $k\times$(change in length), always toward restoring its natural length. Here each end moves sideways by $a\sin\theta_i\approx a\theta_i$. The vertical shifts are of order $a\theta^2$, too small to matter. The length changes by the <i>difference</i> of the two shifts: $a\theta_1-a\theta_2$. If θ₁ = θ₂ the ends move together and the spring does nothing.</p></details>
 
 <h3>4 · Law</h3>
-<p>Moving, so use Newton's 2nd law for turning, about each pivot:</p>
-$$I\,\ddot\theta = \textstyle\sum\tau .$$
-<details class="c"><summary>Newton's 2nd law for turning; what $I$ is</summary>
-<p>Just as net force gives acceleration ($F = ma$), net torque gives angular acceleration: $I\ddot\theta = \sum\tau$. $I$ (rotational inertia) measures how hard the object is to spin up. For a point mass $m$ at distance $L$ on a weightless rod, $I = mL^2$, because the mass moves $L$ times as fast as the angle changes.</p></details>
+<p class="why"><b>Why a different law from 1(a).</b> In 1(a) nothing moved, so the torques cancelled. Now the pendulums swing, so the torques don't cancel, and the leftover torque changes how fast each one turns. That is Newton's 2nd law in turning form, applied to each pendulum about its own pivot:</p>
+$$I\,\ddot\theta = \textstyle\sum\tau$$
+<p class="why"><b>Where $I = mL^2$ comes from.</b> The mass moves along an arc of length $s = L\theta$, so its acceleration along the arc is $L\ddot\theta$. Newton's 2nd law along the arc: (perpendicular force) $= m\,L\ddot\theta$. Multiply both sides by $L$ to turn force into torque: $\tau = mL^2\ddot\theta$. So for a point mass on a weightless rod, $I = mL^2$.</p>
 
 <h3>5 · Solve</h3>
-<table>
-<tr><th>Torque on pendulum 1</th><th>Size</th><th>Sign (+ = toward larger θ)</th></tr>
-<tr><td>gravity</td><td>$mgL\sin\theta_1\approx mgL\theta_1$</td><td>− (back to vertical)</td></tr>
-<tr><td>spring</td><td>force $ka(\theta_1-\theta_2)$ × lever arm $a\cos\theta_1\approx a$</td><td>− (pushes 1 to the left)</td></tr>
-<tr><td>pivot</td><td>0</td><td></td></tr>
-</table>
-<p>Pendulum 2 is the same, with the spring's sign flipped. Write $mL^2\ddot\theta_i =$ (sum), then divide by $mL^2$.</p>
+<p class="why">Find each torque on pendulum 1 the same way as in 1(a): perpendicular part of the force × distance from the pivot. Sign: + means toward larger θ.</p>
+<p class="why"><b>Gravity.</b> Same as 1(a): perpendicular part $mg\sin\theta_1$ at distance $L$, pulling back toward vertical (−), then small angles:</p>
+$$\tau_{g,1} = -mgL\sin\theta_1 \approx -mgL\,\theta_1$$
+<p class="why"><b>How much the spring is squeezed.</b> Each spring end sits a distance $a$ down its rod, so it moves sideways by $a\sin\theta_i\approx a\theta_i$ (same triangle as 1(a)). The spring's length changes by the difference of the two moves:</p>
+$$\Delta\ell = a\theta_1 - a\theta_2 = a(\theta_1-\theta_2)\qquad(\text{shorter when positive})$$
+<details class="c"><summary>Why the difference, and why only sideways</summary>
+<p>If both ends move right by the same amount, the spring just slides along and keeps its length. Only the difference changes its length. The ends also rise slightly, by about $a\theta^2/2$, but that is second order in a small angle and is dropped.</p></details>
+<p class="why"><b>Spring force</b>, from Hooke's law (force = $k$ × change in length, pushing to restore the natural length):</p>
+$$F_s = k\,a(\theta_1-\theta_2)$$
+<p class="why"><b>Spring torque.</b> $F_s$ is horizontal at distance $a$. As with $F$ in 1(a), its perpendicular part is $F_s\cos\theta\approx F_s$. A squeezed spring pushes pendulum 1 back (−) and pendulum 2 forward (+), equal and opposite:</p>
+$$\tau_{s,1} = -ka^2(\theta_1-\theta_2),\qquad \tau_{s,2} = +ka^2(\theta_1-\theta_2)$$
+<p class="why"><b>Assemble</b> $mL^2\ddot\theta_i = \tau_{g,i}+\tau_{s,i}$ for each pendulum. Then divide by $mL^2$ so each equation reads (angular acceleration) + (restoring terms) = 0.</p>
 
 <h3>6 · Check</h3>
 <div class="check">With $k=0$, each equation becomes the single pendulum $\ddot\theta = -(g/L)\theta$. The spring terms are equal and opposite (Newton's 3rd law). Units: $ka^2/(mL^2)$ has units (N/m)·m²/(kg·m²) = 1/s², the same as $g/L$.</div>
@@ -258,10 +289,11 @@ $$\boxed{\ddot\theta_1 + \frac{g}{L}\theta_1 + \frac{ka^2}{mL^2}(\theta_1-\theta
 </figure>
 
 <h3>4–5 · Test each guess in the equations</h3>
-<ul>
-<li>Put $\theta_1=\theta_2=\theta$ into both equations of 1(b). The spring term is multiplied by $\theta_1-\theta_2=0$. Both equations become the same one.</li>
-<li>Put $\theta_1=-\theta_2=\theta$. Now $\theta_1-\theta_2=2\theta$. Again both equations become the same one (check that the second matches the first).</li>
-</ul>
+<p class="why"><b>Why substitute.</b> In a mode both pendulums follow one and the same equation. Putting the guess into both equations of 1(b) tests that: the guess is a mode if both equations turn into the same one.</p>
+<p class="why"><b>Guess 1, $\theta_1=\theta_2=\theta$.</b> Then $\theta_1-\theta_2=0$, so the spring term vanishes from both equations, which become</p>
+$$\ddot\theta + \frac{g}{L}\,\theta = 0\qquad(\text{both}).$$
+<p class="why"><b>Guess 2, $\theta_1=\theta,\ \theta_2=-\theta$.</b> Then $\theta_1-\theta_2=2\theta$. The first equation becomes the line below. The second becomes the same line multiplied by −1, so it is the same equation:</p>
+$$\ddot\theta + \frac{g}{L}\,\theta + \frac{2ka^2}{mL^2}\,\theta = 0\qquad(\text{both}).$$
 <p>Equivalent algebra: add and subtract the two equations of 1(b) to get separate equations for $\theta_1+\theta_2$ and $\theta_1-\theta_2$.</p>
 
 <h3>6 · Check</h3>
@@ -277,9 +309,9 @@ $$\boxed{\ddot\theta_1 + \frac{g}{L}\theta_1 + \frac{ka^2}{mL^2}(\theta_1-\theta
 <p class="q">Calculate the frequencies of the normal modes of the system.</p>
 
 <h3>Law and solve</h3>
-<details class="c"><summary>Simple harmonic motion: reading off ω</summary>
-<p>Any equation $\ddot x = -C\,x$ with $C&gt;0$ has solutions $x = A\cos(\omega t+\phi)$ with $\omega^2 = C$. Check this by differentiating twice. So once each mode gives an equation of this form, its frequency is the square root of the constant.</p></details>
-<p>From 1(c), read the constant in front of θ for each mode and take the square root.</p>
+<p class="why"><b>Why ω is the square root of the constant.</b> Both mode equations have the form $\ddot\theta = -C\,\theta$. Try $\theta = A\cos(\omega t+\phi)$ and differentiate twice: $\ddot\theta = -\omega^2\theta$. This matches $\ddot\theta = -C\theta$ exactly when</p>
+$$\omega^2 = C .$$
+<p class="why">So read the constant multiplying θ in each mode equation from 1(c) and take its square root.</p>
 
 <h3>Check</h3>
 <div class="check">With $k\to0$ or $a\to0$, both frequencies become $\sqrt{g/L}$ (uncoupled pendulums). Mode 2 is faster, because the spring adds to the restoring torque only in mode 2.</div>
@@ -325,29 +357,34 @@ $$\boxed{\omega_1 = \sqrt{\frac{g}{L}},\qquad \omega_2 = \sqrt{\frac{g}{L}+\frac
 </svg>
 <figcaption>Each segment pulls bead $p$ toward its neighbour with tension $T$. Only the sideways parts matter.</figcaption>
 </figure>
-<details class="c"><summary>Sideways pull of a string segment: why $T\,(y_{p+1}-y_p)/l$</summary>
-<p>The segment to the right pulls with tension $T$ along itself. Its sideways part is $T\sin\phi$, where φ is the segment's tilt. For small tilts $\sin\phi\approx\tan\phi = (\text{rise})/(\text{run}) = (y_{p+1}-y_p)/l$. The left segment likewise gives $T(y_{p-1}-y_p)/l$.</p></details>
 
 <h3>4 · Law</h3>
-<p>Newton's 2nd law for bead $p$, sideways:</p>
-$$m\ddot y_p = \frac{T}{l}(y_{p+1}-y_p) + \frac{T}{l}(y_{p-1}-y_p)\ \Longrightarrow\ \ddot y_p = \omega_0^2\,(y_{p+1}+y_{p-1}-2y_p).$$
+<p class="why"><b>Sideways force from each segment.</b> Each segment pulls bead $p$ along itself with tension $T$. Only the sideways part moves the bead sideways. For a small tilt that part is $T$ × (slope), and the slope is rise over run:</p>
+$$\text{right segment: } T\,\frac{y_{p+1}-y_p}{l},\qquad \text{left segment: } T\,\frac{y_{p-1}-y_p}{l}.$$
+<details class="c"><summary>Why sideways part = T × slope</summary>
+<p>Sideways part $=T\sin\phi$, where φ is the segment's tilt. For small φ, $\sin\phi\approx\tan\phi$, and $\tan\phi$ is the slope, rise/run $=(y_{p+1}-y_p)/l$.</p></details>
+<p class="why"><b>Newton's 2nd law</b> for bead $p$, sideways: mass × acceleration = sum of these two forces:</p>
+$$m\ddot y_p = \frac{T}{l}(y_{p+1}-y_p) + \frac{T}{l}(y_{p-1}-y_p)$$
+<p class="why"><b>Divide by $m$</b> and name the constant $\omega_0^2 = T/(ml)$ (units 1/s², a frequency squared):</p>
+$$\ddot y_p = \omega_0^2\,(y_{p+1}+y_{p-1}-2y_p).$$
 <p>This is the same equation as the undriven chain. Only the ends differ.</p>
 
 <h3>5 · Solve</h3>
-<details class="c"><summary>Steady state: why $y_p = A_p\cos\omega t$</summary>
-<p>After start-up effects die away (any slight damping kills them), a driven system moves at the <i>driving</i> frequency. So every bead follows $A_p\cos\omega t$ with its own amplitude $A_p$, and $\ddot y_p = -\omega^2 A_p\cos\omega t$.</p></details>
-<ol>
-<li>Substitute and cancel $\cos\omega t$: &nbsp;$-\omega^2A_p = \omega_0^2(A_{p+1}+A_{p-1}-2A_p)$.</li>
-<li>Try $A_p = C\sin\alpha p$ and use the identity below on $A_{p+1}+A_{p-1}$. Cancel $C\sin\alpha p$ to get a relation between ω and α.</li>
-<li>Apply the boundary conditions to find $C$.</li>
-</ol>
-<details class="c"><summary>Identities used, and why</summary>
-$$\sin(x+y)+\sin(x-y)=2\sin x\cos y\qquad 1-\cos\alpha = 2\sin^2(\alpha/2)$$
-<p>The first turns $\sin\alpha(p+1)+\sin\alpha(p-1)$ into $2\sin\alpha p\cos\alpha$, so every term is proportional to $\sin\alpha p$ and the trial form works for every $p$. The second puts the result in a clean form.</p></details>
+<p class="why"><b>Steady state.</b> A driven system, once start-up effects die away, moves at the <i>driving</i> frequency. So every bead follows</p>
+$$y_p = A_p\cos\omega t \quad\Rightarrow\quad \ddot y_p = -\omega^2 A_p\cos\omega t .$$
+<p class="why"><b>Substitute into the law</b> and cancel the common $\cos\omega t$. This leaves an equation linking neighbouring amplitudes:</p>
+$$-\omega^2A_p = \omega_0^2\,(A_{p+1}+A_{p-1}-2A_p).$$
+<p class="why"><b>Why try $A_p = C\sin\alpha p$.</b> The hint suggests it. A sine shape along the chain is natural for a wave, and $\sin 0 = 0$ already satisfies the fixed left end. To test it, use the identity $\sin(x+y)+\sin(x-y)=2\sin x\cos y$:</p>
+$$A_{p+1}+A_{p-1} = C\sin\alpha(p+1)+C\sin\alpha(p-1) = 2C\sin\alpha p\,\cos\alpha .$$
+<p class="why"><b>Put it in.</b> Every term now contains $C\sin\alpha p$. Cancel it, and what is left must hold for every $p$ at once. That fixes α in terms of ω:</p>
+$$-\omega^2 = \omega_0^2(2\cos\alpha-2)\quad\Rightarrow\quad \omega^2 = 2\omega_0^2(1-\cos\alpha) = 4\omega_0^2\sin^2\tfrac{\alpha}{2}.$$
+<p class="why">The last step uses $1-\cos\alpha = 2\sin^2(\alpha/2)$. Take the square root and solve for α.</p>
 <details class="c"><summary>Why ω &lt; 2ω₀ matters</summary>
-<p>The relation will read $\sin(\alpha/2) = \omega/(2\omega_0)$. A sine is at most 1, so a real α exists only if $\omega\le 2\omega_0$. Above that, α is complex and the motion dies off along the chain (the problem's note).</p></details>
+<p>$\sin(\alpha/2) = \omega/(2\omega_0)$, and a sine is at most 1, so a real α exists only if $\omega\le 2\omega_0$. Above that, α is complex and the motion dies off along the chain (the problem's note).</p></details>
+<p class="why"><b>Boundary conditions fix $C$.</b> Left end: $A_0 = C\sin 0 = 0$, as required. Right end: bead $N+1$ is the driver, so its amplitude must be $h$:</p>
+$$C\sin\alpha(N+1) = h \qquad\text{solve for } C,\ \text{then write } A_p.$$
 <details class="c"><summary>Resonance</summary>
-<p>If $\sin\alpha(N+1)=0$, the amplitude formula blows up. That happens when $\alpha = n\pi/(N+1)$, which are exactly the undriven chain's normal-mode frequencies. Driving at a natural frequency gives resonance.</p></details>
+<p>If $\sin\alpha(N+1)=0$, $C$ blows up. That happens when $\alpha = n\pi/(N+1)$, which are exactly the undriven chain's normal-mode frequencies. Driving at a natural frequency gives resonance.</p></details>
 
 <h3>6 · Check</h3>
 <div class="check">At $p=N+1$ the formula gives $A_{N+1}=h$, and at $p=0$ it gives 0. With $N=1$, a single bead: $\alpha$ from $\sin(\alpha/2)=\omega/2\omega_0$ gives $A_1 = h\sin\alpha/\sin2\alpha = h/(2\cos\alpha)$. Use $\cos\alpha = 1-\omega^2/(2\omega_0^2)$ to compare with a direct solution of $-\omega^2A_1=\omega_0^2(h-2A_1)$.</div>
