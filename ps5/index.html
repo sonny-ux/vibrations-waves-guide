@@ -7,27 +7,31 @@
 <script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
 <style>
+/* Layout: one reading column; each problem part runs the same six-step method, concept boxes open in place, write-up last. */
 :root{--bg:#fbfaf7;--fg:#1d1d1f;--muted:#6b6b70;--line:#1d1d1f;--accent:#c2410c;--accent2:#1d4ed8;--accent3:#15803d;--box:#f0ede6;--rule:#d9d5cc}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#161618;--fg:#ececee;--muted:#9a9aa2;--line:#ececee;--accent:#fb923c;--accent2:#60a5fa;--accent3:#4ade80;--box:#232327;--rule:#38383d;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#161618;--fg:#ececee;--muted:#9a9aa2;--line:#ececee;--accent:#fb923c;--accent2:#60a5fa;--accent3:#4ade80;--box:#232327;--rule:#38383d;color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;margin:0}
 main{max-width:720px;margin:0 auto;padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden}
-table{display:block;overflow-x:auto}
-h1{font-size:1.5rem;margin:0 0 4px}
+h1{font-size:1.5rem;margin:0 0 4px;text-wrap:balance}
 .sub{color:var(--muted);margin:0 0 16px}
-nav{background:var(--box);border-radius:6px;padding:10px 14px;margin-bottom:8px}
-nav a{color:var(--accent2);margin-right:14px;white-space:nowrap}
-h2{font-size:1.25rem;margin:40px 0 6px;border-top:2px solid var(--rule);padding-top:20px}
-h3{font-size:1.05rem;margin:22px 0 6px;color:var(--accent)}
-.def{background:var(--box);border-left:3px solid var(--accent2);padding:8px 14px;margin:10px 0;border-radius:4px}
-.def b:first-child{color:var(--accent2)}
-table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+nav{background:var(--box);border-radius:6px;padding:10px 14px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px 16px}
+nav a{color:var(--accent2)}
+h2{font-size:1.3rem;margin:44px 0 4px;border-top:2px solid var(--rule);padding-top:20px;text-wrap:balance}
+.q{font-style:italic;color:var(--muted);margin:0 0 8px}
+h3{font-size:1rem;margin:22px 0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem;display:block;overflow-x:auto}
 th,td{border:1px solid var(--rule);padding:7px;text-align:left;vertical-align:top}
 th{background:var(--box)}
 ol li,ul li{margin:4px 0}
+details.c{background:var(--box);border-left:3px solid var(--accent2);border-radius:4px;margin:8px 0;padding:0 14px}
+details.c>summary{cursor:pointer;color:var(--accent2);font-weight:600;padding:8px 0;font-size:.95rem}
+details.c[open]{padding-bottom:8px}
+details.w{border:2px solid var(--accent3);border-radius:6px;margin:18px 0 6px;padding:0 16px}
+details.w>summary{cursor:pointer;color:var(--accent3);font-weight:700;padding:10px 0}
+details.w[open]{padding-bottom:10px}
 .check{border:1px dashed var(--accent3);border-radius:6px;padding:6px 14px;margin:12px 0}
-.check b:first-child{color:var(--accent3)}
 figure{margin:14px 0;text-align:center}
 figure > svg{width:100%;max-width:420px;height:auto}
 figcaption{color:var(--muted);font-size:.9rem}
@@ -35,173 +39,329 @@ figure > svg text{fill:var(--fg);font:15px -apple-system,Helvetica,Arial,sans-se
 figure > svg .ln{stroke:var(--line);stroke-width:2.5;fill:none}
 figure > svg .thin{stroke:var(--muted);stroke-width:1.5;fill:none}
 figure > svg .dash{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4;fill:none}
-figure > svg .sp{stroke:var(--accent);stroke-width:2;fill:none}
+figure > svg .f{stroke:var(--accent);stroke-width:3;fill:none}
+figure > svg .g{stroke:var(--accent2);stroke-width:3;fill:none}
+figure > svg .h{stroke:var(--accent3);stroke-width:3;fill:none}
 figure > svg .dot{fill:var(--line)}
-figure > svg .tf{fill:var(--accent)}
+figure > svg .tf{fill:var(--accent)} figure > svg .tg{fill:var(--accent2)} figure > svg .th{fill:var(--accent3)}
+summary:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 </style>
 </head>
 <body>
 <main>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker>
+<marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent2)"/></marker>
+<marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent3)"/></marker>
+</defs></svg>
+
 <h1>Problem Set 5 guide</h1>
-<p class="sub">PHYS 2601 · French 5-8 and 5-16 · due 10/27, submitting Wed 10/28. Claude-written reference: tools for each question, not the solutions.</p>
+<p class="sub">PHYS 2601 · French 5-8 and 5-16 · submitting Wed 10/28. Claude-written. Each part runs the same method. Blue boxes open a concept: what it is and why it is needed here. The green box at the end of each part is a concise write-up. Try the part first, then open it to check.</p>
+<p class="sub"><b>Course policy</b> (from the syllabus notes): AI is allowed as a tutor, but you must be able to reproduce the reasoning yourself. Write it in your own words.</p>
 <nav><a href="#method">Method</a><a href="#p1a">1(a)</a><a href="#p1b">1(b)</a><a href="#p1c">1(c)</a><a href="#p1d">1(d)</a><a href="#p2">2</a></nav>
 
-<h2 id="method">The method, every question</h2>
+<h2 id="method">The method</h2>
 <ol>
-<li><b>Model:</b> what is the system, what is fixed, what is simplified (rigid weightless rods, point masses, small angles).</li>
-<li><b>Name</b> every quantity, and say where it comes from.</li>
+<li><b>Model:</b> the system, what is fixed, what is simplified.</li>
+<li><b>Name:</b> every quantity, with where it comes from.</li>
 <li><b>Force map:</b> every outside force, where it acts, which way.</li>
-<li><b>Choose the law</b> (balance for rest, Newton's 2nd law for motion).</li>
-<li><b>Write, approximate, solve.</b></li>
-<li><b>Check</b> units and simple limits.</li>
+<li><b>Law:</b> balance (at rest) or Newton's 2nd law (moving), for forces or torques.</li>
+<li><b>Solve:</b> write, approximate, solve.</li>
+<li><b>Check:</b> units and simple limits.</li>
 </ol>
-<p>The PDF asks for written comments with the math. One sentence per step above is enough.</p>
 
-<!-- ============ 1(a) ============ -->
+<!-- ================= 1(a) ================= -->
 <h2 id="p1a">Problem 1(a) · pendulum held at an angle</h2>
-<p><i>Find the equilibrium angle θ (≪ 1 rad) when F pushes at A. Then find the force F′ at m that gives the same angle.</i></p>
+<p class="q">A force F is applied at point A of a pendulum. At what angle θ (≪ 1 rad) is the new equilibrium? What force F′, applied at m, would produce the same result?</p>
 
-<div class="def"><b>Torque.</b> How strongly a force twists an object about a pivot:
-$$\tau = (\text{force})\times(\text{lever arm}).$$
-The lever arm is the perpendicular distance from the pivot to the line the force acts along. Far from the pivot and across the rod means a big twist. Aimed at the pivot means no twist.</div>
-<div class="def"><b>Equilibrium.</b> At rest and staying at rest: the twists cancel,
-$$\textstyle\sum \tau = 0 \text{ about the pivot.}$$
-The pivot's own force acts at the pivot, so it has no lever arm and drops out.</div>
-<div class="def"><b>Small angles.</b> For θ ≪ 1 rad: $\sin\theta\approx\theta$ and $\cos\theta\approx 1$.</div>
+<h3>1 · Model</h3>
+<ul>
+<li>System: rod + mass, one rigid object that can only <b>turn about the pivot</b>.</li>
+<li>Rod rigid and weightless; mass is a point at the end.</li>
+<li>"Equilibrium": at rest at angle θ and staying there.</li>
+</ul>
+<details class="c"><summary>Choosing the system: why rod + mass together?</summary>
+<p>Forces between parts of the system (the rod pulling the mass) are internal: they cancel in pairs and never appear. Taking rod + mass together leaves only outside forces. If you took the mass alone, $F$ would not even act on it (it pushes the rod), and the rod's unknown pull would enter instead.</p></details>
 
-<h3>What each piece is made of here</h3>
+<h3>2 · Name</h3>
 <table>
-<tr><th>Force</th><th>Acts at</th><th>Lever arm</th><th>Twist</th><th>Small-angle</th></tr>
-<tr><td>$F$ (horizontal)</td><td>A, distance $a$ down the rod</td><td>vertical drop of A: $a\cos\theta$</td><td>toward larger θ</td><td>$Fa$</td></tr>
-<tr><td>$mg$ (down)</td><td>the mass, distance $L$ down the rod</td><td>sideways offset of the mass: $L\sin\theta$</td><td>back toward vertical</td><td>$mgL\theta$</td></tr>
-<tr><td>Pivot force $P$</td><td>the pivot</td><td>0</td><td>none</td><td>0</td></tr>
-<tr><td>$F'$ (horizontal)</td><td>the mass</td><td>vertical drop of the mass: $L\cos\theta$</td><td>toward larger θ</td><td>$F'L$</td></tr>
+<tr><th>Symbol</th><th>Meaning</th><th>From</th></tr>
+<tr><td>$L$</td><td>pivot to mass</td><td>figure</td></tr>
+<tr><td>$a$</td><td>pivot to A</td><td>figure</td></tr>
+<tr><td>$m,\ g$</td><td>mass; gravity, giving weight $mg$</td><td>figure; standard</td></tr>
+<tr><td>$F$</td><td>applied force at A, horizontal</td><td>problem, figure</td></tr>
+<tr><td>$\theta$</td><td>rod's angle from vertical, $\theta\ll1$</td><td>figure, problem</td></tr>
+<tr><td>$F'$</td><td>horizontal force at the mass</td><td>problem</td></tr>
+<tr><td>$P$</td><td>force from the pivot, unknown</td><td>defined by us</td></tr>
 </table>
-<p>Where the lever arms come from: point A is $a\cos\theta$ below the pivot and $a\sin\theta$ to the side. The mass is $L\cos\theta$ below and $L\sin\theta$ to the side. (Right triangle with the rod as the hypotenuse.) A horizontal force's lever arm is the vertical distance. A vertical force's lever arm is the sideways distance.</p>
 
-<h3>Steps</h3>
-<ol>
-<li>Twist from $F$ = twist from $mg$. Write it with the small-angle forms and solve for θ.</li>
-<li>Twist from $F'$ = twist from $F$ (same angle, so gravity's twist is unchanged). Solve for $F'$.</li>
-</ol>
-<div class="check"><b>Check.</b> θ should grow with $F$ and $a$ and shrink with $m$ and $L$. Is $F'$ bigger or smaller than $F$? It should be smaller, because $F'$ pushes with a longer lever arm.</div>
-
-<!-- ============ 1(b) ============ -->
-<h2 id="p1b">Problem 1(b) · equations of motion, two coupled pendulums</h2>
-<p><i>Two identical pendulums (mass $m$, rod $L$) joined by a spring $k$ at distance $a$ below each pivot. The spring is unstretched when both rods hang vertically. Write the equations for θ₁ and θ₂.</i></p>
+<h3>3 · Force map</h3>
 <figure>
-<svg viewBox="0 0 380 260" role="img" aria-label="Two pendulums; spring attached at distance a; attachment points move sideways by a theta 1 and a theta 2">
+<svg viewBox="0 0 380 320" role="img" aria-label="Force map: pivot force P at the top, F horizontal at A, mg down at the mass">
+  <line x1="80" y1="30" x2="160" y2="30" class="thin"/>
+  <circle cx="120" cy="30" r="6" class="dot"/>
+  <line x1="120" y1="30" x2="84" y2="6" class="h" marker-end="url(#ag)"/><text x="4" y="56" class="th">P (unknown)</text>
+  <line x1="120" y1="30" x2="120" y2="260" class="dash"/>
+  <path d="M120,75 A45,45 0 0 0 139,70.8" class="thin"/><text x="122" y="96">θ</text>
+  <line x1="120" y1="30" x2="204.5" y2="211.3" class="ln"/>
+  <circle cx="166.5" cy="129.7" r="4" class="dot"/><text x="140" y="134">A</text>
+  <text x="152" y="80">a</text><text x="196" y="170">L</text>
+  <line x1="166.5" y1="129.7" x2="270" y2="129.7" class="f" marker-end="url(#ao)"/><text x="276" y="134" class="tf">F</text>
+  <circle cx="204.5" cy="211.3" r="9" class="dot"/><text x="172" y="222">m</text>
+  <line x1="204.5" y1="211.3" x2="204.5" y2="300" class="g" marker-end="url(#ab)"/><text x="214" y="298" class="tg">mg</text>
+</svg>
+<figcaption>Three outside forces, each drawn where it acts.</figcaption>
+</figure>
+<details class="c"><summary>Extended-body force map: why forces are drawn where they act</summary>
+<p>For an object that can turn, where a force acts decides how much it twists the object. So draw the outline of the object and attach each arrow at its real point, not all at one dot.</p></details>
+
+<h3>4 · Law</h3>
+<p>At rest, so the twists about the pivot cancel: $\sum\tau = 0$. Take torques <b>about the pivot</b> so the unknown $P$ drops out.</p>
+<details class="c"><summary>Torque: what it is and why it's here</summary>
+<p><b>Torque</b> is the twisting strength of a force about a pivot:</p>
+$$\tau = (\text{force})\times(\text{lever arm}).$$
+<p>The <b>lever arm</b> is the perpendicular distance from the pivot to the line the force acts along. It is needed here because the rod can only turn, so the question is whether the twists balance. $P$ acts at the pivot, so its lever arm is 0 and it has no twist.</p></details>
+<details class="c"><summary>Lever arms from the figure</summary>
+<p>With the rod as the hypotenuse, a point a distance $r$ down the rod is $r\cos\theta$ below the pivot and $r\sin\theta$ to the side. A horizontal force's lever arm is the vertical drop; a vertical force's lever arm is the sideways offset.</p>
+<table><tr><th>Force</th><th>Lever arm</th><th>Twists toward</th></tr>
+<tr><td>$F$ at A</td><td>$a\cos\theta$</td><td>larger θ</td></tr>
+<tr><td>$mg$ at mass</td><td>$L\sin\theta$</td><td>vertical</td></tr>
+<tr><td>$F'$ at mass</td><td>$L\cos\theta$</td><td>larger θ</td></tr></table></details>
+
+<h3>5 · Solve</h3>
+$$F\,a\cos\theta = mg\,L\sin\theta$$
+<details class="c"><summary>Small angles: why $\sin\theta\approx\theta,\ \cos\theta\approx1$</summary>
+<p>For $\theta\ll1$ rad, the Taylor series $\sin\theta=\theta-\theta^3/6+\dots$ and $\cos\theta=1-\theta^2/2+\dots$ are dominated by their first terms. The problem says $\theta\ll1$, so we keep only those.</p></details>
+<p>Simplify, then solve for θ. For $F'$: same angle, so gravity's twist is unchanged, and $F'$ must supply the twist $F$ did.</p>
+
+<h3>6 · Check</h3>
+<div class="check">θ grows with $F$ and $a$, shrinks with $m$ and $L$. $F' &lt; F$ (since $a&lt;L$): pushing farther from the pivot takes less force. Units: $Fa/(mgL)$ is N·m / N·m, a pure number, as an angle in radians must be.</div>
+
+<details class="w"><summary>Write-up 1(a)</summary>
+<p>Take rod + mass as the system. The outside forces are $F$ at A, $mg$ at the mass, and the pivot force. Torques about the pivot remove the pivot force. At equilibrium the torque of $F$ (lever arm $a\cos\theta$) balances that of gravity (lever arm $L\sin\theta$):</p>
+$$Fa\cos\theta = mgL\sin\theta.$$
+<p>For $\theta\ll1$, $\cos\theta\approx1$ and $\sin\theta\approx\theta$:</p>
+$$\boxed{\theta = \frac{Fa}{mgL}}$$
+<p>A horizontal $F'$ at the mass has lever arm $L\cos\theta$. Producing the same θ requires the same torque as $F$:</p>
+$$F'L\cos\theta = Fa\cos\theta\ \Rightarrow\ \boxed{F' = \frac{a}{L}F}$$
+<p>(This one holds exactly, not just for small θ.)</p>
+</details>
+
+<!-- ================= 1(b) ================= -->
+<h2 id="p1b">Problem 1(b) · equations of motion</h2>
+<p class="q">Two identical pendulums (equal masses, rigid weightless rods) coupled by a light spring, unstretched when both rods are vertical. Write the differential equations for small-amplitude oscillations in terms of θ₁ and θ₂. Neglect damping.</p>
+
+<h3>1 · Model</h3>
+<ul>
+<li>Two systems: pendulum 1 and pendulum 2, each rod + mass turning about its own pivot.</li>
+<li>The spring is outside each pendulum, so it is an outside force on both: it pushes or pulls each at its attachment point, distance $a$ down the rod.</li>
+<li>Now they move, so torques do not cancel. The net torque produces angular acceleration.</li>
+<li>Small amplitude: θ₁, θ₂ ≪ 1.</li>
+</ul>
+
+<h3>2 · Name</h3>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>From</th></tr>
+<tr><td>$m,\ L$</td><td>each mass; each rod length</td><td>figure (identical)</td></tr>
+<tr><td>$a$</td><td>pivot to spring attachment</td><td>figure</td></tr>
+<tr><td>$k$</td><td>spring constant</td><td>figure</td></tr>
+<tr><td>$\theta_1,\theta_2$</td><td>angles from vertical, positive to the right</td><td>figure</td></tr>
+<tr><td>$\ddot\theta$</td><td>angular acceleration (second time derivative of θ)</td><td>notation</td></tr>
+</table>
+<figure>
+<svg viewBox="0 0 380 260" role="img" aria-label="Two pendulums; spring at depth a; attachment points shifted by a theta 1 and a theta 2">
   <line x1="40" y1="20" x2="340" y2="20" class="thin"/>
   <circle cx="100" cy="20" r="5" class="dot"/><circle cx="280" cy="20" r="5" class="dot"/>
   <line x1="100" y1="20" x2="100" y2="230" class="dash"/><line x1="280" y1="20" x2="280" y2="230" class="dash"/>
   <line x1="100" y1="20" x2="168" y2="216" class="ln"/><circle cx="168" cy="216" r="9" class="dot"/>
   <line x1="280" y1="20" x2="313" y2="221" class="ln"/><circle cx="313" cy="221" r="9" class="dot"/>
   <circle cx="126" cy="95" r="4" class="dot"/><circle cx="292" cy="95" r="4" class="dot"/>
-  <polyline points="126,95 150,95 160,85 172,105 184,85 196,105 208,85 220,105 232,85 244,105 256,95 292,95" class="sp"/>
+  <polyline points="126,95 150,95 160,85 172,105 184,85 196,105 208,85 220,105 232,85 244,105 256,95 292,95" class="f" style="stroke-width:2"/>
   <text x="196" y="78" class="tf">k</text>
   <line x1="100" y1="118" x2="126" y2="118" class="thin"/><text x="92" y="138">aθ₁</text>
   <line x1="280" y1="118" x2="292" y2="118" class="thin"/><text x="290" y="138">aθ₂</text>
-  <text x="78" y="62">a</text>
-  <text x="150" y="246">θ₁</text><text x="300" y="250">θ₂</text>
+  <text x="80" y="62">a</text><text x="150" y="246">θ₁</text><text x="300" y="250">θ₂</text>
 </svg>
-<figcaption>Angles measured from vertical, positive to the right. The spring's ends move sideways by about $a\theta_1$ and $a\theta_2$.</figcaption>
+<figcaption>The spring's ends shift sideways by about $a\theta_1$ and $a\theta_2$. Drawn with θ₁ &gt; θ₂, so the spring is shorter than its natural length.</figcaption>
 </figure>
 
-<div class="def"><b>Newton's 2nd law for turning.</b> Net twist produces angular acceleration:
-$$I\,\ddot\theta = \textstyle\sum\tau.$$
-Here $I$ is the rotational inertia, how hard the object is to spin up. For a point mass $m$ on a weightless rod of length $L$, $I = mL^2$.</div>
-<div class="def"><b>Spring (Hooke's law).</b> Force = $k$ × (change in length). It points so as to restore the natural length: a compressed spring pushes its ends apart, a stretched spring pulls them together.</div>
-<div class="def"><b>Sign convention.</b> Twist toward larger θ (to the right) is positive.</div>
-
-<h3>What each piece is made of here</h3>
-<table>
-<tr><th>Quantity</th><th>Made of</th></tr>
-<tr><td>Rotational inertia of each pendulum</td><td>$mL^2$ (all the mass at distance $L$)</td></tr>
-<tr><td>Gravity's twist on pendulum $i$</td><td>from 1(a): size $mgL\theta_i$, pointing back toward vertical, so $-mgL\theta_i$</td></tr>
-<tr><td>Sideways shift of spring end $i$</td><td>$a\sin\theta_i\approx a\theta_i$</td></tr>
-<tr><td>Change in spring length</td><td>difference of the two shifts: $a\theta_1 - a\theta_2$. If positive, the left end moved right more than the right end did, so the spring is <b>compressed</b>.</td></tr>
-<tr><td>Spring force</td><td>$k\,a(\theta_1-\theta_2)$, horizontal</td></tr>
-<tr><td>Lever arm of the spring force</td><td>vertical drop of the attachment point: $a\cos\theta\approx a$</td></tr>
-<tr><td>Spring's twist</td><td>force × lever arm $= k a^2(\theta_1-\theta_2)$. Sign: if compressed, it pushes pendulum 1 to the left (−) and pendulum 2 to the right (+).</td></tr>
-</table>
-
-<h3>Template</h3>
-$$mL^2\,\ddot\theta_1 = (\text{gravity twist on }1) + (\text{spring twist on }1)$$
-$$mL^2\,\ddot\theta_2 = (\text{gravity twist on }2) + (\text{spring twist on }2)$$
-<p>Fill in from the table, then divide through by $mL^2$.</p>
-<div class="check"><b>Check.</b> Set $k=0$. Each equation should become the plain pendulum, $\ddot\theta = -(g/L)\theta$. Also, the spring terms in the two equations should be equal and opposite (Newton's 3rd law).</div>
-
-<!-- ============ 1(c) ============ -->
-<h2 id="p1c">Problem 1(c) · describe the normal modes</h2>
-<div class="def"><b>Normal mode.</b> A motion where every part oscillates at the <i>same single frequency</i>, all in step: they reach their extremes together and pass through vertical together. Two coupled objects have two normal modes. Any motion of the system is a mix of them.</div>
-<div class="def"><b>Symmetry shortcut</b> (the problem's hint). The two pendulums are identical, so guess the two simplest patterns:
-<ul><li>$\theta_1 = \theta_2$: they swing together, side by side.</li>
-<li>$\theta_1 = -\theta_2$: mirror images, swinging toward and away from each other.</li></ul></div>
-
-<h3>Steps</h3>
-<ol>
-<li>Put $\theta_1=\theta_2$ into both equations from 1(b). Do both reduce to the same single equation? What happens to the spring term, and why physically (is the spring ever stretched)?</li>
-<li>Put $\theta_1=-\theta_2$ into both. Same questions: is the spring stretched now, and does it add to gravity's restoring twist?</li>
-<li>Describe each mode in words: how the pendulums move relative to each other, and what the spring does.</li>
-</ol>
-<p><b>Equivalent algebra:</b> add the two equations to get one for $q_+ = \theta_1+\theta_2$, and subtract them to get one for $q_- = \theta_1-\theta_2$. Each is a single pendulum-type equation.</p>
-
-<!-- ============ 1(d) ============ -->
-<h2 id="p1d">Problem 1(d) · frequencies of the normal modes</h2>
-<div class="def"><b>Simple harmonic motion.</b> Any equation of the form
-$$\ddot x = -(\text{positive constant})\cdot x$$
-describes oscillation at angular frequency ω, with $\omega^2 = \text{that constant}$. Example: the single pendulum, $\ddot\theta = -(g/L)\,\theta$, so $\omega = \sqrt{g/L}$.</div>
-<h3>Steps</h3>
-<ol>
-<li>Each mode in 1(c) gives an equation of this form. Read off ω² for each.</li>
-<li>Which mode is faster, and why? (Hint: in which one does the spring add to gravity's pull back to vertical?)</li>
-</ol>
-<div class="check"><b>Check.</b> With $k\to 0$ or $a\to 0$ (no coupling), both frequencies should become $\sqrt{g/L}$. Units: $ka^2/(mL^2)$ must be 1/s², the same as $g/L$.</div>
-
-<!-- ============ 2 ============ -->
-<h2 id="p2">Problem 2 · N coupled oscillators, driven at one end</h2>
-<p><i>French 5-16: driven at ω &lt; 2ω₀ with $y_0 = 0$ and $y_{N+1} = h\cos\omega t$. Find the amplitudes.</i></p>
+<h3>3 · Force map (pendulum 1)</h3>
 <figure>
-<svg viewBox="0 0 380 170" role="img" aria-label="String of N beads between a fixed wall at p equals 0 and a driven end at p equals N plus 1">
-  <line x1="20" y1="30" x2="20" y2="140" class="ln"/><text x="6" y="160">p = 0 (fixed)</text>
-  <polyline points="20,90 75,70 130,60 185,64 240,80 295,62 350,40" class="thin"/>
-  <circle cx="75" cy="70" r="6" class="dot"/><circle cx="130" cy="60" r="6" class="dot"/><circle cx="185" cy="64" r="6" class="dot"/><circle cx="240" cy="80" r="6" class="dot"/><circle cx="295" cy="62" r="6" class="dot"/>
-  <line x1="350" y1="20" x2="350" y2="140" class="dash"/><circle cx="350" cy="40" r="5" class="dot"/>
-  <text x="240" y="160">p = N+1 (driven)</text>
-  <line x1="185" y1="90" x2="185" y2="64" class="thin"/><text x="190" y="104">y_p</text>
-  <line x1="185" y1="118" x2="240" y2="118" class="thin"/><text x="204" y="134">l</text>
-  <text x="66" y="54">1</text><text x="122" y="44">2</text><text x="236" y="62">p</text>
+<svg viewBox="0 0 380 300" role="img" aria-label="Pendulum 1 force map: pivot force, spring force pointing left at the attachment, gravity at the mass">
+  <circle cx="120" cy="30" r="6" class="dot"/>
+  <line x1="120" y1="30" x2="96" y2="8" class="h" marker-end="url(#ag)"/><text x="40" y="20" class="th">P₁</text>
+  <line x1="120" y1="30" x2="120" y2="270" class="dash"/>
+  <line x1="120" y1="30" x2="195.2" y2="236.8" class="ln"/>
+  <circle cx="147.4" cy="105.2" r="4" class="dot"/>
+  <line x1="147.4" y1="105.2" x2="82" y2="105.2" class="f" marker-end="url(#ao)"/><text x="160" y="100" class="tf">spring: k·a(θ₁−θ₂)</text>
+  <circle cx="195.2" cy="236.8" r="9" class="dot"/>
+  <line x1="195.2" y1="236.8" x2="195.2" y2="292" class="g" marker-end="url(#ab)"/><text x="206" y="290" class="tg">mg</text>
+  <text x="140" y="74">a</text><text x="184" y="176">L</text>
 </svg>
-<figcaption>Beads of mass $m$, spaced $l$ apart on a string with tension $T$. $y_p$ is bead $p$'s sideways displacement.</figcaption>
+<figcaption>With θ₁ &gt; θ₂ the spring is compressed and pushes pendulum 1 back to the left. Pendulum 2 gets the equal and opposite push, to the right.</figcaption>
+</figure>
+<details class="c"><summary>Hooke's law: the spring force, and why it is $k a(\theta_1-\theta_2)$</summary>
+<p>A spring pushes or pulls with force $k\times$(change in length), always toward restoring its natural length. Here each end moves sideways by $a\sin\theta_i\approx a\theta_i$. The vertical shifts are of order $a\theta^2$, too small to matter. The length changes by the <i>difference</i> of the two shifts: $a\theta_1-a\theta_2$. If θ₁ = θ₂ the ends move together and the spring does nothing.</p></details>
+
+<h3>4 · Law</h3>
+<p>Moving, so use Newton's 2nd law for turning, about each pivot:</p>
+$$I\,\ddot\theta = \textstyle\sum\tau .$$
+<details class="c"><summary>Newton's 2nd law for turning; what $I$ is</summary>
+<p>Just as net force gives acceleration ($F = ma$), net torque gives angular acceleration: $I\ddot\theta = \sum\tau$. $I$ (rotational inertia) measures how hard the object is to spin up. For a point mass $m$ at distance $L$ on a weightless rod, $I = mL^2$, because the mass moves $L$ times as fast as the angle changes.</p></details>
+
+<h3>5 · Solve</h3>
+<table>
+<tr><th>Torque on pendulum 1</th><th>Size</th><th>Sign (+ = toward larger θ)</th></tr>
+<tr><td>gravity</td><td>$mgL\sin\theta_1\approx mgL\theta_1$</td><td>− (back to vertical)</td></tr>
+<tr><td>spring</td><td>force $ka(\theta_1-\theta_2)$ × lever arm $a\cos\theta_1\approx a$</td><td>− (pushes 1 to the left)</td></tr>
+<tr><td>pivot</td><td>0</td><td></td></tr>
+</table>
+<p>Pendulum 2 is the same, with the spring's sign flipped. Write $mL^2\ddot\theta_i =$ (sum), then divide by $mL^2$.</p>
+
+<h3>6 · Check</h3>
+<div class="check">With $k=0$, each equation becomes the single pendulum $\ddot\theta = -(g/L)\theta$. The spring terms are equal and opposite (Newton's 3rd law). Units: $ka^2/(mL^2)$ has units (N/m)·m²/(kg·m²) = 1/s², the same as $g/L$.</div>
+
+<details class="w"><summary>Write-up 1(b)</summary>
+<p>Apply $I\ddot\theta=\sum\tau$ about each pivot, with $I=mL^2$. For small angles the spring's ends shift by $a\theta_1$ and $a\theta_2$, so it is compressed by $a(\theta_1-\theta_2)$. It exerts a horizontal force $ka(\theta_1-\theta_2)$ with lever arm $\approx a$, pushing pendulum 1 back and pendulum 2 forward. Gravity gives restoring torque $-mgL\theta_i$:</p>
+$$mL^2\ddot\theta_1 = -mgL\,\theta_1 - ka^2(\theta_1-\theta_2)$$
+$$mL^2\ddot\theta_2 = -mgL\,\theta_2 + ka^2(\theta_1-\theta_2)$$
+<p>Dividing by $mL^2$:</p>
+$$\boxed{\ddot\theta_1 + \frac{g}{L}\theta_1 + \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0,\qquad \ddot\theta_2 + \frac{g}{L}\theta_2 - \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0}$$
+</details>
+
+<!-- ================= 1(c) ================= -->
+<h2 id="p1c">Problem 1(c) · the normal modes</h2>
+<p class="q">Describe the motion of the pendulums in each of the normal modes.</p>
+
+<h3>1 · Model</h3>
+<p>Same system and equations as 1(b). The question: which motions keep a single frequency?</p>
+<details class="c"><summary>Normal mode: what it is and why it's here</summary>
+<p>A <b>normal mode</b> is a motion in which every part oscillates at the <i>same</i> frequency, in step. All parts pass through equilibrium together and reach their extremes together. Two coupled pendulums have two such modes, and any motion is a combination of them. The problem asks for these two special motions.</p></details>
+<details class="c"><summary>Symmetry: why guess θ₁ = θ₂ and θ₁ = −θ₂</summary>
+<p>The two pendulums are identical, so swapping them changes nothing. The motions that respect that symmetry are "the same" ($\theta_1=\theta_2$) and "mirror images" ($\theta_1=-\theta_2$). The hint says to use this, then confirm in the equations.</p></details>
+
+<h3>2–3 · Name, picture</h3>
+<figure>
+<svg viewBox="0 0 380 210" role="img" aria-label="Mode 1: both pendulums tilted the same way, spring unchanged. Mode 2: mirror images, spring compressed.">
+  <line x1="20" y1="20" x2="170" y2="20" class="thin"/><line x1="210" y1="20" x2="360" y2="20" class="thin"/>
+  <circle cx="50" cy="20" r="4" class="dot"/><circle cx="130" cy="20" r="4" class="dot"/>
+  <line x1="50" y1="20" x2="82.4" y2="140.7" class="ln"/><line x1="130" y1="20" x2="162.4" y2="140.7" class="ln"/>
+  <circle cx="82.4" cy="140.7" r="7" class="dot"/><circle cx="162.4" cy="140.7" r="7" class="dot"/>
+  <line x1="60.4" y1="58.6" x2="140.4" y2="58.6" class="f" style="stroke-width:2"/>
+  <text x="18" y="180">Mode 1: θ₁ = θ₂</text><text x="18" y="200" style="font-size:13px">spring keeps its length</text>
+  <circle cx="250" cy="20" r="4" class="dot"/><circle cx="330" cy="20" r="4" class="dot"/>
+  <line x1="250" y1="20" x2="271.7" y2="143.1" class="ln"/><line x1="330" y1="20" x2="308.3" y2="143.1" class="ln"/>
+  <circle cx="271.7" cy="143.1" r="7" class="dot"/><circle cx="308.3" cy="143.1" r="7" class="dot"/>
+  <line x1="257" y1="59.4" x2="323" y2="59.4" class="f" style="stroke-width:2"/>
+  <text x="210" y="180">Mode 2: θ₁ = −θ₂</text><text x="210" y="200" style="font-size:13px">spring changes length</text>
+</svg>
 </figure>
 
-<div class="def"><b>The setup (French Ch. 5).</b> Each bead is pulled sideways by the string on its two sides. For small displacements, the pull on bead $p$ depends on how far it sits from its neighbours:
-$$\ddot y_p = -2\omega_0^2\,y_p + \omega_0^2\,(y_{p+1}+y_{p-1}),\qquad \omega_0^2 = \frac{T}{m\,l}.$$
-Check the notation against your book's section on N coupled oscillators.</div>
+<h3>4–5 · Test each guess in the equations</h3>
+<ul>
+<li>Put $\theta_1=\theta_2=\theta$ into both equations of 1(b). The spring term is multiplied by $\theta_1-\theta_2=0$. Both equations become the same one.</li>
+<li>Put $\theta_1=-\theta_2=\theta$. Now $\theta_1-\theta_2=2\theta$. Again both equations become the same one (check that the second matches the first).</li>
+</ul>
+<p>Equivalent algebra: add and subtract the two equations of 1(b) to get separate equations for $\theta_1+\theta_2$ and $\theta_1-\theta_2$.</p>
 
+<h3>6 · Check</h3>
+<div class="check">A guess is a true mode only if <i>both</i> equations reduce to the <i>same</i> equation. Otherwise the two pendulums would need different motions.</div>
+
+<details class="w"><summary>Write-up 1(c)</summary>
+<p><b>Mode 1 (in phase), $\theta_1=\theta_2$:</b> the two pendulums swing together, side by side, with equal amplitude. The spring's ends move together, so it never stretches or compresses and exerts no force. Each pendulum swings as if the spring were absent. Substituting gives $\ddot\theta + (g/L)\theta = 0$ for both.</p>
+<p><b>Mode 2 (out of phase), $\theta_1=-\theta_2$:</b> the pendulums are mirror images, swinging toward each other and then apart. The spring is compressed and stretched by $2a\theta$, which adds to gravity's restoring torque. Substituting gives $\ddot\theta + \left(\dfrac{g}{L}+\dfrac{2ka^2}{mL^2}\right)\theta=0$ for both.</p>
+</details>
+
+<!-- ================= 1(d) ================= -->
+<h2 id="p1d">Problem 1(d) · normal-mode frequencies</h2>
+<p class="q">Calculate the frequencies of the normal modes of the system.</p>
+
+<h3>Law and solve</h3>
+<details class="c"><summary>Simple harmonic motion: reading off ω</summary>
+<p>Any equation $\ddot x = -C\,x$ with $C&gt;0$ has solutions $x = A\cos(\omega t+\phi)$ with $\omega^2 = C$. Check this by differentiating twice. So once each mode gives an equation of this form, its frequency is the square root of the constant.</p></details>
+<p>From 1(c), read the constant in front of θ for each mode and take the square root.</p>
+
+<h3>Check</h3>
+<div class="check">With $k\to0$ or $a\to0$, both frequencies become $\sqrt{g/L}$ (uncoupled pendulums). Mode 2 is faster, because the spring adds to the restoring torque only in mode 2.</div>
+
+<details class="w"><summary>Write-up 1(d)</summary>
+<p>Each mode obeys $\ddot\theta = -\omega^2\theta$. Reading off from 1(c):</p>
+$$\boxed{\omega_1 = \sqrt{\frac{g}{L}},\qquad \omega_2 = \sqrt{\frac{g}{L}+\frac{2ka^2}{mL^2}}}$$
+<p>The in-phase mode has the free-pendulum frequency, because the spring is idle. The out-of-phase mode is higher, because the spring adds stiffness $2ka^2$.</p>
+</details>
+
+<!-- ================= 2 ================= -->
+<h2 id="p2">Problem 2 · N coupled oscillators, driven</h2>
+<p class="q">Consider N coupled oscillators driven at frequency ω &lt; 2ω₀ (i.e. $y_0=0$, $y_{N+1}=h\cos\omega t$). Find the resulting amplitudes of the N oscillators. [Hint: the equations of motion are the same as in the undriven case; only the boundary conditions differ. Try $A_p = C\sin\alpha p$ and determine α and C.]</p>
+
+<h3>1 · Model</h3>
+<ul>
+<li>French's chain: N beads of mass $m$ on a light string under tension $T$, spaced $l$ apart, moving sideways only.</li>
+<li>The left end ($p=0$) is fixed. The right end ($p=N+1$) is shaken: $y_{N+1}=h\cos\omega t$.</li>
+<li>Small displacements: the tension stays $T$ and the string angles are small.</li>
+</ul>
+
+<h3>2 · Name</h3>
 <table>
-<tr><th>Symbol</th><th>Made of / meaning</th></tr>
-<tr><td>$\omega_0^2 = T/(ml)$</td><td>string tension ÷ (bead mass × spacing). Sets how stiffly the beads are coupled.</td></tr>
-<tr><td>$-2\omega_0^2 y_p$</td><td>bead $p$ pulled back by both string segments</td></tr>
-<tr><td>$+\omega_0^2(y_{p+1}+y_{p-1})$</td><td>its neighbours' displacements dragging it along</td></tr>
-<tr><td>$y_0=0$</td><td>left end fixed</td></tr>
-<tr><td>$y_{N+1}=h\cos\omega t$</td><td>right end shaken with amplitude $h$ at frequency ω</td></tr>
+<tr><th>Symbol</th><th>Meaning</th><th>From</th></tr>
+<tr><td>$y_p(t)$</td><td>sideways displacement of bead $p$, $p=1,\dots,N$</td><td>French's notation</td></tr>
+<tr><td>$T,\ l,\ m$</td><td>tension, spacing, bead mass</td><td>French's setup</td></tr>
+<tr><td>$\omega_0^2 = T/(ml)$</td><td>coupling strength; it bundles $T,l,m$</td><td>defined by French</td></tr>
+<tr><td>$h,\ \omega$</td><td>driving amplitude and frequency</td><td>problem</td></tr>
+<tr><td>$A_p$</td><td>amplitude of bead $p$ (what we want)</td><td>problem</td></tr>
 </table>
 
-<div class="def"><b>Steady state.</b> After start-up, every bead moves at the driving frequency: $y_p = A_p\cos\omega t$, with $A_p$ bead $p$'s amplitude. Then $\ddot y_p = -\omega^2 A_p\cos\omega t$.</div>
-<div class="def"><b>Identities you'll need.</b>
-$$\sin(x+y)+\sin(x-y) = 2\sin x\cos y,\qquad 1-\cos\alpha = 2\sin^2(\alpha/2).$$</div>
+<h3>3 · Force map (bead p)</h3>
+<figure>
+<svg viewBox="0 0 380 210" role="img" aria-label="Bead p pulled by tension T along each string segment toward its neighbours">
+  <line x1="20" y1="180" x2="360" y2="180" class="dash"/><text x="250" y="200" style="font-size:13px">equilibrium line</text>
+  <line x1="60" y1="120" x2="190" y2="70" class="ln"/><line x1="190" y1="70" x2="320" y2="110" class="ln"/>
+  <circle cx="60" cy="120" r="6" class="dot"/><circle cx="190" cy="70" r="7" class="dot"/><circle cx="320" cy="110" r="6" class="dot"/>
+  <line x1="190" y1="70" x2="124.7" y2="95.1" class="f" marker-end="url(#ao)"/><line x1="190" y1="70" x2="256.9" y2="90.6" class="f" marker-end="url(#ao)"/>
+  <text x="120" y="82" class="tf">T</text><text x="240" y="76" class="tf">T</text>
+  <text x="40" y="108">p−1</text><text x="182" y="54">p</text><text x="318" y="98">p+1</text>
+  <line x1="60" y1="120" x2="60" y2="180" class="thin"/><line x1="190" y1="70" x2="190" y2="180" class="thin"/><line x1="320" y1="110" x2="320" y2="180" class="thin"/>
+  <text x="66" y="160">y₍p−1₎</text><text x="196" y="140">y_p</text><text x="270" y="160">y₍p+1₎</text>
+</svg>
+<figcaption>Each segment pulls bead $p$ toward its neighbour with tension $T$. Only the sideways parts matter.</figcaption>
+</figure>
+<details class="c"><summary>Sideways pull of a string segment: why $T\,(y_{p+1}-y_p)/l$</summary>
+<p>The segment to the right pulls with tension $T$ along itself. Its sideways part is $T\sin\phi$, where φ is the segment's tilt. For small tilts $\sin\phi\approx\tan\phi = (\text{rise})/(\text{run}) = (y_{p+1}-y_p)/l$. The left segment likewise gives $T(y_{p-1}-y_p)/l$.</p></details>
 
-<h3>Steps</h3>
+<h3>4 · Law</h3>
+<p>Newton's 2nd law for bead $p$, sideways:</p>
+$$m\ddot y_p = \frac{T}{l}(y_{p+1}-y_p) + \frac{T}{l}(y_{p-1}-y_p)\ \Longrightarrow\ \ddot y_p = \omega_0^2\,(y_{p+1}+y_{p-1}-2y_p).$$
+<p>This is the same equation as the undriven chain. Only the ends differ.</p>
+
+<h3>5 · Solve</h3>
+<details class="c"><summary>Steady state: why $y_p = A_p\cos\omega t$</summary>
+<p>After start-up effects die away (any slight damping kills them), a driven system moves at the <i>driving</i> frequency. So every bead follows $A_p\cos\omega t$ with its own amplitude $A_p$, and $\ddot y_p = -\omega^2 A_p\cos\omega t$.</p></details>
 <ol>
-<li>Substitute $y_p = A_p\cos\omega t$ into the equation of motion. Cancel $\cos\omega t$. You get a relation between $A_{p-1}$, $A_p$ and $A_{p+1}$.</li>
-<li>Try $A_p = C\sin(\alpha p)$ (the hint). Use the first identity on $A_{p+1}+A_{p-1}$. Everything should be proportional to $\sin(\alpha p)$; cancel it to get an equation linking ω and α.</li>
-<li>Rewrite it with the second identity. Why does ω &lt; 2ω₀ guarantee a real α? (What is the largest value $\sin^2$ can take?)</li>
-<li>Left end: does $A_0 = C\sin 0$ satisfy $y_0 = 0$ automatically?</li>
-<li>Right end: set $A_{N+1} = h$. Solve for $C$.</li>
-<li>Write $A_p$ in terms of $h$, α, $p$ and $N$, with α fixed by step 2.</li>
+<li>Substitute and cancel $\cos\omega t$: &nbsp;$-\omega^2A_p = \omega_0^2(A_{p+1}+A_{p-1}-2A_p)$.</li>
+<li>Try $A_p = C\sin\alpha p$ and use the identity below on $A_{p+1}+A_{p-1}$. Cancel $C\sin\alpha p$ to get a relation between ω and α.</li>
+<li>Apply the boundary conditions to find $C$.</li>
 </ol>
-<div class="check"><b>Check.</b> At $p = N+1$ your $A_p$ should equal $h$. Also look at what happens when $\sin(\alpha(N+1))\to 0$. That is resonance: the driving frequency matches one of the system's normal-mode frequencies.</div>
+<details class="c"><summary>Identities used, and why</summary>
+$$\sin(x+y)+\sin(x-y)=2\sin x\cos y\qquad 1-\cos\alpha = 2\sin^2(\alpha/2)$$
+<p>The first turns $\sin\alpha(p+1)+\sin\alpha(p-1)$ into $2\sin\alpha p\cos\alpha$, so every term is proportional to $\sin\alpha p$ and the trial form works for every $p$. The second puts the result in a clean form.</p></details>
+<details class="c"><summary>Why ω &lt; 2ω₀ matters</summary>
+<p>The relation will read $\sin(\alpha/2) = \omega/(2\omega_0)$. A sine is at most 1, so a real α exists only if $\omega\le 2\omega_0$. Above that, α is complex and the motion dies off along the chain (the problem's note).</p></details>
+<details class="c"><summary>Resonance</summary>
+<p>If $\sin\alpha(N+1)=0$, the amplitude formula blows up. That happens when $\alpha = n\pi/(N+1)$, which are exactly the undriven chain's normal-mode frequencies. Driving at a natural frequency gives resonance.</p></details>
+
+<h3>6 · Check</h3>
+<div class="check">At $p=N+1$ the formula gives $A_{N+1}=h$, and at $p=0$ it gives 0. With $N=1$, a single bead: $\alpha$ from $\sin(\alpha/2)=\omega/2\omega_0$ gives $A_1 = h\sin\alpha/\sin2\alpha = h/(2\cos\alpha)$. Use $\cos\alpha = 1-\omega^2/(2\omega_0^2)$ to compare with a direct solution of $-\omega^2A_1=\omega_0^2(h-2A_1)$.</div>
+
+<details class="w"><summary>Write-up 2</summary>
+<p>Each bead obeys $\ddot y_p=\omega_0^2(y_{p+1}+y_{p-1}-2y_p)$, with $\omega_0^2=T/ml$. In steady state $y_p=A_p\cos\omega t$:</p>
+$$-\omega^2A_p=\omega_0^2(A_{p+1}+A_{p-1}-2A_p).$$
+<p>Try $A_p=C\sin\alpha p$. Since $\sin\alpha(p+1)+\sin\alpha(p-1)=2\sin\alpha p\cos\alpha$,</p>
+$$-\omega^2 = \omega_0^2(2\cos\alpha-2)\ \Rightarrow\ \omega^2 = 2\omega_0^2(1-\cos\alpha)=4\omega_0^2\sin^2\frac{\alpha}{2},$$
+$$\boxed{\alpha = 2\arcsin\frac{\omega}{2\omega_0}}\quad(\text{real because }\omega&lt;2\omega_0).$$
+<p>Boundary conditions: $A_0=C\sin0=0$ satisfies $y_0=0$ automatically. $A_{N+1}=C\sin\alpha(N+1)=h$ gives $C=h/\sin\alpha(N+1)$. Therefore</p>
+$$\boxed{A_p = h\,\frac{\sin\alpha p}{\sin\alpha(N+1)},\qquad p=1,\dots,N.}$$
+<p>A negative $A_p$ means that bead moves opposite to the driver. The amplitudes diverge when $\alpha(N+1)=n\pi$, i.e. $\omega=2\omega_0\sin\frac{n\pi}{2(N+1)}$, the chain's normal-mode frequencies (resonance).</p>
+</details>
 
 </main>
 
