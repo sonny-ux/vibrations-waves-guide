@@ -46,6 +46,9 @@ figure > svg .dot{fill:var(--line)}
 figure > svg .fd{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:4 3;fill:none}
 figure > svg .gd{stroke:var(--accent2);stroke-width:1.5;stroke-dasharray:4 3;fill:none}
 .why{margin:14px 0 2px}
+ol.wu{padding-left:1.3em}
+ol.wu>li{margin:10px 0}
+ol.wu .r{color:var(--muted);font-size:.95rem}
 figure > svg .tf{fill:var(--accent)} figure > svg .tg{fill:var(--accent2)} figure > svg .th{fill:var(--accent3)}
 summary:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 </style>
@@ -60,6 +63,7 @@ summary:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-o
 
 <h1>Problem Set 5 guide</h1>
 <p class="sub">PHYS 2601 · French 5-8 and 5-16 · submitting Wed 10/28. Claude-written. Each part runs the same method. Blue boxes open a concept: what it is and why it is needed here. The green box at the end of each part is a concise write-up. Try the part first, then open it to check.</p>
+<p class="sub"><b>Write-ups follow the homework rule:</b> every step states why it is taken. Each numbered line is a reason (grey) and the equation it gives.</p>
 <p class="sub"><b>Course policy</b> (from the syllabus notes): AI is allowed as a tutor, but you must be able to reproduce the reasoning yourself. Write it in your own words.</p>
 <nav><a href="#method">Method</a><a href="#p1a">1(a)</a><a href="#p1b">1(b)</a><a href="#p1c">1(c)</a><a href="#p1d">1(d)</a><a href="#p2">2</a></nav>
 
@@ -167,13 +171,21 @@ $$F'L\cos\theta = F\,a\cos\theta$$
 <div class="check">θ grows with $F$ and $a$, shrinks with $m$ and $L$. $F' &lt; F$ (since $a&lt;L$): pushing farther from the pivot takes less force. Units: $Fa/(mgL)$ is N·m / N·m, a pure number, as an angle in radians must be.</div>
 
 <details class="w"><summary>Write-up 1(a)</summary>
-<p>Take rod + mass as the system. The outside forces are $F$ at A, $mg$ at the mass, and the pivot force. Torques about the pivot remove the pivot force. At equilibrium the torque of $F$ (lever arm $a\cos\theta$) balances that of gravity (lever arm $L\sin\theta$):</p>
-$$Fa\cos\theta = mgL\sin\theta.$$
-<p>For $\theta\ll1$, $\cos\theta\approx1$ and $\sin\theta\approx\theta$:</p>
-$$\boxed{\theta = \frac{Fa}{mgL}}$$
-<p>A horizontal $F'$ at the mass has lever arm $L\cos\theta$. Producing the same θ requires the same torque as $F$:</p>
-$$F'L\cos\theta = Fa\cos\theta\ \Rightarrow\ \boxed{F' = \frac{a}{L}F}$$
-<p>(This one holds exactly, not just for small θ.)</p>
+<ol class="wu">
+<li><span class="r">System: rod + mass, which can only rotate about the pivot. Outside forces: $F$ at A, $mg$ at the mass, and the pivot force $P$.</span></li>
+<li><span class="r">At equilibrium the net torque is zero. Take torques about the pivot, where $P$ acts, so $P$ has no torque:</span>
+$$\textstyle\sum\tau_{\text{pivot}} = 0$$</li>
+<li><span class="r">Torque = (component of force perpendicular to the rod) × (distance from the pivot). $F$ is horizontal, so its perpendicular component is $F\cos\theta$, at distance $a$. $mg$ is vertical, so its perpendicular component is $mg\sin\theta$, at distance $L$. They turn in opposite directions, so for zero net torque they are equal:</span>
+$$Fa\cos\theta = mgL\sin\theta$$</li>
+<li><span class="r">θ ≪ 1, so $\sin\theta\approx\theta$ and $\cos\theta\approx1$:</span>
+$$Fa = mgL\,\theta$$</li>
+<li><span class="r">Divide both sides by $mgL$:</span>
+$$\boxed{\theta = \frac{Fa}{mgL}}$$</li>
+<li><span class="r">A horizontal $F'$ at the mass has perpendicular component $F'\cos\theta$ at distance $L$. The same θ means gravity's torque is unchanged, so $F'$ must give the same torque as $F$:</span>
+$$F'L\cos\theta = Fa\cos\theta$$</li>
+<li><span class="r">Divide both sides by $L\cos\theta$. This holds for any θ, not only small θ:</span>
+$$\boxed{F' = \frac{a}{L}\,F}$$</li>
+</ol>
 </details>
 
 <!-- ================= 1(b) ================= -->
@@ -261,11 +273,21 @@ $$\tau_{s,1} = -ka^2(\theta_1-\theta_2),\qquad \tau_{s,2} = +ka^2(\theta_1-\thet
 <div class="check">With $k=0$, each equation becomes the single pendulum $\ddot\theta = -(g/L)\theta$. The spring terms are equal and opposite (Newton's 3rd law). Units: $ka^2/(mL^2)$ has units (N/m)·m²/(kg·m²) = 1/s², the same as $g/L$.</div>
 
 <details class="w"><summary>Write-up 1(b)</summary>
-<p>Apply $I\ddot\theta=\sum\tau$ about each pivot, with $I=mL^2$. For small angles the spring's ends shift by $a\theta_1$ and $a\theta_2$, so it is compressed by $a(\theta_1-\theta_2)$. It exerts a horizontal force $ka(\theta_1-\theta_2)$ with lever arm $\approx a$, pushing pendulum 1 back and pendulum 2 forward. Gravity gives restoring torque $-mgL\theta_i$:</p>
+<ol class="wu">
+<li><span class="r">Each pendulum rotates about its own pivot. Newton's 2nd law for rotation, with $I = mL^2$ for a point mass on a weightless rod:</span>
+$$mL^2\ddot\theta_i = \textstyle\sum\tau_i$$</li>
+<li><span class="r">Gravity: perpendicular component $mg\sin\theta_i$ at distance $L$, restoring (toward vertical). Small angles:</span>
+$$\tau_{g,i} = -mgL\,\theta_i$$</li>
+<li><span class="r">Each spring end, a distance $a$ down its rod, moves sideways by $a\sin\theta_i\approx a\theta_i$ (vertical motion is second order). So the spring's length changes by $a(\theta_1-\theta_2)$. By Hooke's law it pushes with force</span>
+$$F_s = ka(\theta_1-\theta_2)$$</li>
+<li><span class="r">$F_s$ is horizontal at distance $a$. Its perpendicular component is $F_s\cos\theta\approx F_s$. When compressed ($\theta_1&gt;\theta_2$) it pushes pendulum 1 back and pendulum 2 forward:</span>
+$$\tau_{s,1} = -ka^2(\theta_1-\theta_2),\qquad \tau_{s,2} = +ka^2(\theta_1-\theta_2)$$</li>
+<li><span class="r">Substitute the torques into step 1 for each pendulum:</span>
 $$mL^2\ddot\theta_1 = -mgL\,\theta_1 - ka^2(\theta_1-\theta_2)$$
-$$mL^2\ddot\theta_2 = -mgL\,\theta_2 + ka^2(\theta_1-\theta_2)$$
-<p>Dividing by $mL^2$:</p>
-$$\boxed{\ddot\theta_1 + \frac{g}{L}\theta_1 + \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0,\qquad \ddot\theta_2 + \frac{g}{L}\theta_2 - \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0}$$
+$$mL^2\ddot\theta_2 = -mgL\,\theta_2 + ka^2(\theta_1-\theta_2)$$</li>
+<li><span class="r">Divide by $mL^2$ and move all terms to the left:</span>
+$$\boxed{\ddot\theta_1 + \frac{g}{L}\theta_1 + \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0,\qquad \ddot\theta_2 + \frac{g}{L}\theta_2 - \frac{ka^2}{mL^2}(\theta_1-\theta_2)=0}$$</li>
+</ol>
 </details>
 
 <!-- ================= 1(c) ================= -->
@@ -308,8 +330,15 @@ $$\ddot\theta + \frac{g}{L}\,\theta + \frac{2ka^2}{mL^2}\,\theta = 0\qquad(\text
 <div class="check">A guess is a true mode only if <i>both</i> equations reduce to the <i>same</i> equation. Otherwise the two pendulums would need different motions.</div>
 
 <details class="w"><summary>Write-up 1(c)</summary>
-<p><b>Mode 1 (in phase), $\theta_1=\theta_2$:</b> the two pendulums swing together, side by side, with equal amplitude. The spring's ends move together, so it never stretches or compresses and exerts no force. Each pendulum swings as if the spring were absent. Substituting gives $\ddot\theta + (g/L)\theta = 0$ for both.</p>
-<p><b>Mode 2 (out of phase), $\theta_1=-\theta_2$:</b> the pendulums are mirror images, swinging toward each other and then apart. The spring is compressed and stretched by $2a\theta$, which adds to gravity's restoring torque. Substituting gives $\ddot\theta + \left(\dfrac{g}{L}+\dfrac{2ka^2}{mL^2}\right)\theta=0$ for both.</p>
+<ol class="wu">
+<li><span class="r">A normal mode is a motion in which both pendulums oscillate at one frequency, in step. The pendulums are identical, so by symmetry try $\theta_1=\theta_2$ and $\theta_1=-\theta_2$. Check each against both equations of (b).</span></li>
+<li><span class="r">Mode 1, $\theta_1=\theta_2=\theta$: then $\theta_1-\theta_2=0$, the spring term drops out, and both equations become</span>
+$$\ddot\theta + \frac{g}{L}\theta = 0.$$
+<span class="r"><b>Motion:</b> the pendulums swing together, side by side, with equal amplitude. The spring keeps its natural length and exerts no force, so each swings like a free pendulum.</span></li>
+<li><span class="r">Mode 2, $\theta_1=\theta,\ \theta_2=-\theta$: then $\theta_1-\theta_2=2\theta$, and both equations become (the second after multiplying by −1)</span>
+$$\ddot\theta + \left(\frac{g}{L}+\frac{2ka^2}{mL^2}\right)\theta = 0.$$
+<span class="r"><b>Motion:</b> the pendulums are mirror images, swinging toward each other and then apart. The spring is alternately compressed and stretched by $2a\theta$, adding to the restoring torque.</span></li>
+</ol>
 </details>
 
 <!-- ================= 1(d) ================= -->
@@ -325,9 +354,12 @@ $$\omega^2 = C .$$
 <div class="check">With $k\to0$ or $a\to0$, both frequencies become $\sqrt{g/L}$ (uncoupled pendulums). Mode 2 is faster, because the spring adds to the restoring torque only in mode 2.</div>
 
 <details class="w"><summary>Write-up 1(d)</summary>
-<p>Each mode obeys $\ddot\theta = -\omega^2\theta$. Reading off from 1(c):</p>
-$$\boxed{\omega_1 = \sqrt{\frac{g}{L}},\qquad \omega_2 = \sqrt{\frac{g}{L}+\frac{2ka^2}{mL^2}}}$$
-<p>The in-phase mode has the free-pendulum frequency, because the spring is idle. The out-of-phase mode is higher, because the spring adds stiffness $2ka^2$.</p>
+<ol class="wu">
+<li><span class="r">An equation $\ddot\theta = -C\theta$ is solved by $\theta = A\cos(\omega t+\phi)$, since differentiating twice gives $\ddot\theta = -\omega^2\theta$. So $\omega^2 = C$.</span></li>
+<li><span class="r">Read $C$ from each mode equation in (c) and take the square root:</span>
+$$\boxed{\omega_1 = \sqrt{\frac{g}{L}},\qquad \omega_2 = \sqrt{\frac{g}{L}+\frac{2ka^2}{mL^2}}}$$</li>
+<li><span class="r">Check: with no coupling ($k\to0$) both reduce to $\sqrt{g/L}$. Mode 2 is higher because the spring acts only in mode 2.</span></li>
+</ol>
 </details>
 
 <!-- ================= 2 ================= -->
@@ -400,14 +432,20 @@ $$C\sin\alpha(N+1) = h$$
 <div class="check">At $p=N+1$ the formula gives $A_{N+1}=h$, and at $p=0$ it gives 0. With $N=1$, a single bead: $\alpha$ from $\sin(\alpha/2)=\omega/2\omega_0$ gives $A_1 = h\sin\alpha/\sin2\alpha = h/(2\cos\alpha)$. Use $\cos\alpha = 1-\omega^2/(2\omega_0^2)$ to compare with a direct solution of $-\omega^2A_1=\omega_0^2(h-2A_1)$.</div>
 
 <details class="w"><summary>Write-up 2</summary>
-<p>Each bead obeys $\ddot y_p=\omega_0^2(y_{p+1}+y_{p-1}-2y_p)$, with $\omega_0^2=T/ml$. In steady state $y_p=A_p\cos\omega t$:</p>
-$$-\omega^2A_p=\omega_0^2(A_{p+1}+A_{p-1}-2A_p).$$
-<p>Try $A_p=C\sin\alpha p$. Since $\sin\alpha(p+1)+\sin\alpha(p-1)=2\sin\alpha p\cos\alpha$,</p>
-$$-\omega^2 = \omega_0^2(2\cos\alpha-2)\ \Rightarrow\ \omega^2 = 2\omega_0^2(1-\cos\alpha)=4\omega_0^2\sin^2\frac{\alpha}{2},$$
-$$\boxed{\alpha = 2\arcsin\frac{\omega}{2\omega_0}}\quad(\text{real because }\omega&lt;2\omega_0).$$
-<p>Boundary conditions: $A_0=C\sin0=0$ satisfies $y_0=0$ automatically. $A_{N+1}=C\sin\alpha(N+1)=h$ gives $C=h/\sin\alpha(N+1)$. Therefore</p>
-$$\boxed{A_p = h\,\frac{\sin\alpha p}{\sin\alpha(N+1)},\qquad p=1,\dots,N.}$$
-<p>A negative $A_p$ means that bead moves opposite to the driver. The amplitudes diverge when $\alpha(N+1)=n\pi$, i.e. $\omega=2\omega_0\sin\frac{n\pi}{2(N+1)}$, the chain's normal-mode frequencies (resonance).</p>
+<ol class="wu">
+<li><span class="r">Bead $p$ is pulled sideways by the two string segments. For small slopes each gives $T\times$(slope). Newton's 2nd law sideways, with $\omega_0^2 = T/ml$:</span>
+$$\ddot y_p = \omega_0^2\,(y_{p+1}+y_{p-1}-2y_p)$$
+<span class="r">This is the same as the undriven case; only the ends differ: $y_0=0$, $y_{N+1}=h\cos\omega t$.</span></li>
+<li><span class="r">In steady state every bead moves at the driving frequency, $y_p=A_p\cos\omega t$, so $\ddot y_p=-\omega^2y_p$. Substitute and cancel $\cos\omega t$:</span>
+$$-\omega^2A_p=\omega_0^2(A_{p+1}+A_{p-1}-2A_p)$$</li>
+<li><span class="r">Try $A_p=C\sin\alpha p$ (the hint). By $\sin(x+y)+\sin(x-y)=2\sin x\cos y$, $A_{p+1}+A_{p-1}=2C\sin\alpha p\cos\alpha$. Substitute and cancel $C\sin\alpha p$:</span>
+$$-\omega^2=\omega_0^2(2\cos\alpha-2)$$</li>
+<li><span class="r">Use $1-\cos\alpha=2\sin^2(\alpha/2)$ and take the square root. Then divide by $2\omega_0$, apply arcsin, and multiply by 2. α is real because $\omega&lt;2\omega_0$ makes $\omega/2\omega_0&lt;1$:</span>
+$$\omega = 2\omega_0\sin\frac{\alpha}{2}\ \Rightarrow\ \boxed{\alpha = 2\arcsin\frac{\omega}{2\omega_0}}$$</li>
+<li><span class="r">Left end: $A_0=C\sin0=0$, so $y_0=0$ holds automatically. Right end: the driver's amplitude is $h$, so $C\sin\alpha(N+1)=h$. Divide by $\sin\alpha(N+1)$ to get $C$, and substitute into $A_p=C\sin\alpha p$:</span>
+$$\boxed{A_p = h\,\frac{\sin\alpha p}{\sin\alpha(N+1)},\qquad p=1,\dots,N}$$</li>
+<li><span class="r">Interpretation: a negative $A_p$ means that bead moves opposite to the driver. The amplitudes blow up when $\alpha(N+1)=n\pi$, i.e. when ω equals one of the chain's normal-mode frequencies $2\omega_0\sin\frac{n\pi}{2(N+1)}$ (resonance).</span></li>
+</ol>
 </details>
 
 </main>
