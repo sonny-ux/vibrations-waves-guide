@@ -6,7 +6,7 @@
 <title>Vibrations &amp; Waves — Equation Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
@@ -18,15 +18,14 @@
     throwOnError: false
   }); })"></script>
 <script>
-(function(){try{var t=localStorage.getItem('vw-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+(function(){try{if(localStorage.getItem('vw-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
 function cycleTheme(){
-  var r=document.documentElement, cur=r.getAttribute('data-theme')||'auto';
-  var next=cur==='auto'?'dark':cur==='dark'?'light':'auto';
-  if(next==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',next);
-  try{localStorage.setItem('vw-theme',next);}catch(e){}
+  var r=document.documentElement, light=r.getAttribute('data-theme')==='light';
+  if(light)r.removeAttribute('data-theme');else r.setAttribute('data-theme','light');
+  try{localStorage.setItem('vw-theme',light?'dark':'light');}catch(e){}
   setThemeLabel();
 }
-function setThemeLabel(){var b=document.getElementById('themeBtn');if(!b)return;var t=document.documentElement.getAttribute('data-theme')||'auto';b.textContent=t==='dark'?'Dark':t==='light'?'Light':'Auto';}
+function setThemeLabel(){var b=document.getElementById('themeBtn');if(!b)return;b.textContent=document.documentElement.getAttribute('data-theme')==='light'?'Dark':'Light';}
 document.addEventListener('DOMContentLoaded',setThemeLabel);
 </script>
 <style>
@@ -49,50 +48,64 @@ document.addEventListener('DOMContentLoaded',setThemeLabel);
   --text2: #374151;
   --muted: #9ca3af;
 }
-@media (prefers-color-scheme: dark) {
-:root:not([data-theme="light"]) {
-  --bg: #121318;
-  --surf: #191b22;
-  --card: #1d1f27;
-  --card2: #252833;
-  --border: #2c2f3b;
-  --border2: #3a3e4d;
-  --accent: #a78bfa;
-  --adim: #2e2550;
-  --blue: #34d399;
-  --bdim: #12382b;
-  --amber: #fbbf24;
-  --amdim: #3a2e0c;
-  --rose: #fb7185;
-  --rdim: #3f1620;
-  --text: #eceef4;
-  --text2: #c4c8d4;
-  --muted: #8b90a0;
+/* ===== Monochrome serif theme: white on black by default, black on white with data-theme="light" ===== */
+:root {
+  --bg: #000; --surf: #000; --card: #000; --card2: #0d0d0d;
+  --border: #262626; --border2: #3a3a3a;
+  --accent: #fff; --adim: #111; --blue: #fff; --bdim: #0d0d0d;
+  --amber: #e6e6e6; --amdim: #0d0d0d; --rose: #e6e6e6; --rdim: #0d0d0d;
+  --text: #f2f2f2; --text2: #bdbdbd; --muted: #7a7a7a;
   color-scheme: dark;
 }
+:root[data-theme="light"] {
+  --bg: #fff; --surf: #fff; --card: #fff; --card2: #f6f6f6;
+  --border: #e3e3e3; --border2: #cfcfcf;
+  --accent: #000; --adim: #f2f2f2; --blue: #000; --bdim: #f6f6f6;
+  --amber: #222; --amdim: #f6f6f6; --rose: #222; --rdim: #f6f6f6;
+  --text: #111; --text2: #444; --muted: #8a8a8a;
+  color-scheme: light;
 }
-:root[data-theme="dark"] {
-  --bg: #121318;
-  --surf: #191b22;
-  --card: #1d1f27;
-  --card2: #252833;
-  --border: #2c2f3b;
-  --border2: #3a3e4d;
-  --accent: #a78bfa;
-  --adim: #2e2550;
-  --blue: #34d399;
-  --bdim: #12382b;
-  --amber: #fbbf24;
-  --amdim: #3a2e0c;
-  --rose: #fb7185;
-  --rdim: #3f1620;
-  --text: #eceef4;
-  --text2: #c4c8d4;
-  --muted: #8b90a0;
-  color-scheme: dark;
-}
+body { font-size: 18px !important; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.header, .tab-nav { background: var(--bg) !important; }
+.header-title { font-size: 22px !important; font-weight: 500 !important; letter-spacing: .01em; font-style: normal; }
+.header-sub { font-size: 14px !important; font-style: italic; letter-spacing: 0; color: var(--muted) !important; }
+.badge { background: none !important; color: var(--muted) !important; border: 1px solid var(--border2) !important; font-size: 11px !important; letter-spacing: .14em !important; border-radius: 2px !important; }
+.stab { font-size: 15px !important; letter-spacing: .02em !important; color: var(--muted) !important; }
+.stab.active { color: var(--text) !important; border-bottom-color: var(--text) !important; }
+.intro, .howto, .toc, .eqcard, .qtable table, details.deeper { border-radius: 2px !important; box-shadow: none !important; }
+.intro { background: none !important; border: none !important; border-left: 1px solid var(--border2) !important; padding: 4px 0 4px 18px !important; font-style: italic; color: var(--text2) !important; font-size: 17px !important; }
+.howto { background: none !important; border: 1px solid var(--border) !important; color: var(--text2) !important; font-size: 16px !important; }
+.howto b { font-weight: 600; color: var(--text); }
+.sec-title { font-size: 13px !important; letter-spacing: .2em !important; color: var(--text2) !important; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.eqcard { background: none !important; border: none !important; border-bottom: 1px solid var(--border) !important; margin-bottom: 0 !important; }
+.eqhdr { padding-left: 0 !important; padding-right: 0 !important; }
+.eqbody { border-top: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+.eqnum { background: none !important; color: var(--muted) !important; font-size: 13px !important; font-style: italic; letter-spacing: 0 !important; border: none !important; padding-left: 0 !important; min-width: 4.5em; }
+.eqname { font-size: 15px !important; font-style: italic; color: var(--text2) !important; }
+.eqdisp { font-size: 1.12em !important; color: var(--text); }
+.block-label, .toc-label, .qtable th { font-size: 12px !important; letter-spacing: .18em !important; color: var(--muted) !important; }
+.eqbody p, .params li, ol.steps li, ul.mist li { font-size: 17px !important; color: var(--text2); }
+.params .psym { color: var(--text) !important; }
+.method { border-left: none !important; }
+.method .eqnum { background: none !important; color: var(--muted) !important; }
+.mtitle { font-size: 19px !important; font-weight: 500 !important; }
+.toc { background: none !important; border: none !important; padding: 0 !important; }
+.toc a, .toc ul a { color: var(--text) !important; }
+.toc ul a { color: var(--text2) !important; }
+.toc .tnum { font-style: italic; }
+.xref { color: var(--text) !important; font-weight: 500 !important; text-decoration: underline !important; text-decoration-color: var(--border2) !important; text-underline-offset: 3px; }
+.xref:hover { text-decoration-color: var(--text) !important; }
+details.deeper { background: none !important; border-left: 1px solid var(--border2) !important; padding: 0 0 0 16px !important; }
+details.deeper > summary { color: var(--text) !important; font-weight: 500 !important; font-style: italic; }
+.qtable table { background: none !important; border: none !important; border-top: 1px solid var(--border2) !important; }
+.qtable td { color: var(--text2) !important; font-size: 16px; }
+.qtable td.qe { color: var(--text) !important; }
+.theme-btn { background: none !important; border: 1px solid var(--border2) !important; color: var(--muted) !important; border-radius: 2px !important; font-size: 13px !important; letter-spacing: .08em; }
+.footer-note { font-style: italic; color: var(--muted) !important; }
+.katex { font-size: 1.08em; }
+a { color: var(--text); }
 html, body { background: var(--bg); }
-.theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'JetBrains Mono', monospace; cursor: pointer; }
+.theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'EB Garamond', Garamond, Georgia, serif; cursor: pointer; }
 .theme-btn:hover { color: var(--text); }
 .box.blue { border-color: var(--blue) !important; }
 .box.amber { border-color: var(--amber) !important; }
@@ -102,7 +115,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 15px;
   line-height: 1.65;
   min-height: 100vh;
@@ -125,7 +138,7 @@ body {
   flex-wrap: wrap;
 }
 .badge {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -138,14 +151,14 @@ body {
 }
 .header-text { flex: 1; min-width: 160px; }
 .header-title {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
   letter-spacing: 0.01em;
 }
 .header-sub {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 10.5px;
   color: var(--text2);
   margin-top: 2px;
@@ -167,7 +180,7 @@ body {
   padding: 8px 16px 0;
 }
 .stab {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.03em;
@@ -196,7 +209,7 @@ body {
   color: var(--text2);
 }
 .sec-title {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -224,7 +237,7 @@ body {
 }
 .eqhdr:hover { background: var(--card2); }
 .eqnum {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 10.5px;
   font-weight: 600;
   color: var(--accent);
@@ -253,7 +266,7 @@ body {
 .eqbody .block { margin-bottom: 12px; }
 .eqbody .block:last-child { margin-bottom: 0; }
 .block-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
   font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -289,7 +302,7 @@ body {
   font-size: 12px;
   color: var(--muted);
   margin-top: 30px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'EB Garamond', Garamond, Georgia, serif;
 }
 @media (max-width: 480px) {
   .header { padding: 14px 16px 12px; }
@@ -299,7 +312,7 @@ body {
   .eqbody.open { padding-top: 12px; }
 }
 .toc { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 0 0 22px; }
-.toc-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.toc-label { font-family: 'EB Garamond', Garamond, Georgia, serif; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .toc ol { padding-left: 1.3em; }
 .toc > ol > li { margin: 6px 0; font-weight: 600; }
 .toc a { color: var(--accent); text-decoration: none; }
@@ -307,7 +320,7 @@ body {
 .toc ul { list-style: none; padding-left: 0; margin: 2px 0 0; font-weight: 400; font-size: .9em; color: var(--text2); }
 .toc ul li { margin: 1px 0; }
 .toc ul a { color: var(--text2); }
-.toc .tnum { font-family: 'JetBrains Mono', monospace; font-size: .85em; color: var(--muted); display: inline-block; min-width: 5.5em; }
+.toc .tnum { font-family: 'EB Garamond', Garamond, Georgia, serif; font-size: .85em; color: var(--muted); display: inline-block; min-width: 5.5em; }
 .method { border-left: 4px solid var(--blue); }
 .method .eqnum { background: var(--bdim); color: var(--blue); }
 .mtitle { font-weight: 600; font-size: 1.02rem; color: var(--text); margin-bottom: 2px; }
@@ -320,7 +333,7 @@ details.deeper[open] { padding-bottom: 10px; }
 .howto { background: var(--bdim); color: var(--text2); border-radius: 10px; padding: 10px 14px; margin: 0 0 18px; font-size: .92rem; }
 .qtable { overflow-x: auto; margin: 0 0 18px; }
 .qtable table { border-collapse: collapse; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; font-size: .9rem; }
-.qtable th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.qtable th { text-align: left; font-family: 'EB Garamond', Garamond, Georgia, serif; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
 .qtable td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text2); }
 .qtable tr:last-child td { border-bottom: none; }
 .qtable td.qe { color: var(--text); white-space: nowrap; min-width: 9em; }
@@ -338,6 +351,11 @@ details.deeper[open] { padding-bottom: 10px; }
   .eqcard { break-inside: avoid; box-shadow: none !important; }
   .header { position: static !important; }
 }
+@media print {
+  :root, :root[data-theme="light"] { --bg:#fff; --surf:#fff; --card:#fff; --card2:#f6f6f6; --border:#ddd; --border2:#bbb; --accent:#000; --blue:#000; --text:#000; --text2:#333; --muted:#666; color-scheme: light; }
+  body { background:#fff !important; }
+  .theme-btn, .howto { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -349,7 +367,7 @@ details.deeper[open] { padding-bottom: 10px; }
       <div class="header-title">Vibrations &amp; Waves — Equation Guide</div>
       <div class="header-sub">Physics III · Chapters 1, 2, 5 · growing over the semester</div>
     </div>
-    <button class="theme-btn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Auto</button>
+    <button class="theme-btn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
     <div class="badge" style="background:var(--bdim);color:var(--blue);">REFERENCE</div>
   </div>
 </div>
@@ -365,7 +383,7 @@ details.deeper[open] { padding-bottom: 10px; }
 
 <div class="main">
 
-<div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Blue links jump to the card they name.</div>
+<div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Underlined links jump to the card they name.</div>
 <!-- ============ BASICS ============ -->
 <div id="basics" class="panel active">
 <div class="intro">Every small relation in one place, one per line: the ones you use inside other equations without thinking. Each row names the equation, its variables with units, and links to the card where it is explained. This tab is meant to fit on a printed page or two.</div>
