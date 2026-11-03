@@ -247,6 +247,17 @@ body {
 .toc ul li { margin: 1px 0; }
 .toc ul a { color: var(--text2); }
 .toc .tnum { font-family: 'JetBrains Mono', monospace; font-size: .85em; color: var(--muted); display: inline-block; min-width: 5.5em; }
+.method { border-left: 4px solid var(--blue); }
+.method .eqnum { background: var(--bdim); color: var(--blue); }
+.mtitle { font-weight: 600; font-size: 1.02rem; color: var(--text); margin-bottom: 2px; }
+ol.steps { padding-left: 1.3em; } ol.steps li { margin: 5px 0; }
+ul.mist { padding-left: 1.2em; } ul.mist li { margin: 3px 0; }
+.xref { color: var(--blue); text-decoration: none; font-weight: 500; } .xref:hover { text-decoration: underline; }
+details.deeper { margin-top: 10px; background: var(--card2); border-radius: 8px; padding: 0 12px; }
+details.deeper > summary { cursor: pointer; padding: 8px 0; font-weight: 600; color: var(--accent); font-size: .92rem; }
+details.deeper[open] { padding-bottom: 10px; }
+.howto { background: var(--bdim); color: var(--text2); border-radius: 10px; padding: 10px 14px; margin: 0 0 18px; font-size: .92rem; }
+@media print { details.deeper { display: block; } details.deeper > summary { list-style: none; } }
 @media print {
   body { background: #fff !important; }
   .tab-nav, .eqarrow { display: none !important; }
@@ -281,13 +292,46 @@ body {
 
 <div class="main">
 
+<div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Blue links jump to the card they name.</div>
 <!-- ============ CHAPTER 1 ============ -->
 <div id="ch1" class="panel active">
 <div class="intro">Every equation in this chapter describes one thing: a system with a restoring force proportional to displacement, $F=-kx$. Once you recognize that pattern in <em>any</em> physical system — a spring, a pendulum, an LC circuit — every equation below applies to it, just with the labels changed.</div>
 
+<div class="sec-title">Methods · how problems in this chapter are solved</div>
+
+<div class="eqcard method" id="m-shm">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Show a system is SHM and find ω</div><div class="eqname">“Show that … executes simple harmonic motion”, “find the period / frequency of small oscillations”</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>A system sits in stable equilibrium and is displaced a little: a mass on a spring, a pendulum, a floating body, a circuit. Any question about its period or frequency is this method.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li><b>Model.</b> Draw the system displaced by a small amount $x$ (or $\theta$). Name the coordinate and its sign convention.</li><li><b>Forces (or torques).</b> Draw every force at the point where it acts. Find the net <em>restoring</em> force (or torque about the pivot) as a function of $x$.</li><li><b>Newton's second law.</b> Write $m\ddot x = F_{\text{net}}$ (or $I\ddot\theta = \tau_{\text{net}}$).</li><li><b>Approximate.</b> If the force is not yet linear in $x$, use the small-displacement approximation: $\sin\theta\approx\theta$, or a Taylor expansion of $U(x)$.</li><li><b>Match the form.</b> Rearrange to $\ddot x = -(\text{constant})\,x$. The constant is $\omega^2$; take its square root.</li><li><b>Finish.</b> $T = 2\pi/\omega$, $f = 1/T$. Check units (s⁻¹) and that $\omega$ does not depend on amplitude.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-1-6">1.6</a> the SHM equation · <a class="xref" href="#eq-1-7">1.7</a> spring · <a class="xref" href="#eq-1-29-1-31">1.29–1.31</a> pendulum · <a class="xref" href="#eq-1-26-1-27">1.26–1.27</a> Taylor expansion · <a class="xref" href="#eq-1-54">1.54</a> LC circuit</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Leaving a minus sign out: the force must point back toward equilibrium, or there is no oscillation.</li><li>Using $\sin\theta\approx\theta$ in degrees; it holds only in radians.</li><li>Mixing $\omega$ (rad/s) with $f$ (Hz): $\omega = 2\pi f$.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>Why this always works: near any stable minimum, the potential is approximately a parabola (<a class="xref" href="#eq-1-26-1-27">1.26–1.27</a>), so the restoring force is approximately linear. That is why “small oscillations” and “SHM” go together. The energy route reaches the same answer: write $E = \tfrac12\alpha\dot x^2 + \tfrac12\beta x^2$ and read off $\omega^2 = \beta/\alpha$ (<a class="xref" href="#eq-1-43a-c">1.43a–c</a>). Use it when forces are awkward but energies are easy (rolling objects, fluids).</p></details>
+  </div>
+</div>
+
+<div class="eqcard method" id="m-ic">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Fit A and φ to the starting conditions</div><div class="eqname">“At t = 0 the mass is released from …”, “given x(0) and v(0), find the motion”</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>You already know $\omega$ and are told where the system starts and how fast it moves at one moment.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li>Write $x = A\cos(\omega t + \phi)$ and $v = -\omega A\sin(\omega t+\phi)$.</li><li>Substitute $t=0$: $x_0 = A\cos\phi$ and $v_0 = -\omega A\sin\phi$.</li><li>Square and add (since $\cos^2+\sin^2=1$): $A = \sqrt{x_0^2 + (v_0/\omega)^2}$.</li><li>Divide the second by the first: $\tan\phi = -v_0/(\omega x_0)$. Choose the quadrant from the signs of $x_0$ and $v_0$.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-1-14">1.14</a> general solution · <a class="xref" href="#eq-1-12-1-13">1.12–1.13</a> velocity</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Taking $\phi$ from $\tan^{-1}$ without checking the quadrant.</li><li>Released from rest at $x_0$ means $v_0 = 0$, so $A = x_0$, $\phi = 0$: no calculation needed.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>Two constants appear because the SHM equation is second order: it fixes the acceleration, so the position and velocity at one instant must be supplied from outside. Every second-order equation in this course (damped, driven, coupled) needs exactly this step.</p></details>
+  </div>
+</div>
+
 <div class="sec-title">1.2 · A Mass on a Spring</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-2">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.2</span>
     <div class="eqmain"><div class="eqdisp">$F = -kx$</div><div class="eqname">Hooke's law — the restoring force</div></div>
@@ -307,7 +351,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-6">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.6</span>
     <div class="eqmain"><div class="eqdisp">$$\dfrac{\mathrm d^2x}{\mathrm dt^2} = -\omega^2 x$$</div><div class="eqname">The equation of SHM — boxed in the text; the master equation of the chapter</div></div>
@@ -329,7 +373,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-7">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.7</span>
     <div class="eqmain"><div class="eqdisp">$$\omega^2 = \dfrac{k}{m}$$</div><div class="eqname">Angular frequency of a mass on a spring</div></div>
@@ -346,7 +390,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-14">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.14</span>
     <div class="eqmain"><div class="eqdisp">$$x = A\cos(\omega t + \phi)$$</div><div class="eqname">General solution for SHM — boxed in the text</div></div>
@@ -366,7 +410,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-12-1-13">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.12–1.13</span>
     <div class="eqmain"><div class="eqdisp">$$v = -\omega A\sin\omega t, \qquad a = -\omega^2 A\cos\omega t = -\omega^2 x$$</div><div class="eqname">Velocity and acceleration from the displacement</div></div>
@@ -381,7 +425,7 @@ body {
 
 <div class="sec-title">1.2.5 · Energy of a Simple Harmonic Oscillator</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-19">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.19</span>
     <div class="eqmain"><div class="eqdisp">$$E = K + U = \tfrac12 mv^2 + \tfrac12 kx^2$$</div><div class="eqname">Total mechanical energy — boxed in the text</div></div>
@@ -400,7 +444,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-23">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.23</span>
     <div class="eqmain"><div class="eqdisp">$$E = \tfrac12 kA^2$$</div><div class="eqname">Total energy in terms of amplitude alone</div></div>
@@ -415,7 +459,7 @@ body {
 
 <div class="sec-title">1.2.6 · Why Small Oscillations Are Always SHM</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-26-1-27">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.26–1.27</span>
     <div class="eqmain"><div class="eqdisp">$$U(x) \approx \frac{x^2}{2}\left(\frac{\mathrm d^2U}{\mathrm dx^2}\right)_{x=0}, \qquad F = -x\left(\frac{\mathrm d^2U}{\mathrm dx^2}\right)_{x=0}$$</div><div class="eqname">Taylor expansion near equilibrium — the universal justification for SHM</div></div>
@@ -430,7 +474,7 @@ body {
 
 <div class="sec-title">1.3 · The Pendulum</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-29-1-31">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.29, 1.31</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2\theta}{\mathrm dt^2} = -\frac{g}{l}\sin\theta \;\; \xrightarrow{\text{small }\theta} \;\; \frac{\mathrm d^2\theta}{\mathrm dt^2} = -\frac{g}{l}\theta$$</div><div class="eqname">Simple pendulum equation of motion, exact then small-angle</div></div>
@@ -451,7 +495,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-43a-c">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.43a–c</span>
     <div class="eqmain"><div class="eqdisp">$$E = \tfrac12\alpha v^2 + \tfrac12\beta x^2$$</div><div class="eqname">The universal energy signature of SHM</div></div>
@@ -472,7 +516,7 @@ body {
 
 <div class="sec-title">1.4 · Oscillations in Electrical Circuits</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1-54">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1.54</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2q}{\mathrm dt^2} = -\frac{1}{LC}q$$</div><div class="eqname">The LC circuit — SHM in an electrical system</div></div>
@@ -499,9 +543,41 @@ body {
 <div id="ch2" class="panel">
 <div class="intro">Chapter 2 adds one term to the master equation: a velocity-proportional damping force. Everything here is organized around a single comparison — $\gamma^2/4$ (the damping) versus $\omega_0^2$ (the spring-like restoring term) — and which one wins determines whether the system oscillates at all.</div>
 
+<div class="sec-title">Methods · how problems in this chapter are solved</div>
+
+<div class="eqcard method" id="m-classify">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Write the damped equation and classify the damping</div><div class="eqname">“A damping force −bv acts …”, “is the motion oscillatory?”, “what value of b gives critical damping?”</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>SHM plus a force proportional to velocity. The first question is always which regime it is in.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li>Newton's second law with the damping force: $m\ddot x = -kx - b\dot x$.</li><li>Divide both sides by $m$ to reach standard form $\ddot x + \gamma\dot x + \omega_0^2x = 0$; read off $\gamma = b/m$ and $\omega_0^2 = k/m$.</li><li>Compare $\gamma/2$ with $\omega_0$: $\gamma/2 < \omega_0$ light (oscillates), $=\omega_0$ critical, $>\omega_0$ heavy (no oscillation).</li><li>For light damping, the oscillation frequency is $\omega = \sqrt{\omega_0^2 - \gamma^2/4}$ and the amplitude falls as $e^{-\gamma t/2}$.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-2-2">2.2</a> damping force · <a class="xref" href="#eq-2-5">2.5</a> standard form · <a class="xref" href="#eq-2-7-2-8">2.7–2.8</a> light · <a class="xref" href="#eq-2-16">2.16</a> critical · <a class="xref" href="#eq-2-13">2.13</a> heavy</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Amplitude decays as $e^{-\gamma t/2}$, not $e^{-\gamma t}$. The energy decays as $e^{-\gamma t}$.</li><li>Critical damping is $\gamma = 2\omega_0$, not $\gamma = \omega_0$.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>Where the regimes come from: trying $x = e^{pt}$ turns the equation into $p^2 + \gamma p + \omega_0^2 = 0$, so $p = -\gamma/2 \pm\sqrt{\gamma^2/4 - \omega_0^2}$. A negative quantity under the root gives oscillation; zero gives the repeated root (critical); positive gives two decaying exponentials (heavy). The same quadratic decides everything.</p></details>
+  </div>
+</div>
+
+<div class="eqcard method" id="m-decay">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Get γ, τ or Q from decay data</div><div class="eqname">“The amplitude falls to half in …”, “after n oscillations the energy is …”, “find the Q of …”</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>You are given how fast something dies away, and asked for a damping parameter (or the reverse).</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li>Decide whether the data are about <b>amplitude</b> ($\propto e^{-\gamma t/2}$) or <b>energy</b> ($\propto e^{-\gamma t}$).</li><li>Write the ratio: e.g. $A(t)/A_0 = e^{-\gamma t/2}$.</li><li>Take the natural log of both sides and solve for $\gamma$: divide by $-t/2$.</li><li>Then $\tau = 1/\gamma$ and $Q = \omega_0/\gamma$. For successive peaks one period apart use the log decrement $\ln(A_n/A_{n+1}) = \gamma T/2$.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-2-9">2.9</a> log decrement · <a class="xref" href="#eq-2-18-2-19">2.18–2.19</a> energy decay · <a class="xref" href="#eq-2-21-2-23">2.21–2.23</a> Q</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Mixing amplitude and energy decay (factor of 2).</li><li>Using $\log_{10}$ instead of $\ln$.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>Physical meaning of $Q$: about $2\pi$ times the energy stored divided by the energy lost per cycle, or roughly the number of oscillations (times $\pi$) before the energy falls to $1/e$. A tuning fork has $Q$ in the thousands; a car suspension is near critical.</p></details>
+  </div>
+</div>
+
 <div class="sec-title">2.2 · The Equation of Motion with Damping</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-2">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.2</span>
     <div class="eqmain"><div class="eqdisp">$$F_d = -bv$$</div><div class="eqname">Damping force, proportional to velocity</div></div>
@@ -518,7 +594,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-5">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.5</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2x}{\mathrm dt^2} + \gamma\frac{\mathrm dx}{\mathrm dt} + \omega_0^2 x = 0$$</div><div class="eqname">The damped harmonic oscillator equation — boxed in the text</div></div>
@@ -538,7 +614,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-7-2-8">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.7–2.8</span>
     <div class="eqmain"><div class="eqdisp">$$x = A_0\exp(-\gamma t/2)\cos(\omega t + \phi), \qquad \omega^2 = \omega_0^2 - \gamma^2/4$$</div><div class="eqname">Light damping — boxed; oscillation with a decaying envelope</div></div>
@@ -558,7 +634,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-9">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.9</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{A_n}{A_{n+1}} = \exp\!\left(\frac{\gamma T}{2}\right), \qquad \ln\!\left(\frac{A_n}{A_{n+1}}\right) = \frac{\gamma T}{2}$$</div><div class="eqname">Logarithmic decrement — ratio of successive amplitude peaks</div></div>
@@ -576,7 +652,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-13">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.13</span>
     <div class="eqmain"><div class="eqdisp">$$x = A\exp[(-\gamma/2+\sqrt{\gamma^2/4-\omega_0^2})t] + B\exp[(-\gamma/2-\sqrt{\gamma^2/4-\omega_0^2})t]$$</div><div class="eqname">Heavy (over) damping — no oscillation at all</div></div>
@@ -592,7 +668,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-16">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.16</span>
     <div class="eqmain"><div class="eqdisp">$$x = A\exp(-\gamma t/2) + Bt\exp(-\gamma t/2)$$</div><div class="eqname">Critical damping — fastest return to equilibrium, no overshoot</div></div>
@@ -610,7 +686,7 @@ body {
 
 <div class="sec-title">2.3 · Rate of Energy Loss</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-18-2-19">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.18–2.19</span>
     <div class="eqmain"><div class="eqdisp">$$E(t) = E_0\exp(-\gamma t) = E_0\exp(-t/\tau)$$</div><div class="eqname">Exponential energy decay — boxed in the text</div></div>
@@ -629,7 +705,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-21-2-23">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.21, 2.23</span>
     <div class="eqmain"><div class="eqdisp">$$Q = \frac{\omega_0}{\gamma} = \frac{\text{energy stored}}{\text{energy dissipated per radian}}$$</div><div class="eqname">The quality factor Q — boxed in the text</div></div>
@@ -648,7 +724,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-24-2-25">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.24–2.25</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\mathrm d^2x}{\mathrm dt^2} + \frac{\omega_0}{Q}\frac{\mathrm dx}{\mathrm dt} + \omega_0^2 x = 0, \qquad \omega = \omega_0(1-1/4Q^2)^{1/2}$$</div><div class="eqname">The damped oscillator equation, rewritten in terms of Q</div></div>
@@ -663,7 +739,7 @@ body {
 
 <div class="sec-title">2.4 · Damped Electrical Oscillations</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-26">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.26</span>
     <div class="eqmain"><div class="eqdisp">$$L\frac{\mathrm d^2q}{\mathrm dt^2} + R\frac{\mathrm dq}{\mathrm dt} + \frac{q}{C} = 0$$</div><div class="eqname">The damped LCR circuit — the electrical analog of Eq. 2.3b</div></div>
@@ -679,7 +755,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-2-29-2-30">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">2.29–2.30</span>
     <div class="eqmain"><div class="eqdisp">$$\omega^2 = \frac{1}{LC} - \frac{R^2}{4L^2}, \qquad Q = \frac{1}{R}\sqrt{\frac{L}{C}}$$</div><div class="eqname">Oscillation frequency and Q of a damped LCR circuit</div></div>
@@ -698,9 +774,71 @@ body {
 <div id="ch5" class="panel">
 <div class="intro">Chapter 5 moves from one oscillator to a whole medium. A travelling wave is a disturbance whose <em>shape</em> moves at speed $v$ while each point of the medium only oscillates in place. Almost every equation below either describes that moving shape, links its space pattern ($\lambda$, $k$) to its time pattern ($T$, $f$, $\omega$) through $v$, or says which functions obey the wave equation. Labels on the left are topic tags; King's equation numbers to be added when checked against the text.</div>
 
+<div class="sec-title">Methods · how problems in this chapter are solved</div>
+
+<div class="eqcard method" id="m-write">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Write the equation of a travelling wave</div><div class="eqname">“Obtain an equation describing the wave” — PS6 Problem 1</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>You are given an amplitude, a frequency (or period), a speed (or wavelength), a direction, and something about the start.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li><b>Direction.</b> Toward $+x$: use $kx - \omega t$. Toward $-x$: $kx + \omega t$.</li><li><b>Time pattern.</b> $\omega = 2\pi f$ (or $2\pi/T$).</li><li><b>Space pattern.</b> $\lambda = v/f$, then $k = 2\pi/\lambda$. Check $\omega/k = v$.</li><li><b>Phase.</b> Substitute the starting condition into $A\cos(kx-\omega t+\phi)$ to fix $\phi$ (maximum at the start → cosine, $\phi=0$).</li><li><b>Check.</b> Set $x=0$: you should recover the source's SHM.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-sine">sine</a> sinusoidal wave · <a class="xref" href="#eq-defs">defs</a> definitions · <a class="xref" href="#eq-speed">speed</a> speed · <a class="xref" href="#eq-shape">shape</a> direction rule</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Writing $f$ where $\omega$ belongs: the argument of cos must be in radians.</li><li>Getting the direction backwards: $x - vt$ moves toward $+x$.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p><b>Route B, from the source.</b> The end at $x=0$ does SHM, $y(0,t) = A\cos\omega t$. A point at distance $x$ does the same thing a time $x/v$ later, so $y(x,t) = y(0, t - x/v) = A\cos(\omega t - kx)$. This shows why a wave has the form it does: a delay that grows with distance turns oscillation in time into a pattern in space.</p></details>
+  </div>
+</div>
+
+<div class="eqcard method" id="m-solves">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Show a function solves the wave equation</div><div class="eqname">“Show that the following are solutions to the wave equation” — PS6 Problem 2</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>You are handed $y(x,t)$ (or $\psi(x,y,z,t)$) and asked to verify it, or to find the condition that makes it work.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li>Compute $\partial y/\partial t$, then $\partial^2 y/\partial t^2$ (hold $x$ fixed; chain rule brings out $\omega$).</li><li>Compute $\partial y/\partial x$, then $\partial^2 y/\partial x^2$ (hold $t$ fixed; chain rule brings out $k$).</li><li>Substitute both into $\partial^2y/\partial t^2 = v^2\,\partial^2y/\partial x^2$.</li><li>Cancel the common function; what is left is the condition, usually $\omega^2 = v^2k^2$, i.e. $\omega/k = v$.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-1d">1d</a> wave equation · <a class="xref" href="#eq-complex">complex</a> complex form · <a class="xref" href="#eq-3d">3d</a> 3D</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Losing the chain-rule factor ($\omega$ or $k$) on each derivative.</li><li>Shortcut worth stating: if $y$ depends on $x$ and $t$ only through $x \pm vt$, it is a solution automatically.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>Why the condition is always $\omega/k = v$: the wave equation contains $v$ and nothing else, so it can only accept shapes that move at $v$. A sinusoid moves at $\omega/k$, so it qualifies exactly when the two speeds agree. In 3D the same step gives $k_1^2+k_2^2+k_3^2 = \omega^2/v^2$: the speed is fixed, the direction is free.</p></details>
+  </div>
+</div>
+
+<div class="eqcard method" id="m-convert">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Convert between λ, f, k and v</div><div class="eqname">“Calculate the frequency of a wave of wavelength …” — PS6 Problem 3</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>One of $\lambda$, $f$, $k$ is given; the medium tells you $v$.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li><b>Identify the medium.</b> Light, radio, X-rays: $v = c = 3.00\times10^8$ m/s. Sound in air: $v\approx 340$ m/s. String: $v=\sqrt{T/\mu}$.</li><li><b>Convert to SI.</b> nm $=10^{-9}$ m, mm $=10^{-3}$ m, kHz $=10^3$ Hz.</li><li><b>Apply</b> $v = f\lambda$: divide by whichever quantity is known.</li><li><b>Sanity check</b> the size against what you know (visible light ~$10^{14}$ Hz; audible sound has wavelengths from cm to m).</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-speed">speed</a> speed · <a class="xref" href="#eq-em">em</a> EM · <a class="xref" href="#eq-sound">sound</a> sound · <a class="xref" href="#eq-wavenum">wavenum</a> wavenumber</p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Using $c$ for sound.</li><li>Not stating which “wavenumber” ($1/\lambda$ or $2\pi/\lambda$) you assumed.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>The frequency belongs to the source and does not change when a wave enters a new medium; the speed belongs to the medium; the wavelength adjusts so that $v = f\lambda$ still holds.</p></details>
+  </div>
+</div>
+
+<div class="eqcard method" id="m-read">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">method</span>
+    <div class="eqmain"><div class="mtitle">Read the wave off a given equation</div><div class="eqname">“A wave is described by y = 0.02 sin(3x − 12t). Find its speed, wavelength …”</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Recognize it</div><p>An equation is given and the physical quantities are asked for. The reverse of the first method.</p></div>
+    <div class="block"><div class="block-label">Steps</div><ol class="steps"><li>Put it in the form $A\sin(kx \mp \omega t + \phi)$. Read $A$, $k$, $\omega$ directly.</li><li>$\lambda = 2\pi/k$, $f = \omega/2\pi$, $T = 1/f$, $v = \omega/k$.</li><li>Direction from the sign: $-$ between the terms → $+x$.</li></ol></div>
+    <div class="block"><div class="block-label">Uses</div><p><a class="xref" href="#eq-sine">sine</a> · <a class="xref" href="#eq-defs">defs</a> · <a class="xref" href="#eq-speed">speed</a></p></div>
+    <div class="block"><div class="block-label">Common mistakes</div><ul class="mist"><li>Reading $k$ as $\lambda$ or $\omega$ as $f$: the numbers inside the sine are angular quantities.</li></ul></div>
+    <details class="deeper"><summary>Go deeper</summary><p>If the equation is written as $A\sin 2\pi(x/\lambda - t/T)$ or $A\sin\frac{2\pi}{\lambda}(x - vt)$, it is the same wave; multiply out to find $k$ and $\omega$.</p></details>
+  </div>
+</div>
+
 <div class="sec-title">Describing a travelling wave</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-shape">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">shape</span>
     <div class="eqmain"><div class="eqdisp">$$y = f(x - vt) \quad\text{or}\quad y = f(x + vt)$$</div><div class="eqname">Any shape moving without change — the definition of a travelling wave</div></div>
@@ -716,7 +854,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-sine">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">sine</span>
     <div class="eqmain"><div class="eqdisp">$$y = A\cos(kx - \omega t + \phi)$$</div><div class="eqname">The sinusoidal (harmonic) travelling wave — the standard form used in problems</div></div>
@@ -735,7 +873,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-defs">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">defs</span>
     <div class="eqmain"><div class="eqdisp">$$k = \frac{2\pi}{\lambda}, \qquad \omega = 2\pi f, \qquad T = \frac{1}{f}$$</div><div class="eqname">Converting between the space pattern and the time pattern</div></div>
@@ -751,7 +889,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-speed">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">speed</span>
     <div class="eqmain"><div class="eqdisp">$$v = f\lambda = \frac{\omega}{k}$$</div><div class="eqname">Wave speed — links every space quantity to every time quantity</div></div>
@@ -767,7 +905,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-wavenum">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">wavenum</span>
     <div class="eqmain"><div class="eqdisp">$$\tilde\nu = \frac{1}{\lambda} \quad\text{vs.}\quad k = \frac{2\pi}{\lambda}$$</div><div class="eqname">Two quantities both called “wavenumber” — check which one a problem means</div></div>
@@ -785,7 +923,7 @@ body {
 
 <div class="sec-title">The wave equation</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-1d">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">1D</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\partial^2 y}{\partial t^2} = v^2\,\frac{\partial^2 y}{\partial x^2}$$</div><div class="eqname">The one-dimensional wave equation — the master equation of the chapter</div></div>
@@ -807,7 +945,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-complex">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">complex</span>
     <div class="eqmain"><div class="eqdisp">$$y = A\,e^{i(\omega t - kx)}$$</div><div class="eqname">Complex form — same wave, easier derivatives</div></div>
@@ -820,7 +958,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-3d">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">3D</span>
     <div class="eqmain"><div class="eqdisp">$$\frac{\partial^2 \psi}{\partial x^2}+\frac{\partial^2 \psi}{\partial y^2}+\frac{\partial^2 \psi}{\partial z^2} = \frac{1}{v^2}\frac{\partial^2 \psi}{\partial t^2}$$</div><div class="eqname">Three-dimensional wave equation</div></div>
@@ -838,7 +976,7 @@ body {
 
 <div class="sec-title">Wave speeds in particular media</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-string">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">string</span>
     <div class="eqmain"><div class="eqdisp">$$v = \sqrt{\frac{T}{\mu}}$$</div><div class="eqname">Transverse wave on a stretched string</div></div>
@@ -854,7 +992,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-em">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">EM</span>
     <div class="eqmain"><div class="eqdisp">$$c = f\lambda, \qquad c = 3.00\times10^{8}\ \text{m s}^{-1}$$</div><div class="eqname">Electromagnetic waves (radio, light, X-rays) in vacuum</div></div>
@@ -867,7 +1005,7 @@ body {
   </div>
 </div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-sound">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">sound</span>
     <div class="eqmain"><div class="eqdisp">$$v_{\text{sound}} \approx 340\ \text{m s}^{-1}\ \text{(air)}$$</div><div class="eqname">Sound in air — a longitudinal wave</div></div>
@@ -882,7 +1020,7 @@ body {
 
 <div class="sec-title">Worked problems</div>
 
-<div class="eqcard">
+<div class="eqcard" id="eq-ps6-1">
   <div class="eqhdr" onclick="toggle(this)">
     <span class="eqnum">PS6 · 1</span>
     <div class="eqmain"><div class="eqdisp">$$y = 0.15\cos(0.4\pi x - 20\pi t)\ \text{m}$$</div><div class="eqname">King 5-2 — writing the equation of a travelling wave</div></div>
@@ -900,6 +1038,13 @@ body {
 <li>$k = 2\pi/\lambda = 0.4\pi$ rad m⁻¹. Check: $\omega/k = 50$ m s⁻¹ ✓.</li>
 <li>Set $x=0,t=0$: $A\cos\phi = A$, so $\phi=0$.</li>
 <li>Substitute: $y = 0.15\cos(0.4\pi x - 20\pi t)$ m. At $x=0$ this is SHM, 10 Hz, max at $t=0$ ✓.</li>
+</ol>
+    </div>
+    <div class="block"><div class="block-label">Route B — from the source</div>
+      <ol style="padding-left:1.2em">
+<li>The end does SHM starting at its maximum, so $y(0,t) = 0.15\cos(20\pi t)$ (cosine because $\cos 0 = 1$ is its largest value).</li>
+<li>A point at distance $x$ copies the end a time $x/v$ later: $y(x,t) = y(0,\,t - x/v)$.</li>
+<li>Replace $t$ by $t - x/50$: $y = 0.15\cos(20\pi t - 0.4\pi x)$, the same wave.</li>
 </ol>
     </div>
   </div>
@@ -927,6 +1072,20 @@ function toggle(hdr) {
 function openCard(hdr) {
   if (!hdr.classList.contains('open')) toggle(hdr);
 }
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('.xref');
+  if (!a) return;
+  var card = document.querySelector(a.getAttribute('href'));
+  if (!card) return;
+  var panel = card.closest('.panel');
+  if (panel && !panel.classList.contains('active')) {
+    document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+    panel.classList.add('active');
+  }
+  var h = card.querySelector('.eqhdr');
+  if (h && !h.classList.contains('open')) toggle(h);
+});
+window.addEventListener('beforeprint', function () { document.querySelectorAll('details.deeper').forEach(function (d) { d.open = true; }); });
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.panel').forEach(function (panel) {
     var titles = panel.querySelectorAll('.sec-title');
