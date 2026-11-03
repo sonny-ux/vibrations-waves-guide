@@ -136,6 +136,18 @@ details.step[open] > summary::after { content: " －"; }
 .ah { fill: var(--text2); }
 @media print { .fig { break-inside: avoid; } }
 .method .block-label + p .xref[href^="#eq-ps"] { font-weight: 600; }
+.kb { padding: 6px 0 4px; }
+.kbkeys { display: flex; flex-wrap: wrap; gap: 5px; }
+.kk { min-width: 40px; padding: 6px 8px; background: var(--card); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; font: italic 18px 'Times New Roman', 'KaTeX_Math', serif; cursor: pointer; }
+.kk:hover, .kk.on { border-color: var(--text); background: var(--card2); }
+.kbout:empty, .sugg:empty { display: none; }
+.kbout, .sugg { margin-top: 8px; background: var(--card); border: 1px solid var(--border2); border-radius: 8px; padding: 6px 0; max-height: 50vh; overflow-y: auto; }
+.kbout a, .sugg a { display: flex; gap: 10px; align-items: baseline; padding: 7px 12px; color: var(--text); text-decoration: none; font-size: 15px; }
+.kbout a:hover, .sugg a:hover { background: var(--card2); }
+.kbout .ks { font: italic 19px 'Times New Roman', serif; min-width: 34px; color: var(--text); }
+.sugg .st { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); min-width: 64px; }
+#kbBtn.on { border-color: var(--text); color: var(--text); }
+@media print { .kb { display: none !important; } }
 html, body { background: var(--bg); }
 .theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; }
 .theme-btn:hover { color: var(--text); }
@@ -395,11 +407,17 @@ details.deeper[open] { padding-bottom: 10px; }
 <div class="tab-nav">
   <div class="tab-nav-inner">
     <div class="tools">
-      <input id="q" type="search" placeholder="Search equations, variables, methods…" aria-label="Search the guide" autocomplete="off">
+      <input id="q" type="search" placeholder="Search, or tap αβ for symbols" aria-label="Search the guide" autocomplete="off">
+      <button class="tbtn" id="kbBtn" aria-label="Symbol keyboard" onclick="toggleKb()">αβ</button>
       <button class="tbtn" id="expBtn" onclick="toggleAll()">Expand all</button>
       <button class="tbtn" onclick="document.body.classList.toggle('show-help')" aria-label="How to use this guide">?</button>
       <button class="tbtn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
     </div>
+<div class="kb" id="kb" hidden>
+  <div class="kbkeys"><button class="kk" data-i="0">ω</button><button class="kk" data-i="1">ω₀</button><button class="kk" data-i="2">k</button><button class="kk" data-i="3">λ</button><button class="kk" data-i="4">f</button><button class="kk" data-i="5">T</button><button class="kk" data-i="6">v</button><button class="kk" data-i="7">A</button><button class="kk" data-i="8">φ</button><button class="kk" data-i="9">γ</button><button class="kk" data-i="10">τ</button><button class="kk" data-i="11">Q</button><button class="kk" data-i="12">b</button><button class="kk" data-i="13">m</button><button class="kk" data-i="14">μ</button><button class="kk" data-i="15">c</button><button class="kk" data-i="16">ν̃</button><button class="kk" data-i="17">θ</button><button class="kk" data-i="18">g</button><button class="kk" data-i="19">l</button><button class="kk" data-i="20">E</button><button class="kk" data-i="21">x</button><button class="kk" data-i="22">y</button><button class="kk" data-i="23">L C R</button><button class="kk" data-i="24">∂</button></div>
+  <div class="kbout" id="kbout"></div>
+</div>
+<div class="sugg" id="sugg"></div>
     <div class="tabs">
     <button class="stab active" onclick="switchTab('basics')">Basics · Quick Reference</button>
     <button class="stab" onclick="switchTab('concepts')">Concepts</button>
@@ -1369,6 +1387,59 @@ document.addEventListener('click', function (e) {
   if (h && !h.classList.contains('open')) toggle(h);
 });
 window.addEventListener('beforeprint', function () { document.querySelectorAll('details.deeper').forEach(function (d) { d.open = true; }); });
+var SYMS = [["ω", [["angular frequency", "c-angfreq"]]], ["ω₀", [["natural angular frequency", "eq-2-5"]]], ["k", [["wavenumber (Ch. 5)", "c-wavenumber"], ["spring constant (Ch. 1)", "eq-1-2"]]], ["λ", [["wavelength", "c-wavelength"]]], ["f", [["frequency", "c-frequency"], ["shape of a travelling wave, f(x − vt)", "eq-shape"]]], ["T", [["period", "c-period"], ["tension in a string", "eq-string"]]], ["v", [["wave speed", "c-speed"], ["velocity of an oscillating mass", "eq-1-12-1-13"]]], ["A", [["amplitude", "c-amplitude"]]], ["φ", [["phase constant", "c-phase"]]], ["γ", [["damping rate", "c-gamma"]]], ["τ", [["energy decay time", "eq-2-18-2-19"]]], ["Q", [["quality factor", "c-q"]]], ["b", [["damping coefficient", "eq-2-2"]]], ["m", [["mass", "eq-1-7"]]], ["μ", [["mass per unit length", "eq-string"]]], ["c", [["speed of light", "eq-em"]]], ["ν̃", [["spectroscopic wavenumber, 1/λ", "eq-wavenum"]]], ["θ", [["angle of a pendulum", "eq-1-29-1-31"]]], ["g", [["gravitational acceleration", "eq-1-29-1-31"]]], ["l", [["pendulum length", "eq-1-29-1-31"]]], ["E", [["total energy", "eq-1-19"]]], ["x", [["displacement (Ch. 1–2) or position along the wave (Ch. 5)", "eq-1-14"]]], ["y", [["displacement of the medium", "eq-shape"]]], ["L C R", [["inductance, capacitance, resistance", "eq-2-26"]]], ["∂", [["partial derivative", "c-partial"]]]];
+function toggleKb(force){
+  var kb=document.getElementById('kb'), on = force===undefined ? kb.hidden : force;
+  kb.hidden=!on; document.getElementById('kbBtn').classList.toggle('on', on);
+  if(!on){ document.getElementById('kbout').innerHTML=''; document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); }
+}
+function goTo(href){
+  var card=document.querySelector(href); if(!card) return;
+  var q=document.getElementById('q'); if(q.value){ q.value=''; runSearch(); }
+  var panel=card.closest('.panel');
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active', p===panel);});
+  document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick')||'').indexOf("'"+panel.id+"'")>=0); });
+  var h=card.querySelector('.eqhdr'); if(h && !h.classList.contains('open')) toggle(h);
+  document.getElementById('sugg').innerHTML=''; toggleKb(false);
+  setTimeout(function(){ var y=card.getBoundingClientRect().top+window.scrollY-document.querySelector('.tab-nav').offsetHeight-8; window.scrollTo({top:y,behavior:'smooth'}); },30);
+}
+var INDEX=null;
+function buildIndex(){
+  INDEX=[];
+  document.querySelectorAll('.eqcard').forEach(function(c){
+    if(!c.id) return;
+    var name=(c.querySelector('.mtitle')||c.querySelector('.eqname')||{}).textContent||'';
+    var type=c.classList.contains('method')?'method':c.classList.contains('concept')?'concept':'equation';
+    var extra=c.classList.contains('concept') ? '' : (c.querySelector('.eqnum')||{}).textContent||'';
+    INDEX.push({t:name.trim(), type:type, tag:extra, href:'#'+c.id, hay:(name+' '+extra+' '+(c.querySelector('.eqhdr annotation')||{textContent:''}).textContent).toLowerCase()});
+  });
+  GLOSS.forEach(function(g){ if(g.c||g.see) INDEX.push({t:g.t, type:'term', tag:'', href:'#'+(g.c||g.see), hay:(g.t+' '+g.k.join(' ')).toLowerCase()}); });
+}
+function suggest(){
+  if(!INDEX) buildIndex();
+  var q=document.getElementById('q').value.trim().toLowerCase(), box=document.getElementById('sugg');
+  if(!q){ box.innerHTML=''; return; }
+  var rank={concept:0, term:1, method:2, equation:3};
+  var hits=INDEX.filter(function(e){return e.hay.indexOf(q)>=0;})
+    .sort(function(a,b){ var sa=a.t.toLowerCase().indexOf(q)===0?0:1, sb=b.t.toLowerCase().indexOf(q)===0?0:1; return sa-sb || rank[a.type]-rank[b.type]; });
+  var seen={}, out=[];
+  hits.forEach(function(e){ if(out.length<7 && !seen[e.href+e.t]){ seen[e.href+e.t]=1; out.push(e);} });
+  box.innerHTML=out.map(function(e){ return '<a href="'+e.href+'" data-go="'+e.href+'"><span class="st">'+e.type+'</span><span>'+e.t+(e.tag&&e.type==='equation'?' <span style="color:var(--muted)">· '+e.tag+'</span>':'')+'</span></a>'; }).join('');
+}
+document.addEventListener('click', function(e){
+  var go=e.target.closest('[data-go]'); if(go){ e.preventDefault(); goTo(go.dataset.go); return; }
+  var kk=e.target.closest('.kk');
+  if(kk){
+    document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); kk.classList.add('on');
+    var s=SYMS[+kk.dataset.i];
+    document.getElementById('kbout').innerHTML=s[1].map(function(m){return '<a href="#'+m[1]+'" data-go="#'+m[1]+'"><span class="ks">'+s[0]+'</span><span>'+m[0]+'</span></a>';}).join('');
+  }
+});
+document.addEventListener('DOMContentLoaded', function(){
+  var q=document.getElementById('q');
+  q.addEventListener('input', suggest);
+  q.addEventListener('keydown', function(e){ if(e.key==='Enter'){ var a=document.querySelector('#sugg a'); if(a){ e.preventDefault(); goTo(a.dataset.go); q.blur(); } } });
+});
 function toggleAll(){
   var hs=[].slice.call(document.querySelectorAll('.panel.active .eqhdr, body.searching .eqhdr'));
   var anyClosed=hs.some(function(h){return !h.classList.contains('open');});
