@@ -84,6 +84,22 @@ details.deeper > summary { color: var(--text) !important; }
 .eqbody .katex { font-size: 1.12em; }
 .qtable td.qe { font-size: 1.3em; padding-top: 10px !important; padding-bottom: 10px !important; }
 .mtitle { font-size: 1.15rem !important; }
+.tab-nav { position: sticky; top: 0; z-index: 20; }
+.tab-nav-inner { flex-direction: column; align-items: stretch !important; gap: 6px !important; padding-top: 10px !important; }
+.tools { display: flex; gap: 6px; align-items: center; }
+#q { flex: 1; min-width: 0; background: var(--card); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; padding: 7px 10px; font: inherit; font-size: 15px; }
+#q:focus { outline: none; border-color: var(--text); }
+.tbtn { background: var(--card); color: var(--text2); border: 1px solid var(--border2); border-radius: 6px; padding: 7px 10px; font: inherit; font-size: 13px; cursor: pointer; white-space: nowrap; }
+.tbtn:hover { color: var(--text); border-color: var(--text); }
+.tabs { display: flex; flex-wrap: wrap; gap: 2px; }
+.howto { display: none; }
+body.show-help .howto { display: block; }
+body.searching .panel { display: block !important; }
+body.searching .intro, body.searching .toc, body.searching .howto { display: none !important; }
+.hit-none { display: none !important; }
+.noresults { color: var(--muted); padding: 20px 0; display: none; }
+body.searching .noresults.on { display: block; }
+@media print { .tab-nav { display: none !important; } }
 html, body { background: var(--bg); }
 .theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; }
 .theme-btn:hover { color: var(--text); }
@@ -340,28 +356,25 @@ details.deeper[open] { padding-bottom: 10px; }
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="badge">KING</div>
-    <div class="header-text">
-      <div class="header-title">Vibrations &amp; Waves — Equation Guide</div>
-      <div class="header-sub">Physics III · Chapters 1, 2, 5 · growing over the semester</div>
-    </div>
-    <button class="theme-btn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
-    <div class="badge" style="background:var(--bdim);color:var(--blue);">REFERENCE</div>
-  </div>
-</div>
-
 <div class="tab-nav">
   <div class="tab-nav-inner">
+    <div class="tools">
+      <input id="q" type="search" placeholder="Search equations, variables, methods…" aria-label="Search the guide" autocomplete="off">
+      <button class="tbtn" id="expBtn" onclick="toggleAll()">Expand all</button>
+      <button class="tbtn" onclick="document.body.classList.toggle('show-help')" aria-label="How to use this guide">?</button>
+      <button class="tbtn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
+    </div>
+    <div class="tabs">
     <button class="stab active" onclick="switchTab('basics')">Basics · Quick Reference</button>
     <button class="stab" onclick="switchTab('ch1')">Ch. 1 · Simple Harmonic Motion</button>
     <button class="stab" onclick="switchTab('ch2')">Ch. 2 · Damped Oscillator</button>
     <button class="stab" onclick="switchTab('ch5')">Ch. 5 · Travelling Waves</button>
+    </div>
   </div>
 </div>
 
 <div class="main">
+<div class="noresults" id="noRes">No matches.</div>
 
 <div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Underlined links jump to the card they name.</div>
 <!-- ============ BASICS ============ -->
@@ -1153,6 +1166,8 @@ details.deeper[open] { padding-bottom: 10px; }
 
 <script>
 function switchTab(id) {
+  var q=document.getElementById('q'); if(q && q.value){ q.value=''; runSearch(); }
+  var eb=document.getElementById('expBtn'); if(eb) eb.textContent='Expand all';
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1182,6 +1197,38 @@ document.addEventListener('click', function (e) {
   if (h && !h.classList.contains('open')) toggle(h);
 });
 window.addEventListener('beforeprint', function () { document.querySelectorAll('details.deeper').forEach(function (d) { d.open = true; }); });
+function toggleAll(){
+  var hs=[].slice.call(document.querySelectorAll('.panel.active .eqhdr, body.searching .eqhdr'));
+  var anyClosed=hs.some(function(h){return !h.classList.contains('open');});
+  hs.forEach(function(h){ if(h.classList.contains('open')!==anyClosed) toggle(h); });
+  document.querySelectorAll('.panel.active details.deeper, body.searching details.deeper').forEach(function(d){d.open=anyClosed;});
+  document.getElementById('expBtn').textContent=anyClosed?'Collapse all':'Expand all';
+}
+function runSearch(){
+  var q=document.getElementById('q').value.trim().toLowerCase();
+  document.body.classList.toggle('searching', !!q);
+  var items=document.querySelectorAll('.eqcard, .qtable tbody tr');
+  var n=0;
+  items.forEach(function(el){
+    var hit=!q || el.textContent.toLowerCase().indexOf(q)>=0 || [].some.call(el.querySelectorAll('annotation'),function(a){return a.textContent.toLowerCase().indexOf(q)>=0;});
+    el.classList.toggle('hit-none', !hit); if(hit&&q) n++;
+  });
+  document.querySelectorAll('.sec-title').forEach(function(t){
+    var el=t.nextElementSibling, any=false;
+    while(el && !el.classList.contains('sec-title')){
+      if(el.classList.contains('eqcard') && !el.classList.contains('hit-none')) any=true;
+      if(el.classList.contains('qtable') && el.querySelector('tbody tr:not(.hit-none)')) any=true;
+      el=el.nextElementSibling;
+    }
+    t.classList.toggle('hit-none', !!q && !any);
+    var tb=t.nextElementSibling; if(tb && tb.classList.contains('qtable')) tb.classList.toggle('hit-none', !!q && !any);
+  });
+  document.getElementById('noRes').classList.toggle('on', !!q && n===0);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var q=document.getElementById('q'); q.addEventListener('input', runSearch);
+  q.addEventListener('keydown', function(e){ if(e.key==='Escape'){ q.value=''; runSearch(); q.blur(); } });
+});
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.panel').forEach(function (panel) {
     var titles = panel.querySelectorAll('.sec-title');
