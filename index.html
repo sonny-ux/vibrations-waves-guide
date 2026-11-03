@@ -237,6 +237,15 @@ body {
   .eqbody { padding: 4px 12px 14px; }
   .eqbody.open { padding-top: 12px; }
 }
+@media print {
+  body { background: #fff !important; }
+  .tab-nav, .eqarrow { display: none !important; }
+  .panel { display: block !important; }
+  .panel + .panel { break-before: page; }
+  .eqbody { display: block !important; padding-top: 10px; }
+  .eqcard { break-inside: avoid; box-shadow: none !important; }
+  .header { position: static !important; }
+}
 </style>
 </head>
 <body>
@@ -246,7 +255,7 @@ body {
     <div class="badge">KING</div>
     <div class="header-text">
       <div class="header-title">Vibrations &amp; Waves — Equation Guide</div>
-      <div class="header-sub">Physics III · Chapters 1–2 · growing over the semester</div>
+      <div class="header-sub">Physics III · Chapters 1, 2, 5 · growing over the semester</div>
     </div>
     <div class="badge" style="background:var(--bdim);color:var(--blue);">REFERENCE</div>
   </div>
@@ -256,6 +265,7 @@ body {
   <div class="tab-nav-inner">
     <button class="stab active" onclick="switchTab('ch1')">Ch. 1 · Simple Harmonic Motion</button>
     <button class="stab" onclick="switchTab('ch2')">Ch. 2 · Damped Oscillator</button>
+    <button class="stab" onclick="switchTab('ch5')">Ch. 5 · Travelling Waves</button>
   </div>
 </div>
 
@@ -668,6 +678,219 @@ body {
   <div class="eqbody">
     <div class="block"><div class="block-label">Reading it</div>
       <p>Direct substitution of the mechanical-to-electrical correspondence above into Eq. 2.6 and Eq. 2.21. Larger resistance $R$ means more damping (smaller $Q$), exactly as a larger $b$ would mechanically.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ============ CHAPTER 5 ============ -->
+<div id="ch5" class="panel">
+<div class="intro">Chapter 5 moves from one oscillator to a whole medium. A travelling wave is a disturbance whose <em>shape</em> moves at speed $v$ while each point of the medium only oscillates in place. Almost every equation below either describes that moving shape, links its space pattern ($\lambda$, $k$) to its time pattern ($T$, $f$, $\omega$) through $v$, or says which functions obey the wave equation. Labels on the left are topic tags; King's equation numbers to be added when checked against the text.</div>
+
+<div class="sec-title">Describing a travelling wave</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">shape</span>
+    <div class="eqmain"><div class="eqdisp">$$y = f(x - vt) \quad\text{or}\quad y = f(x + vt)$$</div><div class="eqname">Any shape moving without change — the definition of a travelling wave</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$y$</span> displacement of the medium at position $x$, time $t$ (m)</li><li><span class="psym">$f$</span> any function: the shape of the wave</li><li><span class="psym">$v$</span> wave speed (m s⁻¹)</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Origin</div>
+      <p>At $t=0$ the shape is $f(x)$. At time $t$, the same value of $f$ occurs where $x - vt$ has the same value, i.e. at $x$ shifted by $vt$. So the whole shape slides a distance $vt$ to the right. <b>Direction rule:</b> $x - vt$ → moves toward $+x$; $x + vt$ → moves toward $-x$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">sine</span>
+    <div class="eqmain"><div class="eqdisp">$$y = A\cos(kx - \omega t + \phi)$$</div><div class="eqname">The sinusoidal (harmonic) travelling wave — the standard form used in problems</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$A$</span> amplitude, the maximum displacement (m)</li><li><span class="psym">$k$</span> wavenumber: radians of phase per metre (rad m⁻¹)</li><li><span class="psym">$\omega$</span> angular frequency: radians of phase per second (rad s⁻¹)</li><li><span class="psym">$\phi$</span> phase constant (rad), set by the starting condition</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Reading it</div>
+      <p>Factor out $k$: $kx-\omega t = k(x - \tfrac{\omega}{k}t)$, so this is $f(x-vt)$ with $v=\omega/k$, moving toward $+x$. Use $kx+\omega t$ for $-x$. Fix one $x$ and you get SHM in time (Ch. 1); fix one $t$ and you get a sine pattern in space. Sine or cosine is a choice: $\sin\theta = \cos(\theta - \pi/2)$, so they differ only by $\phi$.</p>
+    </div>
+    <div class="block"><div class="block-label">Finding φ</div>
+      <p>Substitute the given condition, usually at $x=0,\ t=0$: $y(0,0) = A\cos\phi$. Maximum upward displacement gives $\cos\phi=1$, $\phi=0$; zero displacement moving up or down gives $\phi=\pm\pi/2$ (check the sign with $\partial y/\partial t$).</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">defs</span>
+    <div class="eqmain"><div class="eqdisp">$$k = \frac{2\pi}{\lambda}, \qquad \omega = 2\pi f, \qquad T = \frac{1}{f}$$</div><div class="eqname">Converting between the space pattern and the time pattern</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$\lambda$</span> wavelength: distance between neighbouring crests (m)</li><li><span class="psym">$f$</span> frequency: oscillations per second (Hz = s⁻¹)</li><li><span class="psym">$T$</span> period: time for one oscillation (s)</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Origin</div>
+      <p>One full cycle is $2\pi$ radians. Moving one wavelength along $x$ advances the phase by $2\pi$, so $k\lambda = 2\pi$. Waiting one period advances it by $2\pi$, so $\omega T = 2\pi$, and with $T=1/f$, $\omega = 2\pi f$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">speed</span>
+    <div class="eqmain"><div class="eqdisp">$$v = f\lambda = \frac{\omega}{k}$$</div><div class="eqname">Wave speed — links every space quantity to every time quantity</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Origin</div>
+      <p>In one period $T$ each crest moves forward exactly one wavelength, so $v = \lambda/T = f\lambda$. Substituting $f=\omega/2\pi$ and $\lambda = 2\pi/k$ gives $v=\omega/k$.</p>
+    </div>
+    <div class="block"><div class="block-label">Use</div>
+      <p>Any two of $v$, $f$ (or $\omega$), $\lambda$ (or $k$) give the third. The speed is set by the <em>medium</em>; the frequency is set by the <em>source</em>; the wavelength follows from both.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">ν̃ vs k</span>
+    <div class="eqmain"><div class="eqdisp">$$\tilde\nu = \frac{1}{\lambda} \quad\text{vs.}\quad k = \frac{2\pi}{\lambda}$$</div><div class="eqname">Two quantities both called “wavenumber” — check which one a problem means</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$\tilde\nu$</span> spectroscopic wavenumber: wavelengths per metre (m⁻¹)</li><li><span class="psym">$k$</span> angular wavenumber: radians per metre (rad m⁻¹)</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Caution</div>
+      <p>They differ by $2\pi$. A value given in plain m⁻¹ can be either; state which you assume in a write-up. Then $f = v\tilde\nu$ or $f = v k/2\pi$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">The wave equation</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">1D</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\partial^2 y}{\partial t^2} = v^2\,\frac{\partial^2 y}{\partial x^2}$$</div><div class="eqname">The one-dimensional wave equation — the master equation of the chapter</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$\partial/\partial t$</span> partial derivative: differentiate in $t$ holding $x$ fixed</li><li><span class="psym">$\partial/\partial x$</span> partial derivative: differentiate in $x$ holding $t$ fixed</li><li><span class="psym">$v$</span> wave speed</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Reading it</div>
+      <p>Left side: the acceleration of one point of the medium. Right side: the curvature of the shape at that point. Where the string curves most, it accelerates most. This is Newton's second law applied to a small piece of the medium, just as $\ddot x = -\omega^2 x$ was for one mass.</p>
+    </div>
+    <div class="block"><div class="block-label">Why f(x ± vt) solves it</div>
+      <p>Let $u = x - vt$. Chain rule: $\partial y/\partial x = f'(u)$ and $\partial^2 y/\partial x^2 = f''(u)$; $\partial y/\partial t = -v f'(u)$ and $\partial^2 y/\partial t^2 = v^2 f''(u)$. So $\partial^2y/\partial t^2 = v^2\,\partial^2y/\partial x^2$ for <em>any</em> shape $f$. Same for $x+vt$.</p>
+    </div>
+    <div class="block"><div class="block-label">Checking a candidate</div>
+      <p>1. Take $\partial^2y/\partial t^2$. 2. Take $\partial^2y/\partial x^2$. 3. Substitute both and see what condition makes the two sides equal (usually $\omega/k = v$). A sum of solutions with the same $v$ is also a solution (the equation is linear).</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">complex</span>
+    <div class="eqmain"><div class="eqdisp">$$y = A\,e^{i(\omega t - kx)}$$</div><div class="eqname">Complex form — same wave, easier derivatives</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Reading it</div>
+      <p>The physical wave is the real part, $A\cos(\omega t - kx)$. Each $\partial/\partial t$ brings down $i\omega$; each $\partial/\partial x$ brings down $-ik$. So $\partial^2/\partial t^2 \to -\omega^2$ and $\partial^2/\partial x^2 \to -k^2$. Direction: $\omega t - kx$ moves toward $+x$; $\omega t + kx$ toward $-x$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">3D</span>
+    <div class="eqmain"><div class="eqdisp">$$\frac{\partial^2 \psi}{\partial x^2}+\frac{\partial^2 \psi}{\partial y^2}+\frac{\partial^2 \psi}{\partial z^2} = \frac{1}{v^2}\frac{\partial^2 \psi}{\partial t^2}$$</div><div class="eqname">Three-dimensional wave equation</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$\psi$</span> the disturbance at point $(x,y,z)$ and time $t$</li><li><span class="psym">$k_1,k_2,k_3$</span> components of the wave vector $\mathbf k$; it points along the direction of travel</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Plane waves</div>
+      <p>$\psi = A\sin(k_1x+k_2y+k_3z-\omega t)$ is a wave whose crests are flat planes, travelling along $\mathbf k$. Its wavelength is $\lambda = 2\pi/|\mathbf k|$ with $|\mathbf k| = \sqrt{k_1^2+k_2^2+k_3^2}$. (PS6 Problem 2(b) asks you to derive the relation between $k_1,k_2,k_3,\omega,v$ from the equation above.)</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">Wave speeds in particular media</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">string</span>
+    <div class="eqmain"><div class="eqdisp">$$v = \sqrt{\frac{T}{\mu}}$$</div><div class="eqname">Transverse wave on a stretched string</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Parameters</div>
+      <ul class="params"><li><span class="psym">$T$</span> tension in the string (N) — not the period</li><li><span class="psym">$\mu$</span> mass per unit length (kg m⁻¹)</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Reading it</div>
+      <p>Same pattern as $\omega=\sqrt{k/m}$: a restoring quantity over an inertia quantity. Tighter string → faster wave; heavier string → slower wave.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">EM</span>
+    <div class="eqmain"><div class="eqdisp">$$c = f\lambda, \qquad c = 3.00\times10^{8}\ \text{m s}^{-1}$$</div><div class="eqname">Electromagnetic waves (radio, light, X-rays) in vacuum</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Use</div>
+      <p>All EM waves travel at $c$ in vacuum, so $f = c/\lambda$. Radio, visible light and X-rays differ only in $\lambda$ and $f$.</p>
+    </div>
+  </div>
+</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">sound</span>
+    <div class="eqmain"><div class="eqdisp">$$v_{\text{sound}} \approx 340\ \text{m s}^{-1}\ \text{(air)}$$</div><div class="eqname">Sound in air — a longitudinal wave</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Use</div>
+      <p>Use $v = f\lambda$ with this $v$, not $c$. Sound is a pressure wave in a medium; it does not travel at the speed of light. The value is given in problems when needed (King 5-6 uses 340 m s⁻¹).</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">Worked problems</div>
+
+<div class="eqcard">
+  <div class="eqhdr" onclick="toggle(this)">
+    <span class="eqnum">PS6 · 1</span>
+    <div class="eqmain"><div class="eqdisp">$$y = 0.15\cos(0.4\pi x - 20\pi t)\ \text{m}$$</div><div class="eqname">King 5-2 — writing the equation of a travelling wave</div></div>
+    <span class="eqarrow">▸</span>
+  </div>
+  <div class="eqbody">
+    <div class="block"><div class="block-label">Given</div>
+      <ul class="params"><li><span class="psym">$A$</span> 0.15 m</li><li><span class="psym">$f$</span> 10 Hz</li><li><span class="psym">$v$</span> 50 m s⁻¹, toward $+x$</li><li><span class="psym">start</span> $y(0,0)=+A$ (maximum upward at $x=0$, $t=0$)</li></ul>
+    </div>
+    <div class="block"><div class="block-label">Steps</div>
+      <ol style="padding-left:1.2em">
+<li>Wave moves toward $+x$, so use $y = A\cos(kx-\omega t+\phi)$.</li>
+<li>$\omega = 2\pi f$ (one cycle is $2\pi$ rad): $\omega = 20\pi$ rad s⁻¹.</li>
+<li>$v = f\lambda$; divide by $f$: $\lambda = 50/10 = 5.0$ m.</li>
+<li>$k = 2\pi/\lambda = 0.4\pi$ rad m⁻¹. Check: $\omega/k = 50$ m s⁻¹ ✓.</li>
+<li>Set $x=0,t=0$: $A\cos\phi = A$, so $\phi=0$.</li>
+<li>Substitute: $y = 0.15\cos(0.4\pi x - 20\pi t)$ m. At $x=0$ this is SHM, 10 Hz, max at $t=0$ ✓.</li>
+</ol>
     </div>
   </div>
 </div>
