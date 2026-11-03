@@ -237,6 +237,16 @@ body {
   .eqbody { padding: 4px 12px 14px; }
   .eqbody.open { padding-top: 12px; }
 }
+.toc { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 0 0 22px; }
+.toc-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.toc ol { padding-left: 1.3em; }
+.toc > ol > li { margin: 6px 0; font-weight: 600; }
+.toc a { color: var(--accent); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.toc ul { list-style: none; padding-left: 0; margin: 2px 0 0; font-weight: 400; font-size: .9em; color: var(--text2); }
+.toc ul li { margin: 1px 0; }
+.toc ul a { color: var(--text2); }
+.toc .tnum { font-family: 'JetBrains Mono', monospace; font-size: .85em; color: var(--muted); display: inline-block; min-width: 5.5em; }
 @media print {
   body { background: #fff !important; }
   .tab-nav, .eqarrow { display: none !important; }
@@ -759,7 +769,7 @@ body {
 
 <div class="eqcard">
   <div class="eqhdr" onclick="toggle(this)">
-    <span class="eqnum">ν̃ vs k</span>
+    <span class="eqnum">wavenum</span>
     <div class="eqmain"><div class="eqdisp">$$\tilde\nu = \frac{1}{\lambda} \quad\text{vs.}\quad k = \frac{2\pi}{\lambda}$$</div><div class="eqname">Two quantities both called “wavenumber” — check which one a problem means</div></div>
     <span class="eqarrow">▸</span>
   </div>
@@ -914,6 +924,46 @@ function toggle(hdr) {
   hdr.classList.toggle('open');
   body.classList.toggle('open');
 }
+function openCard(hdr) {
+  if (!hdr.classList.contains('open')) toggle(hdr);
+}
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.panel').forEach(function (panel) {
+    var titles = panel.querySelectorAll('.sec-title');
+    if (!titles.length) return;
+    var toc = document.createElement('nav');
+    toc.className = 'toc';
+    toc.innerHTML = '<div class="toc-label">Contents</div>';
+    var ol = document.createElement('ol');
+    titles.forEach(function (t, i) {
+      t.id = t.id || panel.id + '-s' + (i + 1);
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="#' + t.id + '">' + t.textContent + '</a>';
+      var ul = document.createElement('ul');
+      var el = t.nextElementSibling;
+      var n = 0;
+      while (el && !el.classList.contains('sec-title')) {
+        if (el.classList.contains('eqcard')) {
+          n++;
+          el.id = el.id || t.id + '-e' + n;
+          var num = el.querySelector('.eqnum'), name = el.querySelector('.eqname');
+          var item = document.createElement('li');
+          item.innerHTML = '<a href="#' + el.id + '"><span class="tnum">' + (num ? num.textContent : '') + '</span>' + (name ? name.textContent : '') + '</a>';
+          (function (card) {
+            item.querySelector('a').addEventListener('click', function () { openCard(card.querySelector('.eqhdr')); });
+          })(el);
+          ul.appendChild(item);
+        }
+        el = el.nextElementSibling;
+      }
+      if (n) li.appendChild(ul);
+      ol.appendChild(li);
+    });
+    toc.appendChild(ol);
+    var intro = panel.querySelector('.intro');
+    if (intro) intro.after(toc); else panel.prepend(toc);
+  });
+});
 </script>
 
 </body>
