@@ -102,6 +102,7 @@ body {
   max-width: 780px;
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 2px;
   padding: 8px 16px 0;
 }
@@ -257,6 +258,14 @@ details.deeper { margin-top: 10px; background: var(--card2); border-radius: 8px;
 details.deeper > summary { cursor: pointer; padding: 8px 0; font-weight: 600; color: var(--accent); font-size: .92rem; }
 details.deeper[open] { padding-bottom: 10px; }
 .howto { background: var(--bdim); color: var(--text2); border-radius: 10px; padding: 10px 14px; margin: 0 0 18px; font-size: .92rem; }
+.qtable { overflow-x: auto; margin: 0 0 18px; }
+.qtable table { border-collapse: collapse; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; font-size: .9rem; }
+.qtable th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.qtable td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text2); }
+.qtable tr:last-child td { border-bottom: none; }
+.qtable td.qe { color: var(--text); white-space: nowrap; min-width: 9em; }
+.qtable td.qs { white-space: nowrap; }
+@media print { .qtable tr { break-inside: avoid; } }
 @media print { details.deeper { display: block; } details.deeper > summary { list-style: none; } }
 @media print {
   body { background: #fff !important; }
@@ -284,7 +293,8 @@ details.deeper[open] { padding-bottom: 10px; }
 
 <div class="tab-nav">
   <div class="tab-nav-inner">
-    <button class="stab active" onclick="switchTab('ch1')">Ch. 1 · Simple Harmonic Motion</button>
+    <button class="stab active" onclick="switchTab('basics')">Basics · Quick Reference</button>
+    <button class="stab" onclick="switchTab('ch1')">Ch. 1 · Simple Harmonic Motion</button>
     <button class="stab" onclick="switchTab('ch2')">Ch. 2 · Damped Oscillator</button>
     <button class="stab" onclick="switchTab('ch5')">Ch. 5 · Travelling Waves</button>
   </div>
@@ -292,9 +302,33 @@ details.deeper[open] { padding-bottom: 10px; }
 
 <div class="main">
 
-<div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Blue links jump to the card they name.</div>
+<div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Blue links jump to the card they name.</div>
+<!-- ============ BASICS ============ -->
+<div id="basics" class="panel active">
+<div class="intro">Every small relation in one place, one per line: the ones you use inside other equations without thinking. Each row names the equation, its variables with units, and links to the card where it is explained. This tab is meant to fit on a printed page or two.</div>
+
+<div class="sec-title">Time: period, frequency, angular frequency</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$\omega = 2\pi f$</td><td>Angular frequency from frequency</td><td>$\omega$ rad s⁻¹; $f$ Hz (= s⁻¹)</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$T = \dfrac{1}{f}$</td><td>Period from frequency</td><td>$T$ s</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$T = \dfrac{2\pi}{\omega}$</td><td>Period from angular frequency</td><td></td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$f = \dfrac{\omega}{2\pi}$</td><td>Frequency from angular frequency</td><td></td><td class="qs"></td></tr></tbody></table></div>
+
+<div class="sec-title">Space: wavelength, wavenumber, speed</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$v = f\lambda$</td><td>Wave speed from frequency and wavelength</td><td>$v$ m s⁻¹; $\lambda$ m</td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$v = \dfrac{\omega}{k}$</td><td>Wave speed from angular quantities</td><td></td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$k = \dfrac{2\pi}{\lambda}$</td><td>Angular wavenumber</td><td>$k$ rad m⁻¹</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$\lambda = \dfrac{2\pi}{k} = \dfrac{v}{f}$</td><td>Wavelength</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\tilde\nu = \dfrac{1}{\lambda}$</td><td>Spectroscopic wavenumber (not $k$)</td><td>$\tilde\nu$ m⁻¹</td><td class="qs"><a class="xref" href="#eq-wavenum">wavenum</a></td></tr><tr><td class="qe">$c = 3.00\times10^8$ m s⁻¹</td><td>Speed of EM waves in vacuum</td><td></td><td class="qs"><a class="xref" href="#eq-em">em</a></td></tr><tr><td class="qe">$v_{\text{sound}} \approx 340$ m s⁻¹</td><td>Speed of sound in air</td><td></td><td class="qs"><a class="xref" href="#eq-sound">sound</a></td></tr><tr><td class="qe">$v = \sqrt{T/\mu}$</td><td>Wave speed on a string</td><td>$T$ tension N; $\mu$ kg m⁻¹</td><td class="qs"><a class="xref" href="#eq-string">string</a></td></tr></tbody></table></div>
+
+<div class="sec-title">Simple harmonic motion</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$F = -kx$</td><td>Hooke's law</td><td>$k$ N m⁻¹; $x$ m</td><td class="qs"><a class="xref" href="#eq-1-2">1.2</a></td></tr><tr><td class="qe">$\ddot x = -\omega^2 x$</td><td>SHM equation</td><td>$\ddot x$ m s⁻²</td><td class="qs"><a class="xref" href="#eq-1-6">1.6</a></td></tr><tr><td class="qe">$\omega = \sqrt{k/m}$</td><td>Spring–mass frequency</td><td>$m$ kg</td><td class="qs"><a class="xref" href="#eq-1-7">1.7</a></td></tr><tr><td class="qe">$\omega = \sqrt{g/l}$</td><td>Pendulum frequency (small angle)</td><td>$g$ m s⁻²; $l$ m</td><td class="qs"><a class="xref" href="#eq-1-29-1-31">1.29–1.31</a></td></tr><tr><td class="qe">$\omega = 1/\sqrt{LC}$</td><td>LC circuit frequency</td><td>$L$ H; $C$ F</td><td class="qs"><a class="xref" href="#eq-1-54">1.54</a></td></tr><tr><td class="qe">$x = A\cos(\omega t+\phi)$</td><td>SHM solution</td><td>$A$ m; $\phi$ rad</td><td class="qs"><a class="xref" href="#eq-1-14">1.14</a></td></tr><tr><td class="qe">$v_{\max} = A\omega$</td><td>Maximum speed (at $x=0$)</td><td></td><td class="qs"><a class="xref" href="#eq-1-12-1-13">1.12–1.13</a></td></tr><tr><td class="qe">$a_{\max} = A\omega^2$</td><td>Maximum acceleration (at $x=\pm A$)</td><td></td><td class="qs"><a class="xref" href="#eq-1-12-1-13">1.12–1.13</a></td></tr><tr><td class="qe">$E = \tfrac12 kA^2$</td><td>Total energy</td><td>$E$ J</td><td class="qs"><a class="xref" href="#eq-1-23">1.23</a></td></tr></tbody></table></div>
+
+<div class="sec-title">Damping</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$\gamma = b/m$</td><td>Damping rate</td><td>$\gamma$ s⁻¹; $b$ kg s⁻¹</td><td class="qs"><a class="xref" href="#eq-2-5">2.5</a></td></tr><tr><td class="qe">$\omega_0^2 = k/m$</td><td>Natural angular frequency squared</td><td></td><td class="qs"><a class="xref" href="#eq-2-5">2.5</a></td></tr><tr><td class="qe">$A(t) = A_0e^{-\gamma t/2}$</td><td>Amplitude decay (light damping)</td><td></td><td class="qs"><a class="xref" href="#eq-2-7-2-8">2.7–2.8</a></td></tr><tr><td class="qe">$E(t) = E_0e^{-\gamma t}$</td><td>Energy decay</td><td></td><td class="qs"><a class="xref" href="#eq-2-18-2-19">2.18–2.19</a></td></tr><tr><td class="qe">$\tau = 1/\gamma$</td><td>Energy decay time</td><td>$\tau$ s</td><td class="qs"><a class="xref" href="#eq-2-18-2-19">2.18–2.19</a></td></tr><tr><td class="qe">$Q = \omega_0/\gamma$</td><td>Quality factor</td><td>dimensionless</td><td class="qs"><a class="xref" href="#eq-2-21-2-23">2.21–2.23</a></td></tr><tr><td class="qe">$\omega = \sqrt{\omega_0^2-\gamma^2/4}$</td><td>Damped oscillation frequency</td><td></td><td class="qs"><a class="xref" href="#eq-2-7-2-8">2.7–2.8</a></td></tr><tr><td class="qe">$\gamma = 2\omega_0$</td><td>Critical damping</td><td></td><td class="qs"><a class="xref" href="#eq-2-16">2.16</a></td></tr></tbody></table></div>
+
+<div class="sec-title">Math you recall inside problems</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$\cos 0 = 1,\ \sin 0 = 0$</td><td>Cosine starts at its max; sine starts at zero</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\sin\theta = \cos(\theta-\pi/2)$</td><td>Sine is cosine shifted by a quarter cycle</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\cos(-\theta)=\cos\theta$</td><td>Cosine is even (lets you flip $kx-\omega t$ to $\omega t - kx$)</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\sin\theta\approx\theta,\ \cos\theta\approx 1-\theta^2/2$</td><td>Small-angle approximations ($\theta$ in radians)</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\dfrac{d}{dt}\cos\omega t = -\omega\sin\omega t$</td><td>Derivative brings out $\omega$ (chain rule)</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\dfrac{d}{dt}\sin\omega t = \omega\cos\omega t$</td><td></td><td></td><td class="qs"></td></tr><tr><td class="qe">$\dfrac{d}{dt}e^{pt} = p\,e^{pt}$</td><td>Exponential: derivative is a multiple of itself</td><td></td><td class="qs"></td></tr><tr><td class="qe">$e^{i\theta} = \cos\theta + i\sin\theta$</td><td>Euler's formula (complex form of waves)</td><td></td><td class="qs"><a class="xref" href="#eq-complex">complex</a></td></tr><tr><td class="qe">$\ln(e^{a}) = a$</td><td>Undo an exponential (decay problems)</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\cos^2\theta+\sin^2\theta = 1$</td><td>Used to find $A$ from $x_0, v_0$</td><td></td><td class="qs"></td></tr></tbody></table></div>
+
+<div class="sec-title">Units and prefixes</div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">Hz $=$ s⁻¹</td><td>Hertz: cycles per second</td><td></td><td class="qs"></td></tr><tr><td class="qe">rad</td><td>Radian: dimensionless; $2\pi$ rad $=$ one cycle</td><td></td><td class="qs"></td></tr><tr><td class="qe">n $=10^{-9}$, µ $=10^{-6}$, m $=10^{-3}$</td><td>nano, micro, milli</td><td></td><td class="qs"></td></tr><tr><td class="qe">k $=10^{3}$, M $=10^{6}$, G $=10^{9}$</td><td>kilo, mega, giga</td><td></td><td class="qs"></td></tr></tbody></table></div>
+
+</div>
+
 <!-- ============ CHAPTER 1 ============ -->
-<div id="ch1" class="panel active">
+<div id="ch1" class="panel">
 <div class="intro">Every equation in this chapter describes one thing: a system with a restoring force proportional to displacement, $F=-kx$. Once you recognize that pattern in <em>any</em> physical system — a spring, a pendulum, an LC circuit — every equation below applies to it, just with the labels changed.</div>
 
 <div class="sec-title">Methods · how problems in this chapter are solved</div>
@@ -1081,6 +1115,7 @@ document.addEventListener('click', function (e) {
   if (panel && !panel.classList.contains('active')) {
     document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
     panel.classList.add('active');
+    document.querySelectorAll('.stab').forEach(function (t) { t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'" + panel.id + "'") >= 0); });
   }
   var h = card.querySelector('.eqhdr');
   if (h && !h.classList.contains('open')) toggle(h);
