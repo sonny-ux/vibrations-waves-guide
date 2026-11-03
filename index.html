@@ -614,7 +614,19 @@ $$\underbrace{kx - \omega t}_{\text{phase}} = k\Big(\underbrace{x - \tfrac{\omeg
     <div class="eqmain"><div class="eqdisp">$$v = f\lambda = \frac{\omega}{k}$$</div><div class="eqname">Wave speed — how fast the shape moves</div></div>
     <span class="eqarrow">▸</span>
   </div>
-  <div class="eqbody"><div class="block"><div class="block-label">Definition</div><p>The speed at which the wave shape (a crest, say) travels through the medium. Units: m/s.</p></div><div class="block"><div class="block-label">What sets it</div><p>The medium. On a string, $v = \sqrt{T/\mu}$ (tension over mass per length). Light in vacuum, $c = 3.00\times10^8$ m/s. Sound in air, about 340 m/s.</p></div><div class="block"><div class="block-label">Watch out</div><p><b>Wave speed is not the speed of the medium.</b> Each point of a string moves up and down with velocity $\partial y/\partial t$, which changes all the time and is unrelated to $v$. The shape moves along; the string does not.</p></div><div class="block"><div class="block-label">Related</div><p><a class="xref" href="#c-pattern">time and space pattern</a> · <a class="xref" href="#eq-string">string card</a> · <a class="xref" href="#eq-speed">speed card</a></p></div></div>
+  <div class="eqbody"><div class="block"><div class="block-label">Definition</div><p>The speed at which the wave shape (a crest, say) travels through the medium. Units: m/s.</p></div><div class="block"><div class="block-label">How the three forms relate</div>
+$$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
+<ol class="steps"><li><b>$\lambda/T$ is the definition:</b> in one period $T$ a crest moves one wavelength $\lambda$; speed is distance ÷ time.</li>
+<li><b>$f\lambda$ counts cycles:</b> $f = 1/T$, so $\lambda/T = \lambda\cdot\tfrac{1}{T} = f\lambda$. (cycles per second) × (metres per cycle) = metres per second.</li>
+<li><b>$\omega/k$ counts radians:</b> $\omega = 2\pi f$ and $k = 2\pi/\lambda$, so $\dfrac{\omega}{k} = \dfrac{2\pi f}{2\pi/\lambda} = f\lambda$. The $2\pi$ cancels: (rad/s) ÷ (rad/m) = m/s.</li></ol></div>
+<div class="block"><div class="block-label">What each variable does</div><ul class="mist">
+<li>$f$, $\omega$: <b>time</b> — how fast one point oscillates; set by the <b>source</b>.</li>
+<li>$\lambda$, $k$: <b>space</b> — how the shape repeats along the medium.</li>
+<li>$v$: set by the <b>medium</b>. So $\lambda = v/f$ follows; entering a new medium, $f$ stays and $\lambda$ changes.</li></ul></div>
+<div class="block"><div class="block-label">Which form to use</div><ul class="mist">
+<li>Given $f$ or $\lambda$ in Hz and metres: $v = f\lambda$ (PS6 · 3).</li>
+<li>Given an equation $A\cos(kx - \omega t)$: read $k$, $\omega$ and use $v = \omega/k$ (PS6 · 2).</li></ul></div>
+<div class="block"><div class="block-label">What sets it</div><p>The medium. On a string, $v = \sqrt{T/\mu}$ (tension over mass per length). Light in vacuum, $c = 3.00\times10^8$ m/s. Sound in air, about 340 m/s.</p></div><div class="block"><div class="block-label">Watch out</div><p><b>Wave speed is not the speed of the medium.</b> Each point of a string moves up and down with velocity $\partial y/\partial t$, which changes all the time and is unrelated to $v$. The shape moves along; the string does not.</p></div><div class="block"><div class="block-label">Related</div><p><a class="xref" href="#c-pattern">time and space pattern</a> · <a class="xref" href="#eq-string">string card</a> · <a class="xref" href="#eq-speed">speed card</a></p></div></div>
 </div>
 
 <div class="sec-title">Mathematical ideas</div>
