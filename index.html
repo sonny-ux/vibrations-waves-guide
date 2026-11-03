@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vibrations &amp; Waves — Equation Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Waves Guide">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="manifest" href="manifest.json">
+<title>Waves Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -86,7 +94,7 @@ details.deeper > summary { color: var(--text) !important; }
 .qtable td.qe { font-size: 1.3em; padding-top: 10px !important; padding-bottom: 10px !important; }
 .mtitle { font-size: 1.15rem !important; }
 .tab-nav { position: sticky; top: 0; z-index: 20; }
-.tab-nav-inner { flex-direction: column; align-items: stretch !important; gap: 6px !important; padding-top: 10px !important; }
+.tab-nav-inner { flex-direction: column; flex-wrap: nowrap !important; align-items: stretch !important; gap: 6px !important; padding-top: 10px !important; }
 .tools { display: flex; gap: 6px; align-items: center; }
 #q { flex: 1; min-width: 0; background: var(--card); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; padding: 7px 10px; font: inherit; font-size: 15px; }
 #q:focus { outline: none; border-color: var(--text); }
@@ -157,6 +165,43 @@ details.step[open] > summary::after { content: " －"; }
 .kbsel:empty { display: none; }
 .kbsel b { color: var(--text); font-family: 'KaTeX_Math', 'Times New Roman', serif; font-style: italic; font-weight: 400; font-size: 1.1em; }
 .kbsel a { color: var(--muted); }
+/* ===== Phone and tablet ===== */
+.tab-nav-inner { padding-left: max(16px, env(safe-area-inset-left)) !important; padding-right: max(16px, env(safe-area-inset-right)) !important; padding-top: max(10px, env(safe-area-inset-top)) !important; }
+.main { padding-left: max(16px, env(safe-area-inset-left)) !important; padding-right: max(16px, env(safe-area-inset-right)) !important; padding-bottom: max(70px, calc(env(safe-area-inset-bottom) + 40px)) !important; }
+#gpop { bottom: max(16px, calc(env(safe-area-inset-bottom) + 8px)); }
+.tbtn, .kk, .stab { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+#q { font-size: 16px !important; } /* 16px stops iOS zooming in on focus */
+.eqdisp, .qtable, .fig { -webkit-overflow-scrolling: touch; }
+@media (max-width: 640px) {
+  .tools { flex-wrap: wrap; min-width: 0; }
+  .tab-nav { overflow-x: hidden !important; }
+  #q { flex: 1 1 100%; order: 0; }
+  .tools .tbtn { flex: 1 1 0; text-align: center; padding: 8px 6px; }
+  .tabs { min-width: 0; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .stab { white-space: nowrap; flex: 0 0 auto; font-size: 14px !important; padding: 8px 10px !important; }
+  .eqhdr { flex-wrap: wrap !important; align-items: flex-start !important; gap: 4px 10px !important; padding: 12px 12px !important; }
+  .eqnum { order: 0; }
+  .eqmain { flex: 1 1 100% !important; order: 1; min-width: 0; }
+  .eqarrow { position: absolute; right: 12px; top: 12px; }
+  .eqcard { position: relative; }
+  .eqdisp { font-size: 1.4em !important; }
+  .eqbody { padding-left: 12px !important; padding-right: 12px !important; }
+  .eqbody .katex-display { font-size: 1.12em; }
+  .main { padding-top: 14px !important; }
+  /* Basics table: one stacked block per row */
+  .qtable thead { display: none; }
+  .qtable table, .qtable tbody, .qtable tr, .qtable td { display: block; width: 100%; }
+  .qtable tr { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .qtable td { border: none !important; padding: 2px 0 !important; }
+  .qtable td.qe { white-space: normal; font-size: 1.35em; padding-bottom: 4px !important; }
+  .qtable td:empty { display: none; }
+  .gloss td { display: block; }
+  .kk { min-width: 44px; min-height: 48px; }
+  .kbout, .sugg { max-height: 45vh; }
+  .intro { font-size: 15px; }
+  .toc .tnum { min-width: 4.5em; }
+}
 html, body { background: var(--bg); }
 .theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; }
 .theme-btn:hover { color: var(--text); }
