@@ -153,6 +153,10 @@ details.step[open] > summary::after { content: " －"; }
 .params li .pdesc { flex: 1; min-width: 0; }
 .params .psym { flex: 0 0 auto; }
 .block-label .katex, .sec-title .katex { text-transform: none; }
+.kbsel { font-size: 14px; color: var(--text2); margin-top: 8px; }
+.kbsel:empty { display: none; }
+.kbsel b { color: var(--text); font-family: 'KaTeX_Math', 'Times New Roman', serif; font-style: italic; font-weight: 400; font-size: 1.1em; }
+.kbsel a { color: var(--muted); }
 html, body { background: var(--bg); }
 .theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; }
 .theme-btn:hover { color: var(--text); }
@@ -420,6 +424,7 @@ details.deeper[open] { padding-bottom: 10px; }
     </div>
 <div class="kb" id="kb" hidden>
   <div class="kbkeys"><button class="kk" data-i="0">ω<span class="kn">omega</span></button><button class="kk" data-i="1">ω₀<span class="kn">omega-naught</span></button><button class="kk" data-i="2">k</button><button class="kk" data-i="3">λ<span class="kn">lambda</span></button><button class="kk" data-i="4">f</button><button class="kk" data-i="5">T</button><button class="kk" data-i="6">v</button><button class="kk" data-i="7">A</button><button class="kk" data-i="8">φ<span class="kn">phi</span></button><button class="kk" data-i="9">γ<span class="kn">gamma</span></button><button class="kk" data-i="10">τ<span class="kn">tau</span></button><button class="kk" data-i="11">Q</button><button class="kk" data-i="12">b</button><button class="kk" data-i="13">m</button><button class="kk" data-i="14">μ<span class="kn">mu</span></button><button class="kk" data-i="15">c</button><button class="kk" data-i="16">ν̃<span class="kn">1/λ</span></button><button class="kk" data-i="17">θ<span class="kn">theta</span></button><button class="kk" data-i="18">g</button><button class="kk" data-i="19">l</button><button class="kk" data-i="20">E</button><button class="kk" data-i="21">x</button><button class="kk" data-i="22">y</button><button class="kk" data-i="23">L C R</button><button class="kk" data-i="24">∂<span class="kn">partial</span></button></div>
+  <div class="kbsel" id="kbsel"></div>
   <div class="kbout" id="kbout"></div>
 </div>
 <div class="sugg" id="sugg"></div>
@@ -447,7 +452,7 @@ details.deeper[open] { padding-bottom: 10px; }
 <div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$\omega = 2\pi f$</td><td>Angular frequency from frequency</td><td>$\omega$ rad s⁻¹; $f$ Hz (= s⁻¹)</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$T = \dfrac{1}{f}$</td><td>Period from frequency</td><td>$T$ s</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$T = \dfrac{2\pi}{\omega}$</td><td>Period from angular frequency</td><td></td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$f = \dfrac{\omega}{2\pi}$</td><td>Frequency from angular frequency</td><td></td><td class="qs"></td></tr></tbody></table></div>
 
 <div class="sec-title">Space: wavelength, wavenumber, speed</div>
-<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$v = f\lambda$</td><td>Wave speed from frequency and wavelength</td><td>$v$ m s⁻¹; $\lambda$ m</td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$v = \dfrac{\omega}{k}$</td><td>Wave speed from angular quantities</td><td></td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$k = \dfrac{2\pi}{\lambda}$</td><td>Angular wavenumber</td><td>$k$ rad m⁻¹</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$\lambda = \dfrac{2\pi}{k} = \dfrac{v}{f}$</td><td>Wavelength</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\tilde\nu = \dfrac{1}{\lambda}$</td><td>Spectroscopic wavenumber (not $k$)</td><td>$\tilde\nu$ m⁻¹</td><td class="qs"><a class="xref" href="#eq-wavenum">wavenum</a></td></tr><tr><td class="qe">$c = 3.00\times10^8$ m s⁻¹</td><td>Speed of EM waves in vacuum</td><td></td><td class="qs"><a class="xref" href="#eq-em">em</a></td></tr><tr><td class="qe">$v_{\text{sound}} \approx 340$ m s⁻¹</td><td>Speed of sound in air</td><td></td><td class="qs"><a class="xref" href="#eq-sound">sound</a></td></tr><tr><td class="qe">$v = \sqrt{T/\mu}$</td><td>Wave speed on a string</td><td>$T$ tension N; $\mu$ kg m⁻¹</td><td class="qs"><a class="xref" href="#eq-string">string</a></td></tr></tbody></table></div>
+<div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$v = f\lambda$</td><td>Wave speed from frequency and wavelength</td><td>$v$ m s⁻¹; $\lambda$ m</td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$v = \dfrac{\lambda}{T}$</td><td>Wave speed: one wavelength per period</td><td>$T$ s</td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$v = \dfrac{\omega}{k}$</td><td>Wave speed from angular quantities</td><td></td><td class="qs"><a class="xref" href="#eq-speed">speed</a></td></tr><tr><td class="qe">$k = \dfrac{2\pi}{\lambda}$</td><td>Angular wavenumber</td><td>$k$ rad m⁻¹</td><td class="qs"><a class="xref" href="#eq-defs">defs</a></td></tr><tr><td class="qe">$\lambda = \dfrac{2\pi}{k} = \dfrac{v}{f}$</td><td>Wavelength</td><td></td><td class="qs"></td></tr><tr><td class="qe">$\tilde\nu = \dfrac{1}{\lambda}$</td><td>Spectroscopic wavenumber (not $k$)</td><td>$\tilde\nu$ m⁻¹</td><td class="qs"><a class="xref" href="#eq-wavenum">wavenum</a></td></tr><tr><td class="qe">$c = 3.00\times10^8$ m s⁻¹</td><td>Speed of EM waves in vacuum</td><td></td><td class="qs"><a class="xref" href="#eq-em">em</a></td></tr><tr><td class="qe">$v_{\text{sound}} \approx 340$ m s⁻¹</td><td>Speed of sound in air</td><td></td><td class="qs"><a class="xref" href="#eq-sound">sound</a></td></tr><tr><td class="qe">$v = \sqrt{T/\mu}$</td><td>Wave speed on a string</td><td>$T$ tension N; $\mu$ kg m⁻¹</td><td class="qs"><a class="xref" href="#eq-string">string</a></td></tr></tbody></table></div>
 
 <div class="sec-title">Simple harmonic motion</div>
 <div class="qtable"><table><thead><tr><th>Equation</th><th>What it is</th><th>Variables (units)</th><th>See</th></tr></thead><tbody><tr><td class="qe">$F = -kx$</td><td>Hooke's law</td><td>$k$ N m⁻¹; $x$ m</td><td class="qs"><a class="xref" href="#eq-1-2">1.2</a></td></tr><tr><td class="qe">$\ddot x = -\omega^2 x$</td><td>SHM equation</td><td>$\ddot x$ m s⁻²</td><td class="qs"><a class="xref" href="#eq-1-6">1.6</a></td></tr><tr><td class="qe">$\omega = \sqrt{k/m}$</td><td>Spring–mass frequency</td><td>$m$ kg</td><td class="qs"><a class="xref" href="#eq-1-7">1.7</a></td></tr><tr><td class="qe">$\omega = \sqrt{g/l}$</td><td>Pendulum frequency (small angle)</td><td>$g$ m s⁻²; $l$ m</td><td class="qs"><a class="xref" href="#eq-1-29-1-31">1.29–1.31</a></td></tr><tr><td class="qe">$\omega = 1/\sqrt{LC}$</td><td>LC circuit frequency</td><td>$L$ H; $C$ F</td><td class="qs"><a class="xref" href="#eq-1-54">1.54</a></td></tr><tr><td class="qe">$x = A\cos(\omega t+\phi)$</td><td>SHM solution</td><td>$A$ m; $\phi$ rad</td><td class="qs"><a class="xref" href="#eq-1-14">1.14</a></td></tr><tr><td class="qe">$v_{\max} = A\omega$</td><td>Maximum speed (at $x=0$)</td><td></td><td class="qs"><a class="xref" href="#eq-1-12-1-13">1.12–1.13</a></td></tr><tr><td class="qe">$a_{\max} = A\omega^2$</td><td>Maximum acceleration (at $x=\pm A$)</td><td></td><td class="qs"><a class="xref" href="#eq-1-12-1-13">1.12–1.13</a></td></tr><tr><td class="qe">$E = \tfrac12 kA^2$</td><td>Total energy</td><td>$E$ J</td><td class="qs"><a class="xref" href="#eq-1-23">1.23</a></td></tr></tbody></table></div>
@@ -1386,11 +1391,12 @@ document.addEventListener('click', function (e) {
 });
 window.addEventListener('beforeprint', function () { document.querySelectorAll('details.deeper').forEach(function (d) { d.open = true; }); });
 var SYMNAME = {"ω": "omega", "ω₀": "omega-naught", "λ": "lambda", "φ": "phi", "γ": "gamma", "τ": "tau", "μ": "mu", "ν̃": "nu-tilde", "θ": "theta", "∂": "partial"};
+var SYMPAT = {"ω": "\\\\omega(?!\\s*_)", "ω₀": "\\\\omega\\s*_\\s*\\{?0", "k": "(?<![\\\\A-Za-z])k(?![A-Za-z])", "λ": "\\\\lambda", "f": "(?<![\\\\A-Za-z])f(?![A-Za-z])", "T": "(?<![\\\\A-Za-z])T(?![A-Za-z])", "v": "(?<![\\\\A-Za-z])v(?![A-Za-z])", "A": "(?<![\\\\A-Za-z])A(?![A-Za-z])", "φ": "\\\\phi", "γ": "\\\\gamma", "τ": "\\\\tau", "Q": "(?<![\\\\A-Za-z])Q(?![A-Za-z])", "b": "(?<![\\\\A-Za-z])b(?![A-Za-z])", "m": "(?<![\\\\A-Za-z])m(?![A-Za-z])", "μ": "\\\\mu", "c": "(?<![\\\\A-Za-z])c(?![A-Za-z])", "ν̃": "\\\\tilde\\s*\\\\nu", "θ": "\\\\theta", "g": "(?<![\\\\A-Za-z])g(?![A-Za-z])", "l": "(?<![\\\\A-Za-z])l(?![A-Za-z])", "E": "(?<![\\\\A-Za-z])E(?![A-Za-z])", "x": "(?<![\\\\A-Za-z])x(?![A-Za-z])", "y": "(?<![\\\\A-Za-z])y(?![A-Za-z])", "L C R": "(?<![\\\\A-Za-z])(L|C|R)(?![A-Za-z])", "∂": "\\\\partial"};
 var SYMS = [["ω", [["angular frequency", "c-angfreq"]]], ["ω₀", [["natural angular frequency", "eq-2-5"]]], ["k", [["wavenumber (Ch. 5)", "c-wavenumber"], ["spring constant (Ch. 1)", "eq-1-2"]]], ["λ", [["wavelength", "c-wavelength"]]], ["f", [["frequency", "c-frequency"], ["shape of a travelling wave, f(x − vt)", "eq-shape"]]], ["T", [["period", "c-period"], ["tension in a string", "eq-string"]]], ["v", [["wave speed", "c-speed"], ["velocity of an oscillating mass", "eq-1-12-1-13"]]], ["A", [["amplitude", "c-amplitude"]]], ["φ", [["phase constant", "c-phase"]]], ["γ", [["damping rate", "c-gamma"]]], ["τ", [["energy decay time", "eq-2-18-2-19"]]], ["Q", [["quality factor", "c-q"]]], ["b", [["damping coefficient", "eq-2-2"]]], ["m", [["mass", "eq-1-7"]]], ["μ", [["mass per unit length", "eq-string"]]], ["c", [["speed of light", "eq-em"]]], ["ν̃", [["spectroscopic wavenumber, 1/λ", "eq-wavenum"]]], ["θ", [["angle of a pendulum", "eq-1-29-1-31"]]], ["g", [["gravitational acceleration", "eq-1-29-1-31"]]], ["l", [["pendulum length", "eq-1-29-1-31"]]], ["E", [["total energy", "eq-1-19"]]], ["x", [["displacement (Ch. 1–2) or position along the wave (Ch. 5)", "eq-1-14"]]], ["y", [["displacement of the medium", "eq-shape"]]], ["L C R", [["inductance, capacitance, resistance", "eq-2-26"]]], ["∂", [["partial derivative", "c-partial"]]]];
 function toggleKb(force){
   var kb=document.getElementById('kb'), on = force===undefined ? kb.hidden : force;
   kb.hidden=!on; document.getElementById('kbBtn').classList.toggle('on', on);
-  if(!on){ document.getElementById('kbout').innerHTML=''; document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); }
+  if(!on){ document.getElementById('kbout').innerHTML=''; document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); symFilter(); }
 }
 function goTo(href){
   var card=document.querySelector(href); if(!card) return;
@@ -1429,16 +1435,51 @@ document.addEventListener('click', function(e){
   var go=e.target.closest('[data-go]'); if(go){ e.preventDefault(); goTo(go.dataset.go); return; }
   var kk=e.target.closest('.kk');
   if(kk){
-    document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); kk.classList.add('on');
+    kk.classList.toggle('on');
+    symFilter();
     var s=SYMS[+kk.dataset.i];
+    if(!kk.classList.contains('on')){ document.getElementById('kbout').innerHTML=''; return; }
     document.getElementById('kbout').innerHTML=s[1].map(function(m){return '<a href="#'+m[1]+'" data-go="#'+m[1]+'"><span class="ks">'+s[0]+'</span><span>'+(SYMNAME[s[0]]?'<span style="color:var(--muted)">'+SYMNAME[s[0]]+' · </span>':'')+m[0]+'</span></a>';}).join('');
   }
 });
 document.addEventListener('DOMContentLoaded', function(){
   var q=document.getElementById('q');
-  q.addEventListener('input', suggest);
+  q.addEventListener('input', function(){ if(document.querySelector('.kk.on')){ document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); document.getElementById('kbsel').textContent=''; document.body.classList.remove('symsearch'); } suggest(); });
   q.addEventListener('keydown', function(e){ if(e.key==='Enter'){ var a=document.querySelector('#sugg a'); if(a){ e.preventDefault(); goTo(a.dataset.go); q.blur(); } } });
 });
+function texOf(el){ return [].map.call(el.querySelectorAll('annotation'), function(a){return a.textContent;}).join(' '); }
+function symFilter(){
+  var on=[].map.call(document.querySelectorAll('.kk.on'), function(b){ return SYMS[+b.dataset.i][0]; });
+  var info=document.getElementById('kbsel');
+  if(!on.length){ document.body.classList.remove('searching','symsearch'); document.querySelectorAll('.hit-none').forEach(function(e){e.classList.remove('hit-none');}); info.textContent=''; return; }
+  var res=on.map(function(sym){ return new RegExp(SYMPAT[sym]); });
+  document.getElementById('q').value='';
+  document.body.classList.add('searching','symsearch');
+  var n=0;
+  document.querySelectorAll('.eqcard').forEach(function(c){
+    var d=c.querySelector('.eqdisp'); var tex=d?texOf(d):'';
+    var hit=!!tex && res.every(function(r){return r.test(tex);});
+    c.classList.toggle('hit-none', !hit); if(hit) n++;
+  });
+  document.querySelectorAll('.qtable tbody tr').forEach(function(r){
+    var q=r.querySelector('td.qe'); var tex=q?texOf(q):'';
+    var hit=!!tex && res.every(function(re){return re.test(tex);});
+    r.classList.toggle('hit-none', !hit); if(hit) n++;
+  });
+  document.querySelectorAll('.sec-title').forEach(function(t){
+    var el=t.nextElementSibling, any=false;
+    while(el && !el.classList.contains('sec-title')){
+      if(el.classList.contains('eqcard') && !el.classList.contains('hit-none')) any=true;
+      if(el.classList.contains('qtable') && el.querySelector('tbody tr:not(.hit-none)')) any=true;
+      el=el.nextElementSibling;
+    }
+    t.classList.toggle('hit-none', !any);
+    var tb=t.nextElementSibling; if(tb && tb.classList.contains('qtable')) tb.classList.toggle('hit-none', !any);
+  });
+  info.innerHTML='Equations containing <b>'+on.join('</b>, <b>')+'</b>: '+n+(n?'':' — none yet')+' &nbsp;<a href="#" id="kbclear">clear</a>';
+  document.getElementById('noRes').classList.toggle('on', n===0);
+}
+document.addEventListener('click', function(e){ if(e.target.id==='kbclear'){ e.preventDefault(); document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); document.getElementById('kbout').innerHTML=''; symFilter(); } });
 function toggleAll(){
   var hs=[].slice.call(document.querySelectorAll('.panel.active .eqhdr, body.searching .eqhdr'));
   var anyClosed=hs.some(function(h){return !h.classList.contains('open');});
