@@ -17,6 +17,18 @@
     ],
     throwOnError: false
   }); })"></script>
+<script>
+(function(){try{var t=localStorage.getItem('vw-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+function cycleTheme(){
+  var r=document.documentElement, cur=r.getAttribute('data-theme')||'auto';
+  var next=cur==='auto'?'dark':cur==='dark'?'light':'auto';
+  if(next==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',next);
+  try{localStorage.setItem('vw-theme',next);}catch(e){}
+  setThemeLabel();
+}
+function setThemeLabel(){var b=document.getElementById('themeBtn');if(!b)return;var t=document.documentElement.getAttribute('data-theme')||'auto';b.textContent=t==='dark'?'Dark':t==='light'?'Light':'Auto';}
+document.addEventListener('DOMContentLoaded',setThemeLabel);
+</script>
 <style>
 :root {
   --bg: #f4f5f9;
@@ -37,6 +49,54 @@
   --text2: #374151;
   --muted: #9ca3af;
 }
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+  --bg: #121318;
+  --surf: #191b22;
+  --card: #1d1f27;
+  --card2: #252833;
+  --border: #2c2f3b;
+  --border2: #3a3e4d;
+  --accent: #a78bfa;
+  --adim: #2e2550;
+  --blue: #34d399;
+  --bdim: #12382b;
+  --amber: #fbbf24;
+  --amdim: #3a2e0c;
+  --rose: #fb7185;
+  --rdim: #3f1620;
+  --text: #eceef4;
+  --text2: #c4c8d4;
+  --muted: #8b90a0;
+  color-scheme: dark;
+}
+}
+:root[data-theme="dark"] {
+  --bg: #121318;
+  --surf: #191b22;
+  --card: #1d1f27;
+  --card2: #252833;
+  --border: #2c2f3b;
+  --border2: #3a3e4d;
+  --accent: #a78bfa;
+  --adim: #2e2550;
+  --blue: #34d399;
+  --bdim: #12382b;
+  --amber: #fbbf24;
+  --amdim: #3a2e0c;
+  --rose: #fb7185;
+  --rdim: #3f1620;
+  --text: #eceef4;
+  --text2: #c4c8d4;
+  --muted: #8b90a0;
+  color-scheme: dark;
+}
+html, body { background: var(--bg); }
+.theme-btn { background: var(--card2); color: var(--text2); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; font: 500 12px 'JetBrains Mono', monospace; cursor: pointer; }
+.theme-btn:hover { color: var(--text); }
+.box.blue { border-color: var(--blue) !important; }
+.box.amber { border-color: var(--amber) !important; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -268,7 +328,9 @@ details.deeper[open] { padding-bottom: 10px; }
 @media print { .qtable tr { break-inside: avoid; } }
 @media print { details.deeper { display: block; } details.deeper > summary { list-style: none; } }
 @media print {
+  :root, :root[data-theme="dark"] { --bg:#fff; --surf:#fff; --card:#fff; --card2:#f0f1f7; --border:#e2e4ef; --text:#111827; --text2:#374151; --muted:#6b7280; --accent:#6d28d9; --blue:#047857; --bdim:#d1fae5; --adim:#ede9fe; color-scheme: light; }
   body { background: #fff !important; }
+  .theme-btn { display: none; }
   .tab-nav, .eqarrow { display: none !important; }
   .panel { display: block !important; }
   .panel + .panel { break-before: page; }
@@ -287,6 +349,7 @@ details.deeper[open] { padding-bottom: 10px; }
       <div class="header-title">Vibrations &amp; Waves — Equation Guide</div>
       <div class="header-sub">Physics III · Chapters 1, 2, 5 · growing over the semester</div>
     </div>
+    <button class="theme-btn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Auto</button>
     <div class="badge" style="background:var(--bdim);color:var(--blue);">REFERENCE</div>
   </div>
 </div>
