@@ -458,6 +458,8 @@ details.deeper[open] { padding-bottom: 10px; }
 
 .forms > li { margin-bottom: 10px; }
 .forms > li > p { margin: 2px 0; }
+
+#sugg .combo { padding: 8px 12px; color: var(--text2); font-size: 14px; }
 </style>
 </head>
 <body>
@@ -465,14 +467,14 @@ details.deeper[open] { padding-bottom: 10px; }
 <div class="tab-nav">
   <div class="tab-nav-inner">
     <div class="tools">
-      <input id="q" type="search" placeholder="Search, or tap αβ for symbols" aria-label="Search the guide" autocomplete="off">
+      <input id="q" type="search" placeholder="Search, or type several: tension mu" aria-label="Search the guide" autocomplete="off">
       <button class="tbtn" id="kbBtn" aria-label="Symbol keyboard" onclick="toggleKb()">αβ</button>
       <button class="tbtn" id="expBtn" onclick="toggleAll()">Expand all</button>
       <button class="tbtn" onclick="document.body.classList.toggle('show-help')" aria-label="How to use this guide">?</button>
       <button class="tbtn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
     </div>
 <div class="kb" id="kb" hidden>
-  <div class="kbkeys"><button class="kk" data-i="0">ω<span class="kn">omega</span></button><button class="kk" data-i="1">ω₀<span class="kn">omega-naught</span></button><button class="kk" data-i="2">k</button><button class="kk" data-i="3">λ<span class="kn">lambda</span></button><button class="kk" data-i="4">f</button><button class="kk" data-i="5">T</button><button class="kk" data-i="6">v</button><button class="kk" data-i="7">A</button><button class="kk" data-i="8">ϕ<span class="kn">phi</span></button><button class="kk" data-i="9">γ<span class="kn">gamma</span></button><button class="kk" data-i="10">τ<span class="kn">tau</span></button><button class="kk" data-i="11">Q</button><button class="kk" data-i="12">b</button><button class="kk" data-i="13">m</button><button class="kk" data-i="14">μ<span class="kn">mu</span></button><button class="kk" data-i="15">c</button><button class="kk" data-i="16">ν̃<span class="kn">1/λ</span></button><button class="kk" data-i="17">θ<span class="kn">theta</span></button><button class="kk" data-i="18">g</button><button class="kk" data-i="19">l</button><button class="kk" data-i="20">E</button><button class="kk" data-i="21">x</button><button class="kk" data-i="22">y</button><button class="kk" data-i="23">L C R</button><button class="kk" data-i="24">∂<span class="kn">partial</span></button><button class="kk" data-i="25">ψ<span class="kn">psi</span></button></div>
+  <div class="kbkeys"><button class="kk" data-i="0">ω<span class="kn">omega</span></button><button class="kk" data-i="1">ω₀<span class="kn">omega-naught</span></button><button class="kk" data-i="2">k</button><button class="kk" data-i="3">λ<span class="kn">lambda</span></button><button class="kk" data-i="4">f</button><button class="kk" data-i="5">T</button><button class="kk" data-i="6">v</button><button class="kk" data-i="7">A</button><button class="kk" data-i="8">ϕ<span class="kn">phi</span></button><button class="kk" data-i="9">γ<span class="kn">gamma</span></button><button class="kk" data-i="10">τ<span class="kn">tau</span></button><button class="kk" data-i="11">Q</button><button class="kk" data-i="12">b</button><button class="kk" data-i="13">m</button><button class="kk" data-i="14">μ<span class="kn">mu</span></button><button class="kk" data-i="15">c</button><button class="kk" data-i="16">ν̃<span class="kn">1/λ</span></button><button class="kk" data-i="17">θ<span class="kn">theta</span></button><button class="kk" data-i="18">g</button><button class="kk" data-i="19">l</button><button class="kk" data-i="20">E</button><button class="kk" data-i="21">x</button><button class="kk" data-i="22">y</button><button class="kk" data-i="23">L C R</button><button class="kk" data-i="24">∂<span class="kn">partial</span></button><button class="kk" data-i="25">ψ<span class="kn">psi</span></button><button class="kk" data-i="26">L<span class="kn">length</span></button><button class="kk" data-i="27">n<span class="kn">mode no.</span></button><button class="kk" data-i="28">ν<span class="kn">nu</span></button></div>
   <div class="kbsel" id="kbsel"></div>
   <div class="kbout" id="kbout"></div>
 </div>
@@ -1798,9 +1800,9 @@ document.addEventListener('click', function (e) {
   if (h && !h.classList.contains('open')) toggle(h);
 });
 window.addEventListener('beforeprint', function () { document.querySelectorAll('details.deeper').forEach(function (d) { d.open = true; }); });
-var SYMNAME = {"ψ": "psi", "ω": "omega", "ω₀": "omega-naught", "λ": "lambda", "ϕ": "phi", "γ": "gamma", "τ": "tau", "μ": "mu", "ν̃": "nu-tilde", "θ": "theta", "∂": "partial"};
-var SYMPAT = {"ψ": "\\psi", "ω": "\\\\omega(?!\\s*_)", "ω₀": "\\\\omega\\s*_\\s*\\{?0", "k": "(?<![\\\\A-Za-z])k(?![A-Za-z])", "λ": "\\\\lambda", "f": "(?<![\\\\A-Za-z])f(?![A-Za-z])", "T": "(?<![\\\\A-Za-z])T(?![A-Za-z])", "v": "(?<![\\\\A-Za-z])v(?![A-Za-z])", "A": "(?<![\\\\A-Za-z])A(?![A-Za-z])", "ϕ": "\\\\phi", "γ": "\\\\gamma", "τ": "\\\\tau", "Q": "(?<![\\\\A-Za-z])Q(?![A-Za-z])", "b": "(?<![\\\\A-Za-z])b(?![A-Za-z])", "m": "(?<![\\\\A-Za-z])m(?![A-Za-z])", "μ": "\\\\mu", "c": "(?<![\\\\A-Za-z])c(?![A-Za-z])", "ν̃": "\\\\tilde\\s*\\\\nu", "θ": "\\\\theta", "g": "(?<![\\\\A-Za-z])g(?![A-Za-z])", "l": "(?<![\\\\A-Za-z])l(?![A-Za-z])", "E": "(?<![\\\\A-Za-z])E(?![A-Za-z])", "x": "(?<![\\\\A-Za-z])x(?![A-Za-z])", "y": "(?<![\\\\A-Za-z])y(?![A-Za-z])", "L C R": "(?<![\\\\A-Za-z])(L|C|R)(?![A-Za-z])", "∂": "\\\\partial"};
-var SYMS = [["ω", [["angular frequency: every form", "c-angfreq"]]], ["ω₀", [["natural angular frequency", "eq-2-5"]]], ["k", [["wavenumber: every form", "c-wavenumber"], ["spring constant (Ch. 1)", "eq-1-2"]]], ["λ", [["wavelength: every form", "c-wavelength"]]], ["f", [["frequency: every form", "c-frequency"], ["shape of a travelling wave, f(x − vt)", "eq-shape"]]], ["T", [["period: every form", "c-period"], ["tension in a string (in v = √(T/μ))", "eq-string"]]], ["v", [["wave speed: every form (fλ, ω/k, √(T/μ), 2Lf₁)", "c-speed"], ["speed on a string, √(T/μ)", "eq-string"], ["velocity of an oscillating mass", "eq-1-12-1-13"]]], ["A", [["amplitude", "c-amplitude"]]], ["ϕ", [["phase constant", "c-phase"]]], ["γ", [["damping rate", "c-gamma"]]], ["τ", [["energy decay time", "eq-2-18-2-19"]]], ["Q", [["quality factor", "c-q"]]], ["b", [["damping coefficient", "eq-2-2"]]], ["m", [["mass", "eq-1-7"]]], ["μ", [["mass per unit length (in v = √(T/μ))", "eq-string"]]], ["c", [["speed of light", "eq-em"]]], ["ν̃", [["spectroscopic wavenumber, 1/λ", "eq-wavenum"]]], ["θ", [["angle of a pendulum", "eq-1-29-1-31"]]], ["g", [["gravitational acceleration", "eq-1-29-1-31"]]], ["l", [["pendulum length", "eq-1-29-1-31"]]], ["E", [["total energy", "eq-1-19"]]], ["x", [["displacement (Ch. 1–2) or position along the wave (Ch. 5)", "eq-1-14"]]], ["y", [["displacement of the medium", "eq-shape"]]], ["L C R", [["inductance, capacitance, resistance", "eq-2-26"]]], ["∂", [["partial derivative", "c-partial"]]], ["ψ", [["wave function / wave disturbance (3D, quantum)", "c-psi"]]]];
+var SYMNAME = {"ψ": "psi", "ω": "omega", "ω₀": "omega-naught", "λ": "lambda", "ϕ": "phi", "γ": "gamma", "τ": "tau", "μ": "mu", "ν̃": "nu-tilde", "θ": "theta", "∂": "partial", "ν": "nu"};
+var SYMPAT = {"ψ": "\\psi", "ω": "\\\\omega(?!\\s*_)", "ω₀": "\\\\omega\\s*_\\s*\\{?0", "k": "(?<![\\\\A-Za-z])k(?![A-Za-z])", "λ": "\\\\lambda", "f": "(?<![\\\\A-Za-z])f(?![A-Za-z])", "T": "(?<![\\\\A-Za-z])T(?![A-Za-z])", "v": "(?<![\\\\A-Za-z])v(?![A-Za-z])", "A": "(?<![\\\\A-Za-z])A(?![A-Za-z])", "ϕ": "\\\\phi", "γ": "\\\\gamma", "τ": "\\\\tau", "Q": "(?<![\\\\A-Za-z])Q(?![A-Za-z])", "b": "(?<![\\\\A-Za-z])b(?![A-Za-z])", "m": "(?<![\\\\A-Za-z])m(?![A-Za-z])", "μ": "\\\\mu", "c": "(?<![\\\\A-Za-z])c(?![A-Za-z])", "ν̃": "\\\\tilde\\s*\\\\nu", "θ": "\\\\theta", "g": "(?<![\\\\A-Za-z])g(?![A-Za-z])", "l": "(?<![\\\\A-Za-z])l(?![A-Za-z])", "E": "(?<![\\\\A-Za-z])E(?![A-Za-z])", "x": "(?<![\\\\A-Za-z])x(?![A-Za-z])", "y": "(?<![\\\\A-Za-z])y(?![A-Za-z])", "L C R": "(?<![\\\\A-Za-z])(L|C|R)(?![A-Za-z])", "∂": "\\\\partial", "L": "(?<![\\\\A-Za-z])L(?![A-Za-z])", "n": "(?<![\\\\A-Za-z])n(?![A-Za-z])", "ν": "(?<!tilde\\s*)\\\\nu"};
+var SYMS = [["ω", [["angular frequency: every form", "c-angfreq"]]], ["ω₀", [["natural angular frequency", "eq-2-5"]]], ["k", [["wavenumber: every form", "c-wavenumber"], ["spring constant (Ch. 1)", "eq-1-2"]]], ["λ", [["wavelength: every form", "c-wavelength"]]], ["f", [["frequency: every form", "c-frequency"], ["shape of a travelling wave, f(x − vt)", "eq-shape"]]], ["T", [["period: every form", "c-period"], ["tension in a string (in v = √(T/μ))", "eq-string"]]], ["v", [["wave speed: every form (fλ, ω/k, √(T/μ), 2Lf₁)", "c-speed"], ["speed on a string, √(T/μ)", "eq-string"], ["velocity of an oscillating mass", "eq-1-12-1-13"]]], ["A", [["amplitude", "c-amplitude"]]], ["ϕ", [["phase constant", "c-phase"]]], ["γ", [["damping rate", "c-gamma"]]], ["τ", [["energy decay time", "eq-2-18-2-19"]]], ["Q", [["quality factor", "c-q"]]], ["b", [["damping coefficient", "eq-2-2"]]], ["m", [["mass", "eq-1-7"]]], ["μ", [["mass per unit length (in v = √(T/μ))", "eq-string"]]], ["c", [["speed of light", "eq-em"]]], ["ν̃", [["spectroscopic wavenumber, 1/λ", "eq-wavenum"]]], ["θ", [["angle of a pendulum", "eq-1-29-1-31"]]], ["g", [["gravitational acceleration", "eq-1-29-1-31"]]], ["l", [["pendulum length", "eq-1-29-1-31"]]], ["E", [["total energy", "eq-1-19"]]], ["x", [["displacement (Ch. 1–2) or position along the wave (Ch. 5)", "eq-1-14"]]], ["y", [["displacement of the medium", "eq-shape"]]], ["L C R", [["inductance, capacitance, resistance", "eq-2-26"]]], ["∂", [["partial derivative", "c-partial"]]], ["ψ", [["wave function / wave disturbance (3D, quantum)", "c-psi"]]], ["L", [["length of a string or cavity (Ch. 6)", "eq-modes"]]], ["n", [["mode number / harmonic number (Ch. 6)", "c-mode"]]], ["ν", [["frequency, as King writes it (same as f)", "eq-cavity"]]]];
 function toggleKb(force){
   var kb=document.getElementById('kb'), on = force===undefined ? kb.hidden : force;
   kb.hidden=!on; document.getElementById('kbBtn').classList.toggle('on', on);
@@ -1832,6 +1834,8 @@ function suggest(){
   if(!INDEX) buildIndex();
   var q=document.getElementById('q').value.trim().toLowerCase(), box=document.getElementById('sugg');
   if(!q){ box.innerHTML=''; return; }
+  var _c=parseCombo(document.getElementById('q').value);
+  if(_c){ var _n=comboFilter(_c); box.innerHTML='<div class="combo">Equations containing <b>'+_c.join('</b> and <b>')+'</b>: '+_n+(_n?' · shown below':' · none')+'</div>'; return; }
   var rank={concept:0, term:1, method:2, equation:3};
   var raw=document.getElementById('q').value.trim(), symHits=[];
   SYMS.forEach(function(s){
@@ -1903,7 +1907,60 @@ function toggleAll(){
   document.querySelectorAll('.panel.active details.deeper, body.searching details.deeper').forEach(function(d){d.open=anyClosed;});
   document.getElementById('expBtn').textContent=anyClosed?'Collapse all':'Expand all';
 }
+
+var ALIAS = {"mass per unit length":"μ","mass per length":"μ","linear density":"μ","linear mass density":"μ","mu":"μ","mass":"m",
+ "tension":"T","period":"T","frequency":"f","freq":"f","angular frequency":"ω","omega":"ω","natural frequency":"ω₀","omega0":"ω₀","omega naught":"ω₀",
+ "wavelength":"λ","lambda":"λ","wavenumber":"k","wave number":"k","spring constant":"k","speed":"v","velocity":"v","wave speed":"v",
+ "amplitude":"A","phase":"ϕ","phase constant":"ϕ","phi":"ϕ","damping":"γ","damping rate":"γ","gamma":"γ","tau":"τ","decay time":"τ",
+ "quality factor":"Q","damping coefficient":"b","speed of light":"c","length":"L","mode number":"n","mode":"n","harmonic number":"n","nu":"ν",
+ "theta":"θ","angle":"θ","gravity":"g","pendulum length":"l","energy":"E","position":"x","displacement":"y","psi":"ψ","partial":"∂"};
+function parseCombo(raw){
+  var s=' '+raw.trim()+' ', keys=Object.keys(ALIAS).sort(function(a,b){return b.length-a.length;}), found=[];
+  keys.forEach(function(a){
+    var re=new RegExp('(^|[\\s,;+&/])'+a.replace(/ /g,'\\s+')+'(?=[\\s,;+&/]|$)','gi');
+    s=s.replace(re,function(m0,p){ found.push(ALIAS[a]); return p+' \u0001'+(found.length-1)+' '; });
+  });
+  var toks=s.split(/[\s,;+&/]+/).filter(function(t){return t && !/^(and|with|or)$/i.test(t);}), syms=[];
+  for(var i=0;i<toks.length;i++){
+    var t=toks[i];
+    if(t.charAt(0)==='\u0001'){ syms.push(found[+t.slice(1)]); continue; }
+    if(SYMPAT[t]){ syms.push(t); continue; }
+    return null;
+  }
+  syms=syms.filter(function(x,i){return syms.indexOf(x)===i;});
+  return syms.length>=2 ? syms : null;
+}
+function comboFilter(on){
+  var res=on.map(function(sym){ return new RegExp(SYMPAT[sym]); });
+  document.body.classList.add('searching','symsearch');
+  var n=0;
+  document.querySelectorAll('.eqcard').forEach(function(c){
+    var d=c.querySelector('.eqdisp'); var tex=d?texOf(d):'';
+    var hit=!!tex && res.every(function(r){return r.test(tex);});
+    c.classList.toggle('hit-none', !hit); if(hit) n++;
+  });
+  document.querySelectorAll('.qtable tbody tr').forEach(function(r){
+    var q=r.querySelector('td.qe'); var tex=q?texOf(q):'';
+    var hit=!!tex && res.every(function(re){return re.test(tex);});
+    r.classList.toggle('hit-none', !hit); if(hit) n++;
+  });
+  document.querySelectorAll('.sec-title').forEach(function(t){
+    var el=t.nextElementSibling, any=false;
+    while(el && !el.classList.contains('sec-title')){
+      if(el.classList.contains('eqcard') && !el.classList.contains('hit-none')) any=true;
+      if(el.classList.contains('qtable') && el.querySelector('tbody tr:not(.hit-none)')) any=true;
+      el=el.nextElementSibling;
+    }
+    t.classList.toggle('hit-none', !any);
+    var tb=t.nextElementSibling; if(tb && tb.classList.contains('qtable')) tb.classList.toggle('hit-none', !any);
+  });
+  document.getElementById('noRes').classList.toggle('on', n===0);
+  return n;
+}
 function runSearch(){
+  var _raw=document.getElementById('q').value, _combo=parseCombo(_raw);
+  if(_combo){ comboFilter(_combo); return; }
+  document.body.classList.remove('symsearch');
   var q=document.getElementById('q').value.trim().toLowerCase();
   document.body.classList.toggle('searching', !!q);
   var items=document.querySelectorAll('.eqcard, .qtable tbody tr');
