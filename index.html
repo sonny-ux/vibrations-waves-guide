@@ -3360,5 +3360,29 @@ document.addEventListener('DOMContentLoaded', function () {
   requestAnimationFrame(loop);
 })();
 </script>
+
+<script>
+// auto-update (11/18/26): GitHub Pages lets browsers keep a copy for up to 10 minutes, so check for a newer version every minute
+// and when the page comes back into view; reload into the same place (tab, page, scroll position)
+(function(){
+  try { var back = JSON.parse(sessionStorage.getItem('vw-restore') || 'null'); sessionStorage.removeItem('vw-restore');
+    if (back){ window.addEventListener('load', function(){ setTimeout(function(){
+      if (back.panel && !back.page){ document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('active', p.id === back.panel); });
+        document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'" + back.panel + "'") >= 0); }); }
+      (back.open || []).forEach(function(id){ var c = document.getElementById(id); var h = c && c.querySelector('.eqhdr'); if (h && !h.classList.contains('open')) toggle(h); });
+      window.scrollTo(0, back.y || 0); }, 400); }); } } catch(e){}
+  var base = null;
+  function sig(t){ var h = 0; for (var i = 0; i < t.length; i += 7) h = (h * 31 + t.charCodeAt(i)) | 0; return t.length + ':' + h; }
+  function check(){ if (location.protocol === 'file:') return;
+    fetch(location.pathname + '?v=' + Date.now(), {cache: 'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var g = sig(t);
+      if (base === null){ base = g; return; } if (g === base) return;
+      var act = document.querySelector('.panel.active');
+      try { sessionStorage.setItem('vw-restore', JSON.stringify({panel: act ? act.id : null, page: !!window._probPage, y: window.scrollY,
+        open: Array.prototype.map.call(document.querySelectorAll('.eqcard > .eqhdr.open'), function(h){ return h.parentNode.id; }).filter(Boolean)})); } catch(e){}
+      location.replace(location.pathname + '?u=' + Date.now() + location.hash); }).catch(function(){}); }
+  check(); setInterval(function(){ if (!document.hidden) check(); }, 60000);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) check(); });
+})();
+</script>
 </body>
 </html>
