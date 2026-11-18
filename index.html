@@ -511,6 +511,29 @@ ol.route { padding-left: 1.3em; } ol.route li { margin-bottom: .35em; }
 .tbwhen { font-size: .9em; color: var(--text2); }
 #s-toolbox .block ul { padding-left: 1.2em; }
 </style>
+
+<style>
+/* ===== problem pages (11/17/26) ===== */
+#homework .eqcard.prob, #homework .pswitch, #homework .toc { display: none !important; }
+.pindex { display: flex; flex-direction: column; gap: 8px; margin: 6px 0 12px; }
+.pindex a { display: block; border: 1px solid var(--border2); border-radius: 10px; padding: 10px 14px; text-decoration: none !important; color: var(--text) !important; background: var(--card); }
+.pindex a .pit { font-weight: 600; } .pindex a .pis { display: block; font-size: .85em; color: var(--muted); margin-top: 3px; }
+.pindex a .ptag { font-size: .75em; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; display: block; margin-bottom: 2px; }
+body.pagemode .panel { display: none !important; }
+body.pagemode .howto, body.pagemode .footer-note { display: none !important; }
+.ppage { padding: 4px 0 40px; }
+.ppage .ptrail { font-size: .85em; color: var(--muted); margin-bottom: 8px; }
+.ppage .ptrail a { color: var(--text2) !important; }
+.ppage h1 { font-size: 1.45em; margin: 2px 0 10px; line-height: 1.3; }
+.ppage .pswitch2 { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.ppage .pswitch2 a { border: 1px solid var(--border2); border-radius: 999px; padding: 3px 11px; font-size: .86em; text-decoration: none !important; color: var(--text2) !important; }
+.ppage .pswitch2 a.cur { background: var(--text); color: var(--bg) !important; border-color: var(--text); }
+.ppage .block { margin-bottom: 18px; } .ppage .block-label { margin-bottom: 6px; }
+.ppage .pnav { display: flex; justify-content: space-between; gap: 10px; margin-top: 24px; }
+.ppage .pnav a { border: 1px solid var(--border2); border-radius: 10px; padding: 10px 14px; text-decoration: none !important; color: var(--text) !important; max-width: 48%; font-size: .92em; }
+.ppage .pnav a:only-child.nx { margin-left: auto; }
+a.plink { color: var(--text) !important; text-decoration: underline !important; text-decoration-color: var(--muted) !important; text-underline-offset: 3px; }
+</style>
 </head>
 <body>
 
@@ -546,6 +569,7 @@ ol.route { padding-left: 1.3em; } ol.route li { margin-bottom: .35em; }
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs></svg>
 <div class="main">
 <div class="noresults" id="noRes">No matches.</div>
+<div id="ppage" class="ppage" hidden></div>
 
 <div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Underlined links jump to the card they name.</div>
 <!-- ============ START HERE ============ -->
@@ -632,9 +656,10 @@ ol.route { padding-left: 1.3em; } ol.route li { margin-bottom: .35em; }
 
 <!-- ============ HOMEWORK ============ -->
 <div id="homework" class="panel">
-<div class="intro">Each problem, word for word, worked in the order of <a class="xref" href="#s-approach">bring in, set parameters, apply</a>: where it sits on the map, the concepts and equations it needs, every given quantity with what kind of thing it is, the work step by step with reasons, a check, and the clean solution folded at the end. Try a step before opening the next. The <b>Question</b> button at the bottom shows the problem you are on.</div>
+<div class="intro">Each problem, word for word, worked in the order of <a class="xref" href="#s-approach">bring in, set parameters, apply</a>: where it sits on the map, the concepts and equations it needs, every given quantity with what kind of thing it is, the work step by step with reasons, a check, and the clean solution folded at the end. Tap a problem to open its page. On a problem page, the <b>Question</b> button at the bottom shows the problem while you read the work, and the arrows at the end go to the next problem.</div>
 <div class="sec-title" id="set-mt2">Midterm 2 practice (in class Thu 11/19, 75 min, 64 pts)</div>
-<div class="pswitch"><a class="xref pchip" href="#pm-1">P1 · basics</a><a class="xref pchip" href="#pm-2">P2 · junction</a><a class="xref pchip" href="#pm-3">P3 · modes</a><a class="xref pchip" href="#pm-4">P4 · nonuniform</a></div>
+<div class="pswitch"><a class="plink pchip" href="#p/pm-1">P1 · basics</a><a class="plink pchip" href="#p/pm-2">P2 · junction</a><a class="plink pchip" href="#p/pm-3">P3 · modes</a><a class="plink pchip" href="#p/pm-4">P4 · nonuniform</a></div>
+<div class="pindex"></div>
 <p class="psetnote">Practice exam from the course. No Fourier coefficients needed; answers may be symbolic unless numbers are asked for.</p>
 <div class="eqcard method prob" id="pm-1">
   <div class="eqhdr" onclick="toggle(this)">
@@ -709,7 +734,8 @@ ol.route { padding-left: 1.3em; } ol.route li { margin-bottom: .35em; }
 </div>
 
 <div class="sec-title" id="set-ps8">Problem Set 8 (late window until Sun 11/22, 9:00 AM)</div>
-<div class="pswitch"><a class="xref pchip" href="#ps8-1">P1 · touch</a><a class="xref pchip" href="#ps8-2">P2 · SWR</a><a class="xref pchip" href="#ps8-3">P3 · guitar</a><a class="xref pchip" href="#ps8-4">P4 · pipes</a><a class="xref pchip" href="#ps8-5">P5 · box</a></div>
+<div class="pswitch"><a class="plink pchip" href="#p/ps8-1">P1 · touch</a><a class="plink pchip" href="#p/ps8-2">P2 · SWR</a><a class="plink pchip" href="#p/ps8-3">P3 · guitar</a><a class="plink pchip" href="#p/ps8-4">P4 · pipes</a><a class="plink pchip" href="#p/ps8-5">P5 · box</a></div>
+<div class="pindex"></div>
 <p class="psetnote">French 6-1, King 6.4, King 6.8, French 6-8, King 6.15. Written reasoning is required on every problem.</p>
 <div class="eqcard method prob" id="ps8-1">
   <div class="eqhdr" onclick="toggle(this)">
@@ -1257,7 +1283,7 @@ $$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
     <div class="block"><div class="block-label">Definition</div><p>For a wave $y(x,t)$ on a string, the <b>transverse velocity</b> is $\partial y/\partial t$: how fast the piece of string at position $x$ moves up and down at time $t$. Take the derivative with respect to $t$ while holding $x$ fixed, because you are following one piece. The <b>wave speed</b> $v = \omega/k$ is how fast the pattern (a crest, say) moves along the string.</p></div>
     <div class="block"><div class="block-label">For a sinusoid</div><p>If $y = A\cos(kx - \omega t + \phi)$, the chain rule (the inside derivative with respect to $t$ is $-\omega$) gives $$\frac{\partial y}{\partial t} = A\omega\sin(kx - \omega t + \phi).$$ Its largest value is $A\omega$. It depends on the amplitude and the frequency, which come from the source; $v$ does not.</p></div>
     <div class="block"><div class="block-label">Keep them apart</div><ul><li>$v$ is a descriptor of the wave and is set by the medium: $v = \sqrt{T/\mu}$.</li><li>$\partial y/\partial t$ is the velocity of a piece of the system. It changes from point to point and moment to moment, and is zero at a crest.</li><li>They are perpendicular: the pattern moves along $x$, the pieces move along $y$.</li></ul></div>
-    <div class="block"><div class="block-label">Related</div><p><a class="xref" href="#pm-1">Midterm 2 practice, Problem 1</a> · <a class="xref" href="#c-speed">wave speed</a> · <a class="xref" href="#c-partial">partial derivative</a></p></div>
+    <div class="block"><div class="block-label">Related</div><p><a class="plink" href="#p/pm-1">Midterm 2 practice, Problem 1</a> · <a class="xref" href="#c-speed">wave speed</a> · <a class="xref" href="#c-partial">partial derivative</a></p></div>
   </div>
 </div>
 
@@ -1271,7 +1297,7 @@ $$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
     <div class="block"><div class="block-label">Definition</div><p>A sinusoidal wave $y = A\cos(kx - \omega t)$ on a string carries, averaged over time, an energy per unit length $$\Big\langle \frac{dE}{dx}\Big\rangle = \tfrac12\mu\omega^2A^2,$$ half of it kinetic (the pieces move) and half potential (the string is stretched where it slopes). That energy moves with the wave at speed $v$, so the average power past a point is $$\langle P\rangle = \Big\langle \frac{dE}{dx}\Big\rangle\, v = \tfrac12\mu v\,\omega^2A^2.$$</p></div>
     <div class="block"><div class="block-label">Where it comes from</div><p><b>Kinetic:</b> a piece of length $dx$ has mass $\mu\,dx$ and speed $\partial y/\partial t = A\omega\sin(kx-\omega t)$, so kinetic energy $\tfrac12\mu\,dx\,A^2\omega^2\sin^2(\cdots)$. <b>Recall:</b> the average of $\sin^2$ over a cycle is $\tfrac12$. So the average kinetic energy per length is $\tfrac14\mu\omega^2A^2$. The potential energy averages the same, giving $\tfrac12\mu\omega^2A^2$ in all.</p></div>
     <div class="block"><div class="block-label">Reading it</div><ul><li>Energy and power go as $A^2$ and as $\omega^2$: double either and the power is four times larger.</li><li>The medium enters through $\mu v = \sqrt{\mu T}$, called the <b>impedance</b> $Z$ of the string: $\langle P\rangle = \tfrac12 Z\omega^2A^2$.</li><li>Half the amplitude and twice the frequency: $A^2\omega^2$ is unchanged, so on the same string the power is unchanged.</li></ul></div>
-    <div class="block"><div class="block-label">Related</div><p><a class="xref" href="#pm-1">Midterm 2 practice, Problem 1(d)</a> · <a class="xref" href="#c-junction">junctions</a> · <a class="xref" href="#c-energy">energy</a></p></div>
+    <div class="block"><div class="block-label">Related</div><p><a class="plink" href="#p/pm-1">Midterm 2 practice, Problem 1(d)</a> · <a class="xref" href="#c-junction">junctions</a> · <a class="xref" href="#c-energy">energy</a></p></div>
   </div>
 </div>
 
@@ -1287,7 +1313,7 @@ $$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
     <div class="block"><div class="block-label">The two matching conditions</div><p><b>Displacement is continuous</b> at $x = 0$: the string does not break, so the two sides are at the same height. <b>Slope is continuous</b> at $x = 0$: the joint is massless, so the tension forces on it from the two sides must balance at every instant, which needs the same slope on both sides (a kink would put a net force on zero mass).</p><p>At $x = 0$ these give $$A_1 + A_R = A_T,\qquad k_1(A_1 - A_R) = k_2A_T.$$ Solving: $$r = \frac{A_R}{A_1} = \frac{k_1 - k_2}{k_1 + k_2},\qquad t = \frac{A_T}{A_1} = \frac{2k_1}{k_1 + k_2} = 1 + r.$$ Since $k \propto \sqrt{\mu}$ at fixed $T$ and $\omega$, you can write the same with $\sqrt{\mu_1}$, $\sqrt{\mu_2}$ in place of $k_1$, $k_2$.</p></div>
     <div class="block"><div class="block-label">Power: reflected and transmitted fractions</div><p>Power goes as $\tfrac12\mu v\omega^2A^2 = \tfrac12 Z\omega^2A^2$ with $Z = \mu v = \sqrt{\mu T}$. The reflected wave is on the same string, so the reflected fraction is $r^2$. The transmitted wave is on the other string, so its fraction carries the ratio of impedances: $$\mathcal R = r^2,\qquad \mathcal T = \frac{Z_2}{Z_1}\,t^2,\qquad \mathcal R + \mathcal T = 1.$$ The last line is energy conservation: what arrives either goes back or goes on.</p></div>
     <div class="block"><div class="block-label">Limits that check it</div><ul><li>Same strings ($k_1 = k_2$): $r = 0$, $t = 1$. Nothing reflects.</li><li>Right side much heavier ($k_2 \to \infty$, like a wall): $r \to -1$. Total reflection with the wave inverted, as at a fixed end.</li><li>Right side much lighter ($k_2 \to 0$, a free end): $r \to +1$. Total reflection, upright.</li><li>Going into a heavier string, $r \lt 0$: the reflection is inverted. Going into a lighter one, $r \gt 0$.</li></ul></div>
-    <div class="block"><div class="block-label">Related</div><p><a class="xref" href="#pm-2">Midterm 2 practice, Problem 2</a> · <a class="xref" href="#c-partialref">partial reflection</a> · <a class="xref" href="#c-boundary">boundary conditions</a> · <a class="xref" href="#c-wavepower">power</a></p></div>
+    <div class="block"><div class="block-label">Related</div><p><a class="plink" href="#p/pm-2">Midterm 2 practice, Problem 2</a> · <a class="xref" href="#c-partialref">partial reflection</a> · <a class="xref" href="#c-boundary">boundary conditions</a> · <a class="xref" href="#c-wavepower">power</a></p></div>
   </div>
 </div>
 
@@ -1301,7 +1327,7 @@ $$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
     <div class="block"><div class="block-label">The idea</div><p>If $\mu$ changes slowly along the string, each short stretch behaves like a uniform string with its own $\mu(x)$. The local wave speed is $v(x) = \sqrt{T/\mu(x)}$, with the same tension $T$ everywhere (the string is in equilibrium, so the pull is the same all along it).</p></div>
     <div class="block"><div class="block-label">Travel time</div><p>Over a short distance $dx$ the speed is nearly constant, so the time to cross it is $dt = dx/v(x)$ (distance divided by speed). The total time is the sum of these pieces, which is the integral $$t_{\text{travel}} = \int_0^L \frac{dx}{v(x)}.$$ You cannot use $L/v$: there is no single $v$.</p></div>
     <div class="block"><div class="block-label">Speeding up or slowing down</div><p>Where the string is heavier, the same tension force acts on more mass, so each piece accelerates less and the disturbance is passed on more slowly. Larger $\mu$ means smaller $v$.</p></div>
-    <div class="block"><div class="block-label">Related</div><p><a class="xref" href="#pm-4">Midterm 2 practice, Problem 4</a> · <a class="xref" href="#eq-string">string speed</a></p></div>
+    <div class="block"><div class="block-label">Related</div><p><a class="plink" href="#p/pm-4">Midterm 2 practice, Problem 4</a> · <a class="xref" href="#eq-string">string speed</a></p></div>
   </div>
 </div>
 
@@ -2761,13 +2787,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('click', function(e){
     var a = e.target.closest('.xref'); if (!a) return;
     var act = document.querySelector('.panel.active');
-    back = {panel: act ? act.id : 'basics', y: window.scrollY}; bp.classList.add('on');
+    back = {panel: act ? act.id : 'basics', y: window.scrollY, hash: window._probPage ? '#p/' + window._probPage : null}; bp.classList.add('on');
   }, true);
-  bp.addEventListener('click', function(){ if (!back) return; var b = back; back = null; bp.classList.remove('on'); showPanel(b.panel); setTimeout(function(){ window.scrollTo(0, b.y); }, 30); });
+  bp.addEventListener('click', function(){ if (!back) return; var b = back; back = null; bp.classList.remove('on'); if (b.hash){ location.hash = b.hash; setTimeout(function(){ window.scrollTo(0, b.y); }, 60); return; } showPanel(b.panel); setTimeout(function(){ window.scrollTo(0, b.y); }, 30); });
   document.querySelectorAll('.stab').forEach(function(t){ t.addEventListener('click', function(){ back = null; bp.classList.remove('on'); }); });
 
   var qp = document.getElementById('qpill'), qs = document.getElementById('qsheet'), cur = null;
   function current(){
+    if (window._probPage){ var pg = document.getElementById('ppage'), ps = pg.querySelector('.pstate'); return (ps && ps.getBoundingClientRect().bottom < 60) ? pg : null; }
     var mid = window.innerHeight / 2, best = null;
     document.querySelectorAll('.panel.active .eqcard.prob').forEach(function(c){
       if (!c.querySelector('.eqhdr.open')) return; var r = c.getBoundingClientRect();
@@ -2777,7 +2804,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function update(){ cur = current(); qp.classList.toggle('on', !!cur); if (!cur) qs.classList.remove('on'); }
   window.addEventListener('scroll', update, {passive: true}); document.addEventListener('click', function(){ setTimeout(update, 50); });
   qp.addEventListener('click', function(e){ e.stopPropagation(); if (!cur) return;
-    qs.querySelector('.qst').textContent = cur.querySelector('.mtitle').textContent;
+    qs.querySelector('.qst').textContent = (cur.querySelector('.mtitle') || cur.querySelector('h1')).textContent;
     var st = cur.querySelector('.pstate').cloneNode(true); var b = qs.querySelector('.qsb'); b.innerHTML = ''; b.appendChild(st);
     qs.scrollTop = 0; qs.classList.add('on'); });
   qs.querySelector('.qsx').addEventListener('click', function(){ qs.classList.remove('on'); });
@@ -2813,6 +2840,55 @@ document.addEventListener('DOMContentLoaded', function () {
     layer = b.getAttribute('data-l'); document.querySelectorAll('.wmtog button').forEach(function(x){ x.classList.toggle('on', x === b); });
     svg.querySelectorAll('.wmnt').forEach(function(t){ t.textContent = t.getAttribute(layer === 'phys' ? 'data-p' : 'data-m'); });
     var on = svg.querySelector('.wmn.on'); if (on) showNode(on.getAttribute('data-n')); }); });
+})();
+</script>
+
+<script>
+// problem pages (11/17/26): #p/<id> shows one problem as its own page, built from its card
+(function(){
+  var page = document.getElementById('ppage'), hw = document.getElementById('homework'); if (!page || !hw) return;
+  // sets, in order, from the Homework tab
+  var SETS = [], cur = null;
+  Array.prototype.forEach.call(hw.children, function(el){
+    if (el.classList.contains('sec-title')) { cur = {title: el.textContent, ids: [], index: null}; SETS.push(cur); }
+    else if (cur && el.classList.contains('pindex')) cur.index = el;
+    else if (cur && el.classList.contains('prob')) cur.ids.push(el.id);
+  });
+  function info(id){ var c = document.getElementById(id); if (!c) return null;
+    var route = Array.prototype.map.call(c.querySelectorAll('ol.route > li > b'), function(b){ return b.textContent; }).join(' → ');
+    return {card: c, title: c.querySelector('.mtitle').textContent, tag: c.querySelector('.eqnum').textContent, route: route}; }
+  function setOf(id){ for (var i = 0; i < SETS.length; i++) if (SETS[i].ids.indexOf(id) >= 0) return SETS[i]; return null; }
+  // the index in the Homework tab
+  SETS.forEach(function(st){ if (!st.index) return;
+    st.index.innerHTML = st.ids.map(function(id){ var f = info(id);
+      return '<a href="#p/' + id + '"><span class="ptag">' + f.tag + '</span><span class="pit">' + f.title + '</span>' + (f.route ? '<span class="pis">Route: ' + f.route + '</span>' : '') + '</a>'; }).join(''); });
+  function render(el){ if (window.renderMathInElement) renderMathInElement(el, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false}); }
+  var lastTabY = 0;
+  function open(id){ var f = info(id), st = setOf(id); if (!f || !st) return false;
+    var i = st.ids.indexOf(id), prev = st.ids[i - 1], next = st.ids[i + 1];
+    var chips = st.ids.map(function(x){ return '<a href="#p/' + x + '"' + (x === id ? ' class="cur"' : '') + '>' + info(x).tag.replace(/^.*· /, '') + '</a>'; }).join('');
+    page.innerHTML = '<div class="ptrail"><a href="#" data-home="1">Homework</a> › ' + st.title + '</div>'
+      + '<div class="pswitch2">' + chips + '</div><h1>' + f.title + '</h1>'
+      + '<div class="pbody">' + f.card.querySelector('.eqbody').innerHTML + '</div>'
+      + '<div class="pnav">' + (prev ? '<a class="pv" href="#p/' + prev + '">← ' + info(prev).title + '</a>' : '') + (next ? '<a class="nx" href="#p/' + next + '">' + info(next).title + ' →</a>' : '') + '</div>';
+    page.hidden = false; document.body.classList.add('pagemode'); render(page);
+    document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'homework'") >= 0); });
+    window.scrollTo(0, 0); window._probPage = id; return true; }
+  function close(){ if (page.hidden) return; page.hidden = true; page.innerHTML = ''; document.body.classList.remove('pagemode'); window._probPage = null; }
+  function showHomework(){ document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('active', p.id === 'homework'); });
+    document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'homework'") >= 0); }); }
+  function route(){ var h = location.hash;
+    if (h.indexOf('#p/') === 0){ if (!open(h.slice(3))) close(); }
+    else if (!page.hidden){ close(); showHomework(); setTimeout(function(){ window.scrollTo(0, lastTabY); }, 20); } }
+  window.addEventListener('hashchange', route); route();
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#p/"]'); if (a && page.hidden) lastTabY = window.scrollY;
+    if (e.target.closest('[data-home]')){ e.preventDefault(); history.pushState(null, '', location.pathname); route(); close(); showHomework(); window.scrollTo(0, 0); }
+  });
+  // a tab tap leaves page mode
+  document.querySelectorAll('.stab').forEach(function(t){ t.addEventListener('click', function(){ if (!page.hidden){ history.pushState(null, '', location.pathname); close(); } }); });
+  // a link to a concept from inside a page: leave page mode first (the guide's own handler then opens the card)
+  document.addEventListener('click', function(e){ var x = e.target.closest('.xref'); if (x && !page.hidden && page.contains(x)){ window._backHash = location.hash; close(); } }, true);
 })();
 </script>
 </body>
