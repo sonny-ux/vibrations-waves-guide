@@ -569,6 +569,14 @@ a.plink { color: var(--text) !important; text-decoration: underline !important; 
 .mmx button.gone { text-decoration: line-through; opacity: .5; }
 .mmxcap { font-size: .92em; color: var(--text2); margin-top: 6px; }
 </style>
+
+<style>
+/* equation links (11/18/26) */
+a.eqauto { text-decoration: none !important; border-bottom: 1px solid var(--muted); color: inherit !important; }
+a.eqauto .katex-display { margin: .6em 0; }
+a.eqauto:has(.katex-display) { display: block; border-bottom: 0; }
+a.eqauto:has(.katex-display) .katex { border-bottom: 1px solid var(--muted); padding-bottom: 2px; }
+</style>
 </head>
 <body>
 
@@ -3048,7 +3056,7 @@ document.addEventListener('DOMContentLoaded', function () {
       + '<div class="pswitch2">' + chips + '</div><h1>' + f.title + '</h1>'
       + '<div class="pbody">' + f.card.querySelector('.eqbody').innerHTML + '</div>'
       + '<div class="pnav">' + (prev ? '<a class="pv" href="#p/' + prev + '">← ' + info(prev).title + '</a>' : '') + (next ? '<a class="nx" href="#p/' + next + '">' + info(next).title + ' →</a>' : '') + '</div>';
-    page.hidden = false; document.body.classList.add('pagemode'); render(page);
+    page.hidden = false; document.body.classList.add('pagemode'); render(page); if (window.eqAutolink) window.eqAutolink(page);
     document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'homework'") >= 0); });
     window.scrollTo(0, 0); window._probPage = id; return true; }
   function close(){ if (page.hidden) return; page.hidden = true; page.innerHTML = ''; document.body.classList.remove('pagemode'); window._probPage = null; }
@@ -3139,6 +3147,57 @@ document.addEventListener('DOMContentLoaded', function () {
   setPluck(0.3); refresh();
   if (reduce){ paused = true; document.getElementById('mmxpause').textContent = 'Play'; tp = 0.3; draw(tp); }
   requestAnimationFrame(loop);
+})();
+</script>
+
+<script>
+// every general equation links to its card (11/18/26): equations with numbers substituted do not match and stay plain
+(function(){
+  function norm(t){ return (t || '').replace(/\\(left|right|displaystyle|,|;|!|quad|qquad)(?![a-zA-Z])/g, '').replace(/\\[dt]frac/g, '\\frac')
+      .replace(/\\text\{\s*\}/g, '').replace(/\s+/g, '').replace(/[.,;:]+$/, '').replace(/\{(\w)\}/g, '$1'); }
+  var MAP = {};
+  function add(tex, href){ var k = norm(tex); if (k && k.length > 2 && !MAP[k] && !(window._eqSkip && window._eqSkip[k])) MAP[k] = href; }
+  // common forms, written the way the guide writes them
+  [['v = \\omega/k', 'eq-speed'], ['v = f\\lambda', 'eq-speed'], ['v = \\lambda/T', 'eq-speed'], ['\\lambda = 2\\pi/k', 'eq-defs'], ['k = 2\\pi/\\lambda', 'eq-defs'],
+   ['T = 2\\pi/\\omega', 'eq-defs'], ['\\omega = 2\\pi f', 'eq-defs'], ['f = 1/T', 'eq-defs'], ['\\omega = vk', 'eq-speed'], ['k = \\omega/v', 'eq-speed'],
+   ['v = \\sqrt{T/\\mu}', 'eq-string'], ['v = \\sqrt{B/\\rho}', 'eq-sound'], ['\\omega_0 = \\sqrt{k/m}', 'c-natural'],
+   ['\\lambda_n = 2L/n', 'eq-modes'], ['k_n = n\\pi/L', 'eq-modes'], ['f_n = nf_1', 'eq-fn'], ['f_n = nv/2L', 'eq-fn'], ['f_n = nv/(2L)', 'eq-fn'], ['f_1 = v/2L', 'eq-fn'], ['f_1 = v/(2L)', 'eq-fn'],
+   ['\\omega_n = vk_n', 'eq-fn'], ['\\lambda_1 = 2L', 'eq-modes'], ['\\sin(n\\pi x/L)', 'c-mode'], ['\\sin(n\\pi a/L) = 0', 'c-touch'],
+   ['y = y_1 + y_2', 'c-superposition'], ['y = 2A\\sin kx\\cos\\omega t', 'eq-sw'], ['\\mu = m/L', 'm-touch'], ['\\mu = \\rho\\pi d^2/4', 'eq-mud'],
+   ['p = -B\\,\\partial\\xi/\\partial x', 'eq-pressure'], ['\\lambda = h/p', 'c-matterwave'], ['p = h/\\lambda', 'c-matterwave'], ['E_n = n^2h^2/8mL^2', 'eq-box'], ['E = p^2/2m', 'eq-box'],
+   ['\\langle P\\rangle = \\tfrac12\\mu v\\omega^2A^2', 'c-wavepower'], ['\\langle P\\rangle = \\frac12\\mu v\\omega^2A^2', 'c-wavepower'], ['\\langle dE/dx\\rangle = \\tfrac12\\mu\\omega^2A^2', 'c-wavepower'],
+   ['Z = \\mu v = \\sqrt{\\mu T}', 'c-wavepower'], ['Z = \\sqrt{\\mu T}', 'c-wavepower'], ['\\mathcal R = r^2', 'c-junction'], ['\\mathcal R + \\mathcal T = 1', 'c-junction'],
+   ['t = \\int dx/v(x)', 'c-nonuniform'], ['v(x) = \\sqrt{T/\\mu(x)}', 'c-nonuniform'], ['dt = dx/v(x)', 'c-nonuniform'], ['F = -kx', 'eq-1-2'], ['\\partial y/\\partial t', 'c-transverse'],
+   ['(1+R)/(1-R)', 'eq-swr'], ['\\gamma = b/m', 'eq-2-5'],
+   ['k_n = \\frac{n\\pi}{L}', 'eq-modes'], ['\\omega_n = \\frac{n\\pi v}{L}', 'eq-fn'], ['\\omega_n = vk_n = \\frac{n\\pi v}{L} = n\\,\\omega_1', 'eq-fn'], ['v = \\frac{\\omega}{k}', 'eq-speed'],
+   ['\\lambda = \\frac{2\\pi}{k}', 'eq-defs'], ['T = \\frac{2\\pi}{\\omega}', 'eq-defs'], ['r = \\frac{k_1 - k_2}{k_1 + k_2}', 'c-junction'], ['t = \\frac{2k_1}{k_1 + k_2}', 'c-junction'],
+   ['E_n = \\frac{n^2h^2}{8mL^2}', 'eq-box'], ['v = \\sqrt{\\frac{T}{\\mu}}', 'eq-string'], ['v(x) = \\sqrt{\\frac{T}{\\mu(x)}}', 'c-nonuniform'], ['dt = \\frac{dx}{v(x)}', 'c-nonuniform'],
+   ['p = -B\\frac{\\partial\\xi}{\\partial x}', 'eq-pressure'], ['y = (a\\sin kx + b\\cos kx)\\cos(\\omega t + \\phi)', 'eq-sw'], ['f_1 = \\frac{v}{2L}', 'eq-fn'], ['\\lambda_n = \\frac{2L}{n}', 'eq-modes']].forEach(function(p){ add(p[0], p[1]); });
+  var SKIP = {}; ['n = 1, 2, 3, \\dots', 'n=1,2,3,\\dots'].forEach(function(t){ SKIP[norm(t)] = 1; });
+  window._eqSkip = SKIP; Object.keys(SKIP).forEach(function(k){ delete MAP[k]; });
+  function tex(k){ var a = k.querySelector('annotation'); return a ? a.textContent : ''; }
+  function harvest(){
+    document.querySelectorAll('.qtable tbody tr').forEach(function(tr){ var qe = tr.querySelector('td.qe .katex'), l = tr.querySelector('td.qs a.xref'); if (qe && l) add(tex(qe), l.getAttribute('href').slice(1)); });
+    document.querySelectorAll('.eqcard[id^="eq-"] > .eqhdr .eqdisp .katex, .eqcard[id^="c-"] > .eqhdr .eqdisp .katex').forEach(function(k){ add(tex(k), k.closest('.eqcard').id); });
+  }
+  function find(t){ var k = norm(t); if (MAP[k]) return MAP[k];
+    var parts = t.split(/\\qquad|\\quad|,\s*\\quad|\\text\{\s*(?:and|or)\s*\}/); if (parts.length > 1) for (var i = 0; i < parts.length; i++){ var h = MAP[norm(parts[i])]; if (h) return h; }
+    return null; }
+  function autolink(root){
+    (root || document.body).querySelectorAll('.katex').forEach(function(k){
+      if (k.closest('a, .eqhdr, .qtable, svg, #wmap, #gpop, .kb, .wmtog, button, summary') || k.parentNode.classList.contains('eqauto')) return;
+      var h = find(tex(k)); if (!h) return;
+      var own = k.closest('.eqcard'); if (own && own.id === h) return;
+      if (!document.getElementById(h)) return;
+      var disp = k.parentNode.classList && k.parentNode.classList.contains('katex-display') ? k.parentNode : k;
+      if (disp.closest('a')) return;
+      var a = document.createElement('a'); a.className = 'xref eqauto'; a.href = '#' + h; a.title = 'Open its card';
+      disp.parentNode.insertBefore(a, disp); a.appendChild(disp);
+    });
+  }
+  window.eqAutolink = autolink;
+  function run(){ if (!document.querySelector('.katex')) return setTimeout(run, 300); harvest(); autolink(document.body); }
+  window.addEventListener('load', function(){ setTimeout(run, 50); });
 })();
 </script>
 </body>
