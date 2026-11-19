@@ -1517,7 +1517,37 @@ $$F_y = -T\,\frac{\partial y}{\partial x}$$
 <p>and in the air</p>
 $$p = -B\,\frac{\partial \xi}{\partial x}$$
 <ul class="mist"><li><b>Deformation:</b> slope $\partial y/\partial x$ on the string; squeeze $\partial\xi/\partial x$ in air.</li><li><b>Stiffness:</b> $T$ on the string; $B$ in air.</li><li><b>Push back:</b> sideways force $F_y$; pressure $p$.</li><li><b>Inertia:</b> $\mu$ (kg per metre); $\rho$ (kg per cubic metre).</li></ul>
-<p><b>One difference in kind.</b> $B$ is a property: air <i>has</i> it, fixed by the material. $T$ is a set-up condition: a string <i>is under</i> tension, set by how tightly it is stretched; the same string can be under any tension but always has the same $\mu$. Same role, different place on the map. See <a class="xref" href="#eq-string">string speed</a> · <a class="xref" href="#eq-pressure">pressure from displacement</a>.</p></div><div class="block"><div class="block-label">The consequence</div><p>In a standing sound wave the two descriptions are shifted by a quarter wavelength. Where the air moves most (displacement antinode), neighbouring layers move together, the slope $\partial\xi/\partial x$ is zero, and the pressure does not change (pressure node). Where the air does not move (displacement node), the layers on either side move toward it and away from it in turn, the slope is largest, and the pressure swings most (pressure antinode).</p></div>
+<p><b>One difference in kind.</b> $B$ is a property: air <i>has</i> it, fixed by the material. $T$ is a set-up condition: a string <i>is under</i> tension, set by how tightly it is stretched; the same string can be under any tension but always has the same $\mu$. Same role, different place on the map. See <a class="xref" href="#eq-string">string speed</a> · <a class="xref" href="#eq-pressure">pressure from displacement</a>.</p><details class="deeper"><summary>Where the two equations come from, step by step</summary>
+<p>Both come from one idea: the medium pushes back by an amount set by how deformed it is at that point.</p>
+<p><b>The string: $F_y = -T\,\partial y/\partial x$</b></p>
+<p><b>Model.</b> Pick a point $x$ and treat it as the boundary between the piece to its left and the piece to its right. The left piece exerts a pull on the right piece.</p>
+<ol class="steps"><li><p><b>Which way the pull points.</b> Recall: a stretched string can only pull, and it pulls along itself. So the left piece pulls the right piece back toward the left, along the string's line at $x$, with size $T$.</p></li>
+<li><p><b>Name the angle.</b> At $x$ the string is tilted at angle $\theta$. Its slope is how much $y$ rises per unit of $x$ (partial, because $y$ also depends on $t$; this is one instant):</p>
+$$\frac{\partial y}{\partial x} = \tan\theta$$</li>
+<li><p><b>Split the pull into components.</b> Recall: a force $T$ at angle $\theta$ has horizontal part $T\cos\theta$ and vertical part $T\sin\theta$. The pull points back down the string, so its sideways part is</p>
+$$F_y = -T\sin\theta$$
+<p>The minus sign: it points down where the string slopes up.</p></li>
+<li><p><b>Small angles.</b> Recall: for small angles</p>
+$$\sin\theta \approx \tan\theta$$
+<p>String waves have small slopes, so substitute $\tan\theta = \partial y/\partial x$ from step 2 into step 3:</p>
+$$F_y = -T\,\frac{\partial y}{\partial x}$$</li></ol>
+<p><b>What it says:</b> the steeper the string at $x$, the harder the sideways pull; $T$ is the pull per unit of slope.</p>
+<p><b>The air: $p = -B\,\partial\xi/\partial x$</b></p>
+<p><b>Model.</b> Air in a pipe as thin layers along $x$. In a sound wave each layer moves back and forth along the pipe; the layer that sits at $x$ at rest is shifted by $\xi(x)$.</p>
+<ol class="steps"><li><p><b>Take a thin slab.</b> The air between the layer at $x$ and the layer at $x + \Delta x$. At rest its thickness is $\Delta x$.</p></li>
+<li><p><b>How its thickness changes.</b> The left face moves by $\xi(x)$, the right face by $\xi(x+\Delta x)$. The new thickness is the old one plus the difference of the shifts:</p>
+$$\Delta x + \big[\xi(x+\Delta x) - \xi(x)\big]$$
+<p>If both faces move the same amount, the slab slides without being squeezed; only a difference in the shifts squeezes or stretches it.</p></li>
+<li><p><b>Fractional change in volume.</b> The cross-section does not change, so the volume changes in the same proportion as the thickness:</p>
+$$\frac{\Delta V}{V} = \frac{\xi(x+\Delta x) - \xi(x)}{\Delta x}$$
+<p>Recall: as $\Delta x \to 0$ this ratio becomes the derivative $\partial\xi/\partial x$.</p></li>
+<li><p><b>Put it into the definition of $B$.</b> The bulk modulus is defined by</p>
+$$p = -B\,\frac{\Delta V}{V}$$
+<p>Substitute step 3:</p>
+$$p = -B\,\frac{\partial \xi}{\partial x}$$</li></ol>
+<p><b>What it says:</b> where $\xi$ changes quickly along the pipe, the air is squeezed or stretched a lot, so the pressure changes a lot. $\partial\xi/\partial x \lt 0$: the right face moved less than the left, the slab got thinner (squeezed), $p \gt 0$. Positive: the slab got thicker (stretched), $p \lt 0$.</p>
+<p><b>The same shape.</b> Deformation: slope $\partial y/\partial x$, or squeeze $\partial\xi/\partial x$. Stiffness: $T$, or $B$. Push back: $F_y$, or $p$. The minus sign: the push opposes the deformation, as in $F = -kx$. One difference: on the string $y$ is sideways, across the direction of travel (transverse); in air $\xi$ is along it (longitudinal).</p>
+</details></div><div class="block"><div class="block-label">The consequence</div><p>In a standing sound wave the two descriptions are shifted by a quarter wavelength. Where the air moves most (displacement antinode), neighbouring layers move together, the slope $\partial\xi/\partial x$ is zero, and the pressure does not change (pressure node). Where the air does not move (displacement node), the layers on either side move toward it and away from it in turn, the slope is largest, and the pressure swings most (pressure antinode).</p></div>
     <div class="block"><div class="block-label">Ends of a pipe</div><ul><li><b>Closed end:</b> the wall stops the air, $\xi = 0$: displacement node, so pressure antinode.</li><li><b>Open end:</b> the air meets the open atmosphere, which holds the pressure at atmospheric, $p = 0$: pressure node, so displacement antinode.</li></ul><p>This is PS8 Problem 4 (<a class="xref" href="#m-pipe">method</a>). It decides which notes a pipe can play (<a class="xref" href="#eq-pipes">pipes</a>).</p></div>
     <div class="block"><div class="block-label">Why it matters</div><p>Your eardrum responds to pressure, so you hear the pressure wave. A flute (open at both ends) and a clarinet (closed at the reed end) have the same kind of air column but different end conditions, and that is the main reason they sound different: the closed–open pipe has only odd harmonics.</p></div>
     <div class="block"><div class="block-label">Often confused with</div><p>"Node" without saying of what. In a pipe always say "displacement node" or "pressure node": they are at different places.</p></div>
