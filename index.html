@@ -577,6 +577,16 @@ a.eqauto .katex-display { margin: .6em 0; }
 a.eqauto:has(.katex-display) { display: block; border-bottom: 0; }
 a.eqauto:has(.katex-display) .katex { border-bottom: 1px solid var(--muted); padding-bottom: 2px; }
 </style>
+
+<style>
+/* equation results for symbol searches (11/18/26) */
+body.searching .pindex, body.searching .psetnote, body.searching #homework .intro { display: none !important; }
+.eqlist { display: flex; flex-direction: column; gap: 6px; padding: 6px 10px 8px; }
+a.eqres { display: block; border: 1px solid var(--border2); border-radius: 8px; padding: 6px 10px; text-decoration: none !important; color: var(--text) !important; background: var(--card); }
+a.eqres .eqf { display: block; overflow-x: auto; } a.eqres .eqf .katex-display { margin: .2em 0; text-align: left; } a.eqres .eqf .katex-display > .katex { text-align: left; }
+a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top: 2px; }
+.kbsel .eqlist { padding: 6px 0 0; }
+</style>
 </head>
 <body>
 
@@ -2908,7 +2918,7 @@ function suggest(){
   var q=document.getElementById('q').value.trim().toLowerCase(), box=document.getElementById('sugg');
   if(!q){ box.innerHTML=''; return; }
   var _c=parseCombo(document.getElementById('q').value);
-  if(_c){ var _n=comboFilter(_c); box.innerHTML='<div class="combo">Equations containing <b>'+_c.join('</b> and <b>')+'</b>: '+_n+(_n?' · shown below':' · none')+'</div>'; return; }
+  if(_c){ var _n=comboFilter(_c); box.innerHTML='<div class="combo">Equations containing <b>'+_c.join('</b> and <b>')+'</b>: '+_n+(_n?'':' · none')+'</div>'+eqResultsHTML(); return; }
   var rank={concept:0, term:1, method:2, equation:3};
   var raw=document.getElementById('q').value.trim(), symHits=[];
   SYMS.forEach(function(s){
@@ -2971,6 +2981,7 @@ function symFilter(){
     var tb=t.nextElementSibling; if(tb && tb.classList.contains('qtable')) tb.classList.toggle('hit-none', !any);
   });
   info.innerHTML='Equations containing <b>'+on.join('</b>, <b>')+'</b>: '+n+(n?'':' — none yet')+' &nbsp;<a href="#" id="kbclear">clear</a>';
+  info.innerHTML+=eqResultsHTML();
   document.getElementById('noRes').classList.toggle('on', n===0);
 }
 document.addEventListener('click', function(e){ if(e.target.id==='kbclear'){ e.preventDefault(); document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); document.getElementById('kbout').innerHTML=''; symFilter(); } });
@@ -3004,6 +3015,18 @@ function parseCombo(raw){
   syms=syms.filter(function(x,i){return syms.indexOf(x)===i;});
   return syms.length>=2 ? syms : null;
 }
+
+function eqResultsHTML(){
+  var items=[];
+  document.querySelectorAll('.eqcard:not(.hit-none)').forEach(function(c){ var d=c.querySelector('.eqhdr .eqdisp'); if(!d||!c.id) return;
+    var nm=c.querySelector('.eqhdr .eqname'); items.push('<a class="eqres" href="#'+c.id+'" data-go="#'+c.id+'"><span class="eqf">'+d.innerHTML+'</span><span class="eqn">'+(nm?nm.innerHTML:'')+'</span></a>'); });
+  document.querySelectorAll('.qtable tbody tr:not(.hit-none)').forEach(function(r){ var q=r.querySelector('td.qe'), w=r.children[1], l=r.querySelector('td.qs a.xref'); if(!q) return;
+    var h=l?l.getAttribute('href'):''; items.push('<a class="eqres" href="'+(h||'#')+'"'+(h?' data-go="'+h+'"':'')+'><span class="eqf">'+q.innerHTML+'</span><span class="eqn">'+(w?w.innerHTML:'')+'</span></a>'); });
+  return items.length ? '<div class="eqlist">'+items.join('')+'</div>' : '';
+}
+document.addEventListener('click', function(e){ var a=e.target.closest('a.eqres'); if(!a) return; e.preventDefault(); var h=a.getAttribute('data-go'); if(!h) return;
+  var q=document.getElementById('q'); if(q.value){ q.value=''; runSearch(); } document.querySelectorAll('.kk.on').forEach(function(b){ b.classList.remove('on'); }); if(typeof symFilter==='function') symFilter();
+  document.getElementById('sugg').innerHTML=''; if(typeof toggleKb==='function') toggleKb(false); goTo(h); });
 function comboFilter(on){
   var res=on.map(function(sym){ return new RegExp(SYMPAT[sym]); });
   document.body.classList.add('searching','symsearch');
