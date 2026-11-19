@@ -2892,6 +2892,7 @@ function toggleKb(force){
   if(!on){ document.getElementById('kbout').innerHTML=''; document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); symFilter(); }
 }
 function goTo(href){
+  if(href.indexOf('#p/')===0){ var q0=document.getElementById('q'); if(q0.value){ q0.value=''; runSearch(); } document.getElementById('sugg').innerHTML=''; toggleKb(false); location.hash=href; return; }
   var card=document.querySelector(href); if(!card) return;
   var q=document.getElementById('q'); if(q.value){ q.value=''; runSearch(); }
   var panel=card.closest('.panel');
@@ -2907,6 +2908,8 @@ function buildIndex(){
   document.querySelectorAll('.eqcard').forEach(function(c){
     if(!c.id) return;
     var name=(c.querySelector('.mtitle')||c.querySelector('.eqname')||{}).textContent||'';
+    if(c.classList.contains('prob')){ var tg=(c.querySelector('.eqnum')||{}).textContent||'';
+      INDEX.push({t:tg+' · '+name.trim(), type:'problem', tag:'', href:'#p/'+c.id, hay:(tg+' '+c.textContent).toLowerCase()}); return; }
     var type=c.classList.contains('method')?'method':c.classList.contains('concept')?'concept':'equation';
     var extra=c.classList.contains('concept') ? '' : (c.querySelector('.eqnum')||{}).textContent||'';
     INDEX.push({t:name.trim(), type:type, tag:extra, href:'#'+c.id, hay:(name+' '+extra+' '+(c.querySelector('.eqhdr annotation')||{textContent:''}).textContent).toLowerCase()});
@@ -2919,7 +2922,7 @@ function suggest(){
   if(!q){ box.innerHTML=''; return; }
   var _c=parseCombo(document.getElementById('q').value);
   if(_c){ var _n=comboFilter(_c); box.innerHTML='<div class="combo">Equations containing <b>'+_c.join('</b> and <b>')+'</b>: '+_n+(_n?'':' · none')+'</div>'+eqResultsHTML(); return; }
-  var rank={concept:0, term:1, method:2, equation:3};
+  var rank={concept:0, term:1, problem:2, method:3, equation:4};
   var raw=document.getElementById('q').value.trim(), symHits=[];
   SYMS.forEach(function(s){
     var keys=s[0].split(' '), nm=(SYMNAME[s[0]]||'').toLowerCase();
