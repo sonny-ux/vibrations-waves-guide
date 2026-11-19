@@ -2901,6 +2901,7 @@ function toggleKb(force){
   if(!on){ document.getElementById('kbout').innerHTML=''; document.querySelectorAll('.kk.on').forEach(function(b){b.classList.remove('on');}); symFilter(); }
 }
 function goTo(href){
+  if(href.indexOf('#p/')!==0 && document.body.classList.contains('pagemode')){ var pg=document.getElementById('ppage'); if(pg){ pg.hidden=true; pg.innerHTML=''; } document.body.classList.remove('pagemode'); window._probPage=null; }
   if(href.indexOf('#p/')===0){ var q0=document.getElementById('q'); if(q0.value){ q0.value=''; runSearch(); } document.getElementById('sugg').innerHTML=''; toggleKb(false); location.hash=href; return; }
   var card=document.querySelector(href); if(!card) return;
   var q=document.getElementById('q'); if(q.value){ q.value=''; runSearch(); }
@@ -3304,7 +3305,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // a tab tap leaves page mode
   document.querySelectorAll('.stab').forEach(function(t){ t.addEventListener('click', function(){ if (!page.hidden){ history.pushState(null, '', location.pathname); close(); } }); });
   // a link to a concept from inside a page: leave page mode first (the guide's own handler then opens the card)
-  document.addEventListener('click', function(e){ var x = e.target.closest('.xref'); if (x && !page.hidden && page.contains(x)){ window._backHash = location.hash; close(); } }, true);
+  document.addEventListener('click', function(e){ var x = e.target.closest('.xref'); if (x && !page.hidden && (page.contains(x) || x.closest('#gpop, #qsheet, #sugg, .kb'))){ window._backHash = location.hash; close(); } }, true);
 })();
 </script>
 
