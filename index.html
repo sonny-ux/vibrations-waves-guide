@@ -461,13 +461,21 @@ details.deeper[open] { padding-bottom: 10px; }
 
 #sugg .combo { padding: 8px 12px; color: var(--text2); font-size: 14px; }
 
-#recent { position: fixed; z-index: 60; background: var(--card); border: 1px solid var(--border2); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.25); width: min(360px, calc(100vw - 32px)); padding: 6px; }
+#recent { max-height: 60vh; overflow-y: auto; position: fixed; z-index: 60; background: var(--card); border: 1px solid var(--border2); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.25); width: min(360px, calc(100vw - 32px)); padding: 6px; }
 #recent[hidden] { display: none; }
 #recent .rh { font-size: .75em; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 6px 8px 4px; }
 #recent a { display: block; padding: 8px; border-radius: 6px; color: var(--text); text-decoration: none; font-size: 14px; line-height: 1.35; }
 #recent a:hover { background: var(--border2); }
 #recent a .rk { display: block; font-size: .75em; color: var(--muted); }
 #recent .rnone { padding: 8px; color: var(--muted); font-size: 14px; }
+
+#recfront { border: 1px solid var(--border2); border-radius: 10px; padding: 8px 12px 10px; margin: 0 0 16px; font-size: 14px; }
+#recfront[hidden] { display: none; }
+#recfront .rfh { display: flex; justify-content: space-between; align-items: baseline; color: var(--muted); font-size: .8em; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+#recfront .rfh button { background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer; padding: 2px 4px; }
+#recfront a { display: block; padding: 5px 0; color: var(--text); text-decoration: none; }
+#recfront a .rk { color: var(--muted); font-size: .8em; margin-left: 6px; }
+#recfront .rfall { color: var(--text2); text-decoration: underline; }
 </style>
 
 <style>
@@ -654,7 +662,7 @@ a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top
       <input id="q" type="search" placeholder="Search, or type several: tension mu" aria-label="Search the guide" autocomplete="off">
       <button class="tbtn" id="kbBtn" aria-label="Symbol keyboard" onclick="toggleKb()">αβ</button>
       <button class="tbtn" id="expBtn" onclick="toggleAll()">Expand all</button>
-      <button class="tbtn" id="recBtn" aria-label="Recently opened" onclick="toggleRecent(event)">Recent</button>
+      <button class="tbtn" id="recBtn" aria-label="History: recently opened" onclick="toggleRecent(event)">History</button>
       <button class="tbtn" onclick="document.body.classList.toggle('show-help')" aria-label="How to use this guide">?</button>
       <button class="tbtn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
     </div>
@@ -683,6 +691,7 @@ a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top
 <div class="main">
 <div class="noresults" id="noRes">No matches.</div>
 <div id="ppage" class="ppage" hidden></div>
+<div id="recfront" hidden></div>
 
 <div class="howto"><b>How to use this guide.</b> <em>Quick:</em> the Basics tab (every small relation), the Contents box, the one-line names, and the Steps in each Method. <em>Depth:</em> open any card for its variables and origin, and open “Go deeper” for why a method works. Underlined links jump to the card they name.</div>
 <!-- ============ START HERE ============ -->
@@ -3627,7 +3636,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <div id="recent" hidden></div>
 <script>
 (function(){
-  var KEY = 'wg-recent', MAX = 5, quiet = true;
+  var KEY = 'wg-recent', MAX = 25, quiet = true;
   setTimeout(function(){ quiet = false; }, 2500);          // ignore cards reopened when the page reloads itself
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
   function save(a){ try { localStorage.setItem(KEY, JSON.stringify(a)); } catch(e){} }
@@ -3662,7 +3671,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.toggleRecent = function(e){ if (e) e.stopPropagation();
     if (!box.hidden){ box.hidden = true; return; }
     var a = load();
-    box.innerHTML = '<div class="rh">Recently opened</div>' + (a.length ? a.map(function(r, i){
+    box.innerHTML = '<div class="rh">History · last ' + MAX + '</div>' + (a.length ? a.map(function(r, i){
       return '<a href="' + r.href + '" data-i="' + i + '">' + r.name.replace(/</g, '&lt;') + (r.kind ? '<span class="rk">' + r.kind.replace(/</g, '&lt;') + '</span>' : '') + '</a>'; }).join('')
       : '<div class="rnone">Nothing yet. Cards and problem pages you open will appear here.</div>');
     if (window.renderMathInElement) renderMathInElement(box, {delimiters:[{left:'$$',right:'$$',display:false},{left:'$',right:'$',display:false}], throwOnError:false});
@@ -3670,6 +3679,24 @@ document.addEventListener('DOMContentLoaded', function () {
     box.style.top = (b.bottom + 6) + 'px';
     box.style.left = Math.max(16, Math.min(b.right - 360, window.innerWidth - 16 - Math.min(360, window.innerWidth - 32))) + 'px';
     box.hidden = false; };
+
+  // on opening: the last three places, above the first tab, until anything else is opened
+  var fr = document.getElementById('recfront');
+  function hideFront(){ fr.hidden = true; }
+  (function(){ var a = load().slice(0, 3); if (!a.length || location.hash.indexOf('#p/') === 0) return;
+    fr.innerHTML = '<div class="rfh"><span>Pick up where you left off</span><button type="button" aria-label="Hide">×</button></div>'
+      + a.map(function(r){ return '<a href="' + r.href + '">' + r.name.replace(/</g, '&lt;') + (r.kind ? '<span class="rk">' + r.kind.replace(/</g, '&lt;') + '</span>' : '') + '</a>'; }).join('')
+      + '<a href="#" class="rfall" data-all="1">All history</a>';
+    if (window.renderMathInElement) renderMathInElement(fr, {delimiters:[{left:'$',right:'$',display:false}], throwOnError:false});
+    fr.hidden = false; })();
+  fr.addEventListener('click', function(e){ e.preventDefault();
+    if (e.target.closest('.rfh button')) { hideFront(); return; }
+    var l = e.target.closest('a'); if (!l) return;
+    if (l.dataset.all) { e.stopPropagation(); toggleRecent(); return; }
+    hideFront(); goTo(l.getAttribute('href')); });
+  var sw = window.switchTab; if (sw) window.switchTab = function(){ hideFront(); return sw.apply(this, arguments); };
+  window.addEventListener('hashchange', hideFront);
+  var qq = document.getElementById('q'); if (qq) qq.addEventListener('input', hideFront);
   box.addEventListener('click', function(e){ var l = e.target.closest('a'); if (!l) return; e.preventDefault(); box.hidden = true; goTo(l.getAttribute('href')); });
   document.addEventListener('click', function(e){ if (!box.hidden && !box.contains(e.target)) box.hidden = true; });
   window.addEventListener('scroll', function(){ if (!box.hidden) box.hidden = true; }, {passive: true});
