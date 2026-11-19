@@ -596,6 +596,14 @@ a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top
 .phk { font-size: .75em; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .carry { font-style: italic; }
 </style>
+
+<style>
+/* problem page bar replaces the floating Question button (11/18/26) */
+#qpill { display: none !important; }
+.ppage .pbar { position: sticky; z-index: 15; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--bg); border-bottom: 1px solid var(--border2); padding: 6px 0; margin: 0 0 10px; }
+.ppage .pbar .pbt { font-size: .82em; color: var(--muted); letter-spacing: .03em; }
+.ppage .pbar .pbq { border: 1px solid var(--border2); background: var(--card2); color: var(--text); border-radius: 999px; padding: 4px 14px; font: 600 13px -apple-system, system-ui, sans-serif; cursor: pointer; }
+</style>
 </head>
 <body>
 
@@ -3282,11 +3290,14 @@ document.addEventListener('DOMContentLoaded', function () {
   function open(id){ var f = info(id), st = setOf(id); if (!f || !st) return false;
     var i = st.ids.indexOf(id), prev = st.ids[i - 1], next = st.ids[i + 1];
     var chips = st.ids.map(function(x){ return '<a href="#p/' + x + '"' + (x === id ? ' class="cur"' : '') + '>' + info(x).tag.replace(/^.*· /, '') + '</a>'; }).join('');
-    page.innerHTML = '<div class="ptrail"><a href="#" data-home="1">Homework</a> › ' + st.title + '</div>'
+    page.innerHTML = '<div class="pbar"><span class="pbt">' + f.tag + '</span><button type="button" class="pbq">Question</button></div>'
+      + '<div class="ptrail"><a href="#" data-home="1">Homework</a> › ' + st.title + '</div>'
       + '<div class="pswitch2">' + chips + '</div><h1>' + f.title + '</h1>'
       + '<div class="pbody">' + f.card.querySelector('.eqbody').innerHTML + '</div>'
       + '<div class="pnav">' + (prev ? '<a class="pv" href="#p/' + prev + '">← ' + info(prev).title + '</a>' : '') + (next ? '<a class="nx" href="#p/' + next + '">' + info(next).title + ' →</a>' : '') + '</div>';
-    page.hidden = false; document.body.classList.add('pagemode'); render(page); if (window.eqAutolink) window.eqAutolink(page);
+    page.hidden = false; document.body.classList.add('pagemode'); render(page);
+    var nav = document.querySelector('.tab-nav'), bar = page.querySelector('.pbar'); if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
+    bar.querySelector('.pbq').addEventListener('click', function(ev){ ev.stopPropagation(); var qs = document.getElementById('qsheet'); qs.querySelector('.qst').textContent = f.title; var b2 = qs.querySelector('.qsb'); b2.innerHTML = ''; b2.appendChild(page.querySelector('.pstate').cloneNode(true)); qs.scrollTop = 0; qs.classList.add('on'); }); if (window.eqAutolink) window.eqAutolink(page);
     document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'homework'") >= 0); });
     window.scrollTo(0, 0); window._probPage = id; return true; }
   function close(){ if (page.hidden) return; page.hidden = true; page.innerHTML = ''; document.body.classList.remove('pagemode'); window._probPage = null; }
