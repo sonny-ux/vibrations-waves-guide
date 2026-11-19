@@ -476,6 +476,7 @@ details.deeper[open] { padding-bottom: 10px; }
 #recfront a { display: block; padding: 5px 0; color: var(--text); text-decoration: none; }
 #recfront a .rk { color: var(--muted); font-size: .8em; margin-left: 6px; }
 #recfront .rfall { color: var(--text2); text-decoration: underline; }
+.readmore { margin-top: 6px; font-weight: 600; }
 </style>
 
 <style>
@@ -1266,7 +1267,7 @@ $$v = \frac{\lambda}{T} = f\lambda = \frac{\omega}{k}$$
 <div class="block"><div class="block-label">Which form to use</div><ul class="mist">
 <li>Given $f$ or $\lambda$ in Hz and metres: $v = f\lambda$ (PS6 · 3).</li>
 <li>Given an equation $A\cos(kx - \omega t)$: read $k$, $\omega$ and use $v = \omega/k$ (PS6 · 2).</li></ul></div>
-<div class="block"><div class="block-label">What sets it</div><p>The medium. On a string, $v = \sqrt{T/\mu}$ (tension over mass per length). Light in vacuum, $c = 3.00\times10^8$ m/s. Sound in air, about 340 m/s.</p></div><div class="block"><div class="block-label">Watch out</div><p><b>Wave speed is not the speed of the medium.</b> Each point of a string moves up and down with velocity $\partial y/\partial t$, which changes all the time and is unrelated to $v$. The shape moves along; the string does not.</p></div><div class="block"><div class="block-label">What depends on it</div><ul class="mist"><li>Wavelength from frequency, $\lambda = v/f$.</li><li>Normal-mode frequencies $f_n = nv/(2L)$ (Ch. 6).</li><li>Time for a shape to return, $2L/v$.</li></ul></div><div class="block"><div class="block-label">Where it sits</div><p>Every medium has its own wave speed: about 340 m/s for sound in air, 1500 m/s in water, $c$ for light. The pattern $\sqrt{\text{restoring}/\text{inertia}}$ recurs across all of them (<a class="xref" href="#c-restoring">restoring over inertia</a>).</p></div><div class="block"><div class="block-label">Example</div><p>PS7 · 1(a): $T = 200$ N, $\mu = 0.04$ kg/m: $v = \sqrt{200/0.04} = \sqrt{5000} \approx 70.7$ m/s.</p></div><div class="block"><div class="block-label">Related</div><p><a class="xref" href="#c-pattern">time and space pattern</a> · <a class="xref" href="#eq-string">string card</a> · <a class="xref" href="#eq-speed">speed card</a></p></div></div>
+<div class="block"><div class="block-label">What sets it</div><p>The medium. On a string, $v = \sqrt{T/\mu}$ (tension over mass per length). Light in vacuum, $c = 3.00\times10^8$ m/s. Sound in air, about 340 m/s.</p></div><div class="block"><div class="block-label">Watch out</div><p><b>Wave speed is not the speed of the medium.</b> Each point of a string moves up and down with velocity $\partial y/\partial t$, which changes all the time and is unrelated to $v$. The shape moves along; the string does not.</p></div><div class="block"><div class="block-label">What depends on it</div><ul class="mist"><li>Wavelength from frequency, $\lambda = v/f$.</li><li>Normal-mode frequencies $f_n = nv/(2L)$ (Ch. 6).</li><li>Time for a shape to return, $2L/v$.</li></ul></div><div class="block"><div class="block-label">Where it sits</div><p>Every medium has its own wave speed: about 340 m/s for sound in air, 1500 m/s in water, $c$ for light. The pattern $\sqrt{\text{restoring}/\text{inertia}}$ recurs across all of them. <a class="xref" href="#c-restoring">Read more: restoring over inertia →</a></p></div><div class="block"><div class="block-label">Example</div><p>PS7 · 1(a): $T = 200$ N, $\mu = 0.04$ kg/m: $v = \sqrt{200/0.04} = \sqrt{5000} \approx 70.7$ m/s.</p></div><div class="block"><div class="block-label">Related</div><p><a class="xref" href="#c-pattern">time and space pattern</a> · <a class="xref" href="#eq-string">string card</a> · <a class="xref" href="#eq-speed">speed card</a></p></div></div>
 </div>
 
 <div class="sec-title">Mathematical ideas</div>
@@ -2483,7 +2484,7 @@ $$p = -B\,\frac{\partial \xi}{\partial x}$$</li></ol>
       <ul class="params"><li><span class="psym">$T$</span><span class="pdesc">tension in the string (N) — not the period</span></li><li><span class="psym">$\mu$</span><span class="pdesc">mass per unit length (kg m⁻¹)</span></li></ul>
     </div>
     <div class="block"><div class="block-label">Reading it</div>
-      <p>Same pattern as $\omega=\sqrt{k/m}$: a restoring quantity over an inertia quantity (<a class="xref" href="#c-restoring">restoring over inertia</a>). Tighter string → faster wave; heavier string → slower wave.</p>
+      <p>Same pattern as $\omega=\sqrt{k/m}$: a restoring quantity over an inertia quantity. Tighter string → faster wave; heavier string → slower wave.</p><p class="readmore"><a class="xref" href="#c-restoring">Read more: restoring over inertia →</a></p>
     </div><div class="block"><div class="block-label">Its match in sound</div><p>Tension is what pushes back on a string; in air the bulk modulus $B$ plays that part, and $\rho$ plays the part of $\mu$:</p>
 $$v_{\text{sound}} = \sqrt{\frac{B}{\rho}}$$
 <p>Same role, different kind: air <i>has</i> $B$, a string <i>is under</i> $T$. Full comparison: <a class="xref" href="#c-sound2">sound</a>. The pattern: <a class="xref" href="#c-restoring">restoring over inertia</a>.</p></div>
