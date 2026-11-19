@@ -460,6 +460,14 @@ details.deeper[open] { padding-bottom: 10px; }
 .forms > li > p { margin: 2px 0; }
 
 #sugg .combo { padding: 8px 12px; color: var(--text2); font-size: 14px; }
+
+#recent { position: fixed; z-index: 60; background: var(--card); border: 1px solid var(--border2); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.25); width: min(360px, calc(100vw - 32px)); padding: 6px; }
+#recent[hidden] { display: none; }
+#recent .rh { font-size: .75em; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 6px 8px 4px; }
+#recent a { display: block; padding: 8px; border-radius: 6px; color: var(--text); text-decoration: none; font-size: 14px; line-height: 1.35; }
+#recent a:hover { background: var(--border2); }
+#recent a .rk { display: block; font-size: .75em; color: var(--muted); }
+#recent .rnone { padding: 8px; color: var(--muted); font-size: 14px; }
 </style>
 
 <style>
@@ -646,6 +654,7 @@ a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top
       <input id="q" type="search" placeholder="Search, or type several: tension mu" aria-label="Search the guide" autocomplete="off">
       <button class="tbtn" id="kbBtn" aria-label="Symbol keyboard" onclick="toggleKb()">αβ</button>
       <button class="tbtn" id="expBtn" onclick="toggleAll()">Expand all</button>
+      <button class="tbtn" id="recBtn" aria-label="Recently opened" onclick="toggleRecent(event)">Recent</button>
       <button class="tbtn" onclick="document.body.classList.toggle('show-help')" aria-label="How to use this guide">?</button>
       <button class="tbtn" id="themeBtn" onclick="cycleTheme()" aria-label="Switch light or dark mode">Light</button>
     </div>
@@ -3612,6 +3621,58 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('dnext').addEventListener('click', function(){ i = (i + 1) % order.length; if (i === 0) order = shuffle(order.length); show(); });
   document.querySelectorAll('.dtog button').forEach(function(b){ b.addEventListener('click', function(){ start(b.getAttribute('data-m')); }); });
   window.addEventListener('load', function(){ setTimeout(function(){ start('eqs'); }, 300); });
+})();
+</script>
+
+<div id="recent" hidden></div>
+<script>
+(function(){
+  var KEY = 'wg-recent', MAX = 5, quiet = true;
+  setTimeout(function(){ quiet = false; }, 2500);          // ignore cards reopened when the page reloads itself
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
+  function save(a){ try { localStorage.setItem(KEY, JSON.stringify(a)); } catch(e){} }
+  function clean(el){ if (!el) return ''; var c = el.cloneNode(true);
+    c.querySelectorAll('.katex').forEach(function(k){ var t = k.querySelector('annotation'); k.replaceWith(t ? '$' + t.textContent + '$' : k.textContent); });
+    return c.textContent.replace(/\s+/g, ' ').trim(); }
+  function record(href, name, kind){ if (quiet || !name) return;
+    var a = load().filter(function(r){ return r.href !== href; });
+    a.unshift({href: href, name: name.slice(0, 120), kind: kind}); save(a.slice(0, MAX)); }
+  window.recordRecent = record;
+  var tabName = function(card){ var pn = card.closest('.panel'); if (!pn) return '';
+    var t = document.querySelector('.stab[onclick*="\'' + pn.id + '\'"]'); return t ? t.textContent.trim() : ''; };
+  // cards opened by tapping, links or search
+  var t0 = window.toggle;
+  window.toggle = function(hdr){ t0(hdr);
+    if (!hdr.classList.contains('open') || window._bulk) return;
+    var card = hdr.closest('.eqcard'); if (!card || !card.id || card.closest('#ppage') || card.classList.contains('prob')) return;
+    var nm = clean(card.querySelector('.eqname')) || clean(card.querySelector('.mtitle')) || clean(hdr);
+    record('#' + card.id, nm, tabName(card)); };
+  // Expand all should not fill the list
+  var ta = window.toggleAll;
+  if (ta) window.toggleAll = function(){ window._bulk = true; try { ta.apply(this, arguments); } finally { window._bulk = false; } };
+  // problem pages
+  function onHash(){ var h = location.hash; if (h.indexOf('#p/') !== 0) return;
+    var c = document.getElementById(h.slice(3)); if (!c) return;
+    var tag = clean(c.querySelector('.eqnum')), ti = clean(c.querySelector('.mtitle'));
+    record(h, ti || tag, 'Problem · ' + tag); }
+  window.addEventListener('hashchange', onHash);
+  setTimeout(function(){ quiet = false; onHash(); }, 2600);
+  // the list
+  var box = document.getElementById('recent');
+  window.toggleRecent = function(e){ if (e) e.stopPropagation();
+    if (!box.hidden){ box.hidden = true; return; }
+    var a = load();
+    box.innerHTML = '<div class="rh">Recently opened</div>' + (a.length ? a.map(function(r, i){
+      return '<a href="' + r.href + '" data-i="' + i + '">' + r.name.replace(/</g, '&lt;') + (r.kind ? '<span class="rk">' + r.kind.replace(/</g, '&lt;') + '</span>' : '') + '</a>'; }).join('')
+      : '<div class="rnone">Nothing yet. Cards and problem pages you open will appear here.</div>');
+    if (window.renderMathInElement) renderMathInElement(box, {delimiters:[{left:'$$',right:'$$',display:false},{left:'$',right:'$',display:false}], throwOnError:false});
+    var b = document.getElementById('recBtn').getBoundingClientRect();
+    box.style.top = (b.bottom + 6) + 'px';
+    box.style.left = Math.max(16, Math.min(b.right - 360, window.innerWidth - 16 - Math.min(360, window.innerWidth - 32))) + 'px';
+    box.hidden = false; };
+  box.addEventListener('click', function(e){ var l = e.target.closest('a'); if (!l) return; e.preventDefault(); box.hidden = true; goTo(l.getAttribute('href')); });
+  document.addEventListener('click', function(e){ if (!box.hidden && !box.contains(e.target)) box.hidden = true; });
+  window.addEventListener('scroll', function(){ if (!box.hidden) box.hidden = true; }, {passive: true});
 })();
 </script>
 </body>
