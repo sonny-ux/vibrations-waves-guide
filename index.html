@@ -609,6 +609,18 @@ a.eqres .eqn { display: block; font-size: .85em; color: var(--muted); margin-top
 /* per-part relations (11/18/26) */
 .phave .prel { grid-column: 1 / -1; border-top: 1px solid var(--border2); padding-top: 6px; }
 </style>
+
+<style>
+/* folding parts on problem pages (11/18/26) */
+.ppage .wpart.fold:not(.open) > :not(.wph) { display: none; }
+.ppage .wpart.fold > .wph { cursor: pointer; position: relative; padding-right: 30px; }
+.ppage .wpart.fold > .wph::after { content: "▸"; position: absolute; right: 12px; top: 10px; color: var(--muted); transition: transform .15s; }
+.ppage .wpart.fold.open > .wph::after { transform: rotate(90deg); }
+.ppage .wpart.fold:not(.open) { padding-top: 8px; margin-top: 8px; }
+.ppage .pbar .pbbs { display: flex; gap: 6px; }
+.ppage .pbar .pbf { border: 1px solid var(--border2); background: none; color: var(--text2); border-radius: 999px; padding: 4px 12px; font: 600 13px -apple-system, system-ui, sans-serif; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .ppage .wpart.fold > .wph::after { transition: none; } }
+</style>
 </head>
 <body>
 
@@ -3295,13 +3307,20 @@ document.addEventListener('DOMContentLoaded', function () {
   function open(id){ var f = info(id), st = setOf(id); if (!f || !st) return false;
     var i = st.ids.indexOf(id), prev = st.ids[i - 1], next = st.ids[i + 1];
     var chips = st.ids.map(function(x){ return '<a href="#p/' + x + '"' + (x === id ? ' class="cur"' : '') + '>' + info(x).tag.replace(/^.*· /, '') + '</a>'; }).join('');
-    page.innerHTML = '<div class="pbar"><span class="pbt">' + f.tag + '</span><button type="button" class="pbq">Question</button></div>'
+    page.innerHTML = '<div class="pbar"><span class="pbt">' + f.tag + '</span><span class="pbbs"><button type="button" class="pbf">Open all</button><button type="button" class="pbq">Question</button></span></div>'
       + '<div class="ptrail"><a href="#" data-home="1">Homework</a> › ' + st.title + '</div>'
       + '<div class="pswitch2">' + chips + '</div><h1>' + f.title + '</h1>'
       + '<div class="pbody">' + f.card.querySelector('.eqbody').innerHTML + '</div>'
       + '<div class="pnav">' + (prev ? '<a class="pv" href="#p/' + prev + '">← ' + info(prev).title + '</a>' : '') + (next ? '<a class="nx" href="#p/' + next + '">' + info(next).title + ' →</a>' : '') + '</div>';
     page.hidden = false; document.body.classList.add('pagemode'); render(page);
     var nav = document.querySelector('.tab-nav'), bar = page.querySelector('.pbar'); if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
+    // each part folds: tap its question to open or close it; parts start folded so each can be tried first
+    var parts = page.querySelectorAll('.wpart'), fb = bar.querySelector('.pbf');
+    parts.forEach(function(w){ w.classList.add('fold'); var h = w.querySelector('.wph'); if (h){ h.setAttribute('role', 'button'); h.setAttribute('tabindex', '0');
+      h.addEventListener('click', function(ev){ if (ev.target.closest('a, .term')) return; w.classList.toggle('open'); });
+      h.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); w.classList.toggle('open'); } }); } });
+    fb.addEventListener('click', function(){ var anyClosed = Array.prototype.some.call(parts, function(w){ return !w.classList.contains('open'); });
+      parts.forEach(function(w){ w.classList.toggle('open', anyClosed); }); fb.textContent = anyClosed ? 'Fold all' : 'Open all'; });
     bar.querySelector('.pbq').addEventListener('click', function(ev){ ev.stopPropagation(); var qs = document.getElementById('qsheet'); qs.querySelector('.qst').textContent = f.title; var b2 = qs.querySelector('.qsb'); b2.innerHTML = ''; b2.appendChild(page.querySelector('.pstate').cloneNode(true)); qs.scrollTop = 0; qs.classList.add('on'); }); if (window.eqAutolink) window.eqAutolink(page);
     document.querySelectorAll('.stab').forEach(function(t){ t.classList.toggle('active', (t.getAttribute('onclick') || '').indexOf("'homework'") >= 0); });
     window.scrollTo(0, 0); window._probPage = id; return true; }
